@@ -291,9 +291,6 @@ namespace XBot
                 f.VerticalOptions = LayoutOptions.End;
                 stack.Children.Add(f);
             }
-
-
-
             scroll = new ScrollView { Content = stack };
             frame.Content = scroll;
         }

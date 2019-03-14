@@ -9,22 +9,45 @@ namespace XBot
 {
     public class Settings : ContentPage
     {
-        Frame frame;
-        Entry entry;
+        Frame frame = new Frame();
+        Entry entry = new Entry();
         Switch OnStart = new Switch();
+        Switch Dark = new Switch();
 
-        Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Color.Blue };
+        Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = MainPage.UserColor };
+        MainPage main;
 
-        public Settings()
+        public Settings(MainPage m)
         {
+            main = m;
             if ((bool)App.Current.Properties["onstart"])
                 OnStart.IsToggled = true;
+            if ((string)App.Current.Properties["back"] == "30 30 30")
+                Dark.IsToggled = true;
             OnStart.Toggled += (object sender, ToggledEventArgs e) => 
             {
                 if ((bool)App.Current.Properties["onstart"])
                     App.Current.Properties["onstart"] = false;
                 else
                     App.Current.Properties["onstart"] = true;
+            };
+            Dark.Toggled += (object sender, ToggledEventArgs e) =>
+            {
+                if ((string)App.Current.Properties["back"] == "30 30 30")
+                {
+                    App.Current.Properties["back"] = "255 255 255";
+                    App.Current.Properties["user"] = "0 0 255";
+                    App.Current.Properties["bot"] = "128 0 128";
+                }
+                else
+                {
+                    App.Current.Properties["back"] = "30 30 30";
+                    App.Current.Properties["user"] = "86 156 214";
+                    App.Current.Properties["bot"] = "255 0 255";
+                }
+                frame = MakeSubscribtions();
+                //MakeContent();
+                main.Display();
             };
 ;           frame = MakeSubscribtions();
             amount.SelectedIndex = (int)App.Current.Properties["count"] - 1;
@@ -36,7 +59,7 @@ namespace XBot
 
         Frame MakeSubscribtions()
         {
-            Frame f = new Frame { BorderColor = Xamarin.Forms.Color.Blue };
+            Frame f = new Frame { BorderColor = MainPage.UserColor, BackgroundColor = MainPage.BackColor };
             StackLayout sl = new StackLayout
             {
                 Children =
@@ -48,8 +71,9 @@ namespace XBot
                         //FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         VerticalOptions = LayoutOptions.End,
-                        TextColor = Xamarin.Forms.Color.Blue,
-                        FontAttributes = FontAttributes.Bold
+                        TextColor = MainPage.UserColor,
+                        FontAttributes = FontAttributes.Bold,
+                        BackgroundColor = MainPage.BackColor
                     }
                 }
             };
@@ -63,9 +87,9 @@ namespace XBot
                     ClassId = i.ToString(),
                     TextColor = Xamarin.Forms.Color.Red,
                     FontAttributes = FontAttributes.Bold,
-                    BorderColor = Xamarin.Forms.Color.Blue,
+                    BorderColor = MainPage.UserColor,
                     HorizontalOptions = LayoutOptions.Start,
-                    BackgroundColor = Xamarin.Forms.Color.White
+                    BackgroundColor = MainPage.BackColor
                 };
                 button.Clicked += (object sender, EventArgs e) => 
                 {
@@ -76,7 +100,8 @@ namespace XBot
                 };
                 Frame newf = new Frame
                 {
-                    BorderColor = Xamarin.Forms.Color.Blue,
+                    BorderColor = MainPage.UserColor,
+                    BackgroundColor = MainPage.BackColor,
                     Content = new StackLayout
                     {
                         Children =
@@ -85,7 +110,7 @@ namespace XBot
                             new Label
                             {
                                 Text = subs[i],
-                                TextColor = Xamarin.Forms.Color.Blue,
+                                TextColor = MainPage.UserColor,
                                 HorizontalTextAlignment = TextAlignment.Start,
                                 VerticalTextAlignment = TextAlignment.Center
                             }
@@ -101,8 +126,8 @@ namespace XBot
                 FontSize = 20,
                 TextColor = Xamarin.Forms.Color.Green,
                 FontAttributes = FontAttributes.Bold,
-                BackgroundColor = Xamarin.Forms.Color.White,
-                BorderColor = Xamarin.Forms.Color.Blue,
+                BackgroundColor = MainPage.BackColor,
+                BorderColor = MainPage.UserColor,
                 HorizontalOptions = LayoutOptions.Start,
             };
             button1.Clicked += (object sender, EventArgs e) =>
@@ -122,11 +147,12 @@ namespace XBot
                 PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Xamarin.Forms.Color.Blue
+                TextColor = MainPage.UserColor,
+                BackgroundColor = MainPage.BackColor
             };
             Frame newframe = new Frame
             {
-                BorderColor = Xamarin.Forms.Color.Blue,
+                BorderColor = MainPage.UserColor,
                 Content = new StackLayout
                 {
                     Children =
@@ -135,7 +161,8 @@ namespace XBot
                         entry
                     },
                     Orientation = StackOrientation.Horizontal
-                }
+                },
+                BackgroundColor = MainPage.BackColor
             };
             sl.Children.Add(newframe);
             f.Content = sl;
@@ -144,6 +171,7 @@ namespace XBot
 
         void MakeContent()
         {
+            BackgroundColor = MainPage.BackColor;
             Content = new ScrollView
             {
                 Content = new StackLayout
@@ -152,23 +180,25 @@ namespace XBot
                     {
                         new Frame
                         {
+                            BackgroundColor = MainPage.BackColor,
                             Content = new StackLayout
                             {
                                 Children =
                                 {
                                     new Label
                                     {
-                                        TextColor = Xamarin.Forms.Color.Blue,
+                                        TextColor = MainPage.UserColor,
                                         Text = "Количество новостей за раз",
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         VerticalOptions = LayoutOptions.Center,
-                                        HorizontalTextAlignment = TextAlignment.Start
+                                        HorizontalTextAlignment = TextAlignment.Start,
+                                        BackgroundColor = MainPage.BackColor
                                     },
                                     amount
                                 },
                                 Orientation = StackOrientation.Horizontal
                             },
-                            BorderColor = Xamarin.Forms.Color.Blue,
+                            BorderColor = MainPage.UserColor,
                             VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                         },
@@ -181,7 +211,7 @@ namespace XBot
                                 {
                                     new Label
                                     {
-                                        TextColor = Xamarin.Forms.Color.Blue,
+                                        TextColor = MainPage.UserColor,
                                         Text = "Показывать подписки при старте",
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         VerticalOptions = LayoutOptions.Center,
@@ -191,9 +221,33 @@ namespace XBot
                                 },
                                 Orientation = StackOrientation.Horizontal
                             },
-                            BorderColor = Xamarin.Forms.Color.Blue,
+                            BorderColor = MainPage.UserColor,
                             VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
+                            BackgroundColor = MainPage.BackColor
+                        },
+                        new Frame
+                        {
+                            Content = new StackLayout
+                            {
+                                Children =
+                                {
+                                    new Label
+                                    {
+                                        TextColor = MainPage.UserColor,
+                                        Text = "Темная тема",
+                                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                                        VerticalOptions = LayoutOptions.Center,
+                                        HorizontalTextAlignment = TextAlignment.Start
+                                    },
+                                    Dark////////////////////////////////////////////////////////////////////
+                                },
+                                Orientation = StackOrientation.Horizontal
+                            },
+                            BorderColor = MainPage.UserColor,
+                            VerticalOptions = LayoutOptions.End,
+                            HorizontalOptions = LayoutOptions.FillAndExpand,
+                            BackgroundColor = MainPage.BackColor
                         }
                     }
                 }

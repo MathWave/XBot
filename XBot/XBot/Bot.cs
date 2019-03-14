@@ -11,7 +11,6 @@ namespace XBot
     {
      
         private static readonly HttpClient client = new HttpClient();
-        static List<string> allnews;
 
         async public static void GetNews(MainPage m)
         {            
@@ -79,7 +78,7 @@ namespace XBot
             else if (mess.Length == 0)
                 Chat.Add("Поиск не дал результатов", true);
             else
-                Chat.Add($"Топ-{amount} подписок на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b".Replace("&quot;", "\"").Replace("&amp;", "\""), true);
+                Chat.Add(($"Топ-{amount} подписок на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
         }
 

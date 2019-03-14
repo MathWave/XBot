@@ -33,17 +33,17 @@ namespace XBot
                 App.Current.Properties["subscribes"] = "";
                 App.Current.Properties["count"] = 5;
                 App.Current.Properties["onstart"] = false;
+                App.Current.Properties["back"] = "White";
             }
-            BackgroundColor = Xamarin.Forms.Color.White;
             message = new Entry
             {
                 Placeholder = "Сообщение",
                 PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
                 FontSize = 20,
-                BackgroundColor = Xamarin.Forms.Color.White,
+                BackgroundColor = BackColor,
                 VerticalOptions = LayoutOptions.End,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Xamarin.Forms.Color.Blue
+                TextColor = UserColor
             };
             message.Completed += ButtonClick;
             settings = new Button
@@ -52,8 +52,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Xamarin.Forms.Color.White,
-                TextColor = Xamarin.Forms.Color.Blue,
+                BackgroundColor = BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             subscribes = new Button
@@ -62,8 +61,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Xamarin.Forms.Color.White,
-                TextColor = Xamarin.Forms.Color.Blue,
+                BackgroundColor = BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             news = new Button
@@ -72,8 +70,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Xamarin.Forms.Color.White,
-                TextColor = Xamarin.Forms.Color.Blue,
+                BackgroundColor = BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             weather = new Button
@@ -82,8 +79,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Xamarin.Forms.Color.White,
-                TextColor = Xamarin.Forms.Color.Blue,
+                BackgroundColor = BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             weather.Clicked += WeatherClick;
@@ -124,7 +120,7 @@ namespace XBot
 
         private void SettingsClick(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new Settings());
+            Navigation.PushAsync(new Settings(this));
         }
 
         private void NewsClick(object sender, EventArgs e)
@@ -196,7 +192,7 @@ namespace XBot
             news.IsEnabled = true;
             weather.IsEnabled = true;
         }
-        
+
         void DoCommand()
         {
             List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
@@ -230,6 +226,13 @@ namespace XBot
         public void MakeContent()
         {
             Content = new StackLayout { Children = { frame, message, new StackLayout { Children = { settings, subscribes, news, weather }, Orientation = StackOrientation.Horizontal } } };
+            BackgroundColor = BackColor;
+            message.TextColor = UserColor;
+            message.BackgroundColor = BackColor;
+            settings.BackgroundColor = BackColor;
+            subscribes.BackgroundColor = BackColor;
+            news.BackgroundColor = BackColor;
+            weather.BackgroundColor = BackColor;
             if (scroll != null)
                 scroll.ScrollToAsync(stack, ScrollToPosition.End, false);
         }
@@ -237,22 +240,23 @@ namespace XBot
         public void MakeFrame()
         {
             List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand };
+            frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = BackColor };
             stack = new StackLayout { VerticalOptions = LayoutOptions.End };
             for (int i = 0; i < mes.Count; i++)
             {
-                Frame f = new Frame(); 
+                Frame f = new Frame { BackgroundColor = BackColor };
                 if (mes[i][0] == 'U')
                     f = new Frame
                     {
-                        Content = new Label { TextColor = Xamarin.Forms.Color.Blue, Text = mes[i].Substring(1) },
-                        BorderColor = Xamarin.Forms.Color.Blue,
+                        Content = new Label { TextColor = UserColor, Text = mes[i].Substring(1), BackgroundColor = BackColor },
+                        BorderColor = UserColor,
                         HorizontalOptions = LayoutOptions.End,
+                        BackgroundColor = BackColor
                     };
                 else
                 {
                     if (mes[i].Split('֍').Length == 1)
-                        f.Content = new Label { TextColor = Xamarin.Forms.Color.Purple, Text = mes[i].Substring(1) };
+                        f.Content = new Label { TextColor = BotColor, Text = mes[i].Substring(1), BackgroundColor = BackColor };
                     else
                     {
                         string[] info = mes[i].Substring(1).Split('֍');
@@ -261,7 +265,7 @@ namespace XBot
                         for (int j = 0; j < info.Length / 2; j++)
                         {
                             dict[info[2 * j]] = info[2 * j + 1];
-                            Label l = new Label { TextColor = Xamarin.Forms.Color.Purple, Text = info[2 * j] };
+                            Label l = new Label { TextColor = BotColor, Text = info[2 * j] };
                             if (j > 0)
                             {
                                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -277,7 +281,7 @@ namespace XBot
                         }
                         f.Content = sl;
                     }
-                    f.BorderColor = Xamarin.Forms.Color.Purple;
+                    f.BorderColor = BotColor;
                     f.HorizontalOptions = LayoutOptions.Start;
                 }
                 f.VerticalOptions = LayoutOptions.End;
@@ -285,6 +289,33 @@ namespace XBot
             }
             scroll = new ScrollView { Content = stack };
             frame.Content = scroll;
+        }
+
+        public static Xamarin.Forms.Color BackColor
+        {
+            get
+            {
+                string[] c = ((string)App.Current.Properties["back"]).Split(' ');
+                return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
+            }
+        }
+
+        public static Xamarin.Forms.Color UserColor
+        {
+            get 
+            {
+                string[] c = ((string)App.Current.Properties["user"]).Split(' ');
+                return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
+            }
+        }
+
+        public static Xamarin.Forms.Color BotColor
+        {
+            get 
+            {
+                string[] c = ((string)App.Current.Properties["bot"]).Split(' ');
+                return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
+            }
         }
 
     }

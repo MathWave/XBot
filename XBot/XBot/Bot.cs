@@ -11,10 +11,10 @@ namespace XBot
     {
      
         private static readonly HttpClient client = new HttpClient();
+        static List<string> allnews;
 
         async public static void GetNews(MainPage m)
         {            
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
             string line = "";
             string mess = "";
             mess += $"Топ-{(int)App.Current.Properties["count"]} новостей на {DateTime.Now.ToString()}\n\n֍֍";
@@ -32,25 +32,23 @@ namespace XBot
             }
             catch { line = ""; }
             mess += '\b';
-            mes.RemoveAt(mes.Count - 1);
+            Chat.Remove();
             if (line == null || line.Length == 0 || mess == "")
-                mes.Add("BОтсутствует подключение к интернету");
+                Chat.Add("Отсутствует подключение к интернету", true);
             else
-                mes.Add("B" + mess.Replace("&quot;", "\"").Replace("&amp;", "\""));
-            App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
+                Chat.Add(mess.Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
         }
 
         async public static void Search(MainPage m, IEnumerable<string> requests)
         {
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
             int count = 1;
             int amount = 0;
             string mess = "";
             string line = "";
             try
             {
-                while (count != 3 && amount < (int)App.Current.Properties["count"])
+                while (count != 4 && amount < (int)App.Current.Properties["count"])
                 {
                     line = await client.GetStringAsync("http://mediametrics.ru/rating/ru/online.tsv?page=" + count.ToString() + "&update=1401216280");
                     string[] elems = line.Split('\n');
@@ -60,80 +58,30 @@ namespace XBot
                         string info = await client.GetStringAsync("http://mediametrics.ru/rating/index.tsv?titles=" + first[5]);
                         string[] elems1 = info.Split('\t');
                         foreach (string str in requests)
+                        {
                             if (elems1[1].ToLower().Contains(str.ToLower()))
                             {
                                 mess += elems1[1] + "\n֍" + elems1[0] + "֍";
                                 amount++;
                                 break;
                             }
-                        if (amount == 5)
-                            break;
+                            if (amount == (int)App.Current.Properties["count"])
+                                break;
+                        }
                         count++;
                     }
                 }
             }
             catch { }
-            mes.RemoveAt(mes.Count - 1);
+            Chat.Remove();
             if (line == null || line.Length == 0)
-                mes.Add("BОтсутствует подключение к интернету");
+                Chat.Add("Отсутствует подключение к интернету", true);
             else if (mess.Length == 0)
-                mes.Add("BПоиск не дал результатов");
+                Chat.Add("Поиск не дал результатов", true);
             else
-                mes.Add(($"BТоп-{amount} подписок на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""));
-            App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
+                Chat.Add($"Топ-{amount} подписок на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b".Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
         }
 
-        //Быстрый поиск, пока откладывается
-
-
-        /*
-        async public static void FastSearch(MainPage m, string str)
-        {
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            int count = 1;
-            List<string> strings = new List<string>();
-            string[] infos = new string[1];
-            while (infos.Length != 9)
-            {
-                string line = await client.GetStringAsync("http://mediametrics.ru/rating/ru/online.tsv?page=" + count.ToString() + "&update=1401216280");
-                infos = line.Split('\t');
-
-            }
-            List<string> news = new List<string>();
-            try
-            {
-                while (count != 3 && news.Count < 5)
-                {
-                    string line = await client.GetStringAsync("http://mediametrics.ru/rating/ru/online.tsv?page=" + count.ToString() + "&update=1401216280");
-                    string[] elems = line.Split('\n');
-                    for (int i = 1; i < elems.Length; i++)
-                    {
-                        string[] first = elems[i].Split('\t');
-                        string info = await client.GetStringAsync("http://mediametrics.ru/rating/index.tsv?titles=" + first[5]);
-                        string[] elems1 = info.Split('\t');
-                        string article = elems1[1];
-                        if (article.ToLower().Contains(str.ToLower()))
-                            news.Add(article);
-                        if (news.Count == 5)
-                            break;
-                        count++;
-                    }
-                }
-            }
-            catch { }
-            string mess = "";
-            mes.RemoveAt(mes.Count - 1);
-            foreach (string art in news)
-                mess += art.Replace("&quot;", "\"") + "\n\n";
-            if (mess.Length == 0)
-                mes.Add("BПоиск не дал результатов");
-            else
-                mes.Add(("B" + mess + "\b\b\b").Replace("&quot;", "\""));
-            App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
-            m.MakeFrame();
-            m.MakeContent();
-        }
-        */
     }
 }

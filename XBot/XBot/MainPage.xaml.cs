@@ -117,10 +117,7 @@ namespace XBot
 
         private void SubscribesClick(object sender, EventArgs e)
         {
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            mes.Add("BИщу подписки...");
-            App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
+            Chat.Add("Ищу подписки...", true);
             Display();
             Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
         }
@@ -132,10 +129,7 @@ namespace XBot
 
         private void NewsClick(object sender, EventArgs e)
         {
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            mes.Add("BИщу новости...");
-            App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
+            Chat.Add("Ищу новости...", true);
             Display();
             Bot.GetNews(this);
         }
@@ -176,11 +170,9 @@ namespace XBot
                 DoCommand();
             else
             {
-                mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-                mes.Add("U" + message.Text);
-                mes.Add("B" + $"Выполняю поиск по запросу \"{message.Text}\"...");
+                Chat.Add(message.Text, false);
+                Chat.Add($"Выполняю поиск по запросу \"{message.Text}\"...", true);
                 //Bot.send_mes(message.Text);
-                App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
                 Display();
                 Bot.Search(this, message.Text.Split(' '));
                 //Bot.check(this);

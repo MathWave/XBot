@@ -46,10 +46,10 @@ namespace XBot
                     App.Current.Properties["bot"] = "255 0 255";
                 }
                 frame = MakeSubscribtions();
-                //MakeContent();
                 main.Display();
+                Navigation.PopAsync();
             };
-;           frame = MakeSubscribtions();
+            frame = MakeSubscribtions();
             amount.SelectedIndex = (int)App.Current.Properties["count"] - 1;
             amount.SelectedIndexChanged += (object sender, EventArgs e) => { App.Current.Properties["count"] = amount.SelectedIndex + 1; };
             NavigationPage.SetHasNavigationBar(this, false);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace XBot
@@ -12,18 +12,15 @@ namespace XBot
         Frame frame = new Frame();
         Entry entry = new Entry();
         Switch OnStart = new Switch();
-        Switch Dark = new Switch();
+        Button Dark = new Button();
 
         Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = MainPage.UserColor };
         MainPage main;
 
         public Settings(MainPage m)
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             main = m;
-            if ((bool)App.Current.Properties["onstart"])
-                OnStart.IsToggled = true;
-            if ((string)App.Current.Properties["back"] == "30 30 30")
-                Dark.IsToggled = true;
             OnStart.Toggled += (object sender, ToggledEventArgs e) => 
             {
                 if ((bool)App.Current.Properties["onstart"])
@@ -31,29 +28,26 @@ namespace XBot
                 else
                     App.Current.Properties["onstart"] = true;
             };
-            Dark.Toggled += (object sender, ToggledEventArgs e) =>
-            {
-                if ((string)App.Current.Properties["back"] == "30 30 30")
-                {
-                    App.Current.Properties["back"] = "255 255 255";
-                    App.Current.Properties["user"] = "0 0 255";
-                    App.Current.Properties["bot"] = "128 0 128";
-                }
-                else
-                {
-                    App.Current.Properties["back"] = "30 30 30";
-                    App.Current.Properties["user"] = "86 156 214";
-                    App.Current.Properties["bot"] = "255 0 255";
-                }
-                frame = MakeSubscribtions();
-                main.Display();
-                Navigation.PopAsync();
-            };
-            frame = MakeSubscribtions();
             amount.SelectedIndex = (int)App.Current.Properties["count"] - 1;
             amount.SelectedIndexChanged += (object sender, EventArgs e) => { App.Current.Properties["count"] = amount.SelectedIndex + 1; };
-            NavigationPage.SetHasNavigationBar(this, false);
-            BackgroundColor = System.Drawing.Color.FromName((string)App.Current.Properties["color"]);
+            MakeContent();
+        }
+
+         void MakeDark(object sender, EventArgs e)
+        {
+            if ((string)App.Current.Properties["back"] == "30 30 30")
+            {
+                App.Current.Properties["back"] = "255 255 255";
+                App.Current.Properties["user"] = "0 0 255";
+                App.Current.Properties["bot"] = "128 0 128";
+            }
+            else
+            {
+                App.Current.Properties["back"] = "30 30 30";
+                App.Current.Properties["user"] = "86 156 214";
+                App.Current.Properties["bot"] = "255 0 255";
+            }
+            main.Display();
             MakeContent();
         }
 
@@ -95,7 +89,6 @@ namespace XBot
                 {
                     subs.RemoveAt(int.Parse(((Button)sender).ClassId)) ;
                     App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
-                    frame = MakeSubscribtions();
                     MakeContent();
                 };
                 Frame newf = new Frame
@@ -136,7 +129,6 @@ namespace XBot
                 {
                     subs.Add(entry.Text);
                     App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
-                    frame = MakeSubscribtions();
                     MakeContent();
                 }
             };
@@ -172,6 +164,17 @@ namespace XBot
         void MakeContent()
         {
             BackgroundColor = MainPage.BackColor;
+            frame = MakeSubscribtions();
+            Dark = new Button
+            {
+                Text = "Сменить",
+                BackgroundColor = MainPage.BackColor,
+                TextColor = MainPage.UserColor
+            };
+            if ((bool)App.Current.Properties["onstart"])
+                OnStart.IsToggled = true;
+            Dark.Clicked += MakeDark;
+            amount.TextColor = MainPage.UserColor;
             Content = new ScrollView
             {
                 Content = new StackLayout
@@ -235,12 +238,12 @@ namespace XBot
                                     new Label
                                     {
                                         TextColor = MainPage.UserColor,
-                                        Text = "Темная тема",
+                                        Text = "Цветовая тема",
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         VerticalOptions = LayoutOptions.Center,
                                         HorizontalTextAlignment = TextAlignment.Start
                                     },
-                                    Dark////////////////////////////////////////////////////////////////////
+                                    Dark
                                 },
                                 Orientation = StackOrientation.Horizontal
                             },
@@ -252,6 +255,7 @@ namespace XBot
                     }
                 }
             };
+            
         }
 
     }

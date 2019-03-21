@@ -123,15 +123,7 @@ namespace XBot
                 BorderColor = MainPage.UserColor,
                 HorizontalOptions = LayoutOptions.Start,
             };
-            button1.Clicked += (object sender, EventArgs e) =>
-            {
-                if (entry.Text != null && entry.Text.Length != 0)
-                {
-                    subs.Add(entry.Text);
-                    App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
-                    MakeContent();
-                }
-            };
+            button1.Clicked += Add;
             entry = new Entry
             {
                 Placeholder = "Дополнительная подписка",
@@ -142,6 +134,7 @@ namespace XBot
                 TextColor = MainPage.UserColor,
                 BackgroundColor = MainPage.BackColor
             };
+            entry.Completed += Add;
             Frame newframe = new Frame
             {
                 BorderColor = MainPage.UserColor,
@@ -257,6 +250,17 @@ namespace XBot
                 }
             };
             
+        }
+
+        void Add(object sender, EventArgs e)
+        {
+            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
+            if (entry.Text != null && entry.Text.Length != 0)
+            {
+                subs.Add(entry.Text);
+                App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
+                MakeContent();
+            }
         }
 
     }

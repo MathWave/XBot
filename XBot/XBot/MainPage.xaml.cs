@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using System.Drawing;
 
 
+
 namespace XBot
 {
 
@@ -106,16 +107,38 @@ namespace XBot
                 {
                     NewsClick(this, new EventArgs());
                 }
-                catch { }
+                catch
+                {
+                    subscribes.IsEnabled = false; news.IsEnabled = false;
+                    Thread.Sleep(3);
+                    subscribes.IsEnabled = true; news.IsEnabled = true;
+                }
             }
             //try { Bot.Activate(this); } catch { }
         }
 
         private void SubscribesClick(object sender, EventArgs e)
         {
-            Chat.Add("Ищу подписки...", true);
-            Display();
-            Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
+            try
+            {
+                if ((string)App.Current.Properties["subscribes"] == "")
+                {
+                    Chat.Add("Список подписок пуст! Заполните его в настройках!", true);
+                    Display();
+                }
+                else
+                {
+                    Chat.Add("Ищу подписки...", true);
+                    Display();
+                    Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
+                }
+            }
+            catch
+            {
+                subscribes.IsEnabled = false; news.IsEnabled = false;
+                Thread.Sleep(3);
+                subscribes.IsEnabled = true; news.IsEnabled = true;
+            }
         }
 
         private void SettingsClick(object sender, EventArgs e)
@@ -125,9 +148,13 @@ namespace XBot
 
         private void NewsClick(object sender, EventArgs e)
         {
-            Chat.Add("Ищу новости...", true);
-            Display();
-            Bot.GetNews(this);
+            try
+            {
+                Chat.Add("Ищу новости...", true);
+                Display();
+                Bot.GetNews(this);
+            }
+            catch { }
         }
 
         private void WeatherClick(object sender, EventArgs e)
@@ -168,13 +195,10 @@ namespace XBot
             {
                 Chat.Add(message.Text, false);
                 Chat.Add($"Выполняю поиск по запросу \"{message.Text}\"...", true);
-                //Bot.send_mes(message.Text);
                 Display();
                 Bot.Search(this, message.Text.Split(' '));
-                //Bot.check(this);
             }
             message.Text = "";
-            scroll.ScrollToAsync(stack, ScrollToPosition.End, false);
         }
 
         void Block()

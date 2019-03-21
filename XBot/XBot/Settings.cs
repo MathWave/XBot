@@ -45,7 +45,7 @@ namespace XBot
             {
                 App.Current.Properties["back"] = "30 30 30";
                 App.Current.Properties["user"] = "86 156 214";
-                App.Current.Properties["bot"] = "255 0 255";
+                App.Current.Properties["bot"] = "255 255 255";
             }
             main.Display();
             MakeContent();
@@ -169,7 +169,8 @@ namespace XBot
             {
                 Text = "Сменить",
                 BackgroundColor = MainPage.BackColor,
-                TextColor = MainPage.UserColor
+                TextColor = MainPage.UserColor,
+                BorderColor = MainPage.UserColor
             };
             if ((bool)App.Current.Properties["onstart"])
                 OnStart.IsToggled = true;
@@ -205,6 +206,29 @@ namespace XBot
                             VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                         },
+                        new Frame
+                        {
+                            Content = new StackLayout
+                            {
+                                Children =
+                                {
+                                    new Label
+                                    {
+                                        TextColor = MainPage.UserColor,
+                                        Text = "Цветовая тема",
+                                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                                        VerticalOptions = LayoutOptions.Center,
+                                        HorizontalTextAlignment = TextAlignment.Start
+                                    },
+                                    Dark
+                                },
+                                Orientation = StackOrientation.Horizontal
+                            },
+                            BorderColor = MainPage.UserColor,
+                            VerticalOptions = LayoutOptions.End,
+                            HorizontalOptions = LayoutOptions.FillAndExpand,
+                            BackgroundColor = MainPage.BackColor
+                        },
                         frame,
                         new Frame
                         {
@@ -229,29 +253,6 @@ namespace XBot
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                             BackgroundColor = MainPage.BackColor
                         },
-                        new Frame
-                        {
-                            Content = new StackLayout
-                            {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        TextColor = MainPage.UserColor,
-                                        Text = "Цветовая тема",
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        VerticalOptions = LayoutOptions.Center,
-                                        HorizontalTextAlignment = TextAlignment.Start
-                                    },
-                                    Dark
-                                },
-                                Orientation = StackOrientation.Horizontal
-                            },
-                            BorderColor = MainPage.UserColor,
-                            VerticalOptions = LayoutOptions.End,
-                            HorizontalOptions = LayoutOptions.FillAndExpand,
-                            BackgroundColor = MainPage.BackColor
-                        }
                     }
                 }
             };

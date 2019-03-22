@@ -14,7 +14,7 @@ namespace XBot
         Switch OnStart = new Switch();
         Button Dark = new Button();
 
-        Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = MainPage.UserColor };
+        Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Colors.UserColor };
         MainPage main;
 
         public Settings(MainPage m)
@@ -53,7 +53,7 @@ namespace XBot
 
         Frame MakeSubscribtions()
         {
-            Frame f = new Frame { BorderColor = MainPage.UserColor, BackgroundColor = MainPage.BackColor };
+            Frame f = new Frame { BorderColor = Colors.UserColor, BackgroundColor = Colors.BackColor };
             StackLayout sl = new StackLayout
             {
                 Children =
@@ -65,9 +65,9 @@ namespace XBot
                         //FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         VerticalOptions = LayoutOptions.End,
-                        TextColor = MainPage.UserColor,
+                        TextColor = Colors.UserColor,
                         FontAttributes = FontAttributes.Bold,
-                        BackgroundColor = MainPage.BackColor
+                        BackgroundColor = Colors.BackColor
                     }
                 }
             };
@@ -81,9 +81,9 @@ namespace XBot
                     ClassId = i.ToString(),
                     TextColor = Xamarin.Forms.Color.Red,
                     FontAttributes = FontAttributes.Bold,
-                    BorderColor = MainPage.UserColor,
+                    BorderColor = Colors.UserColor,
                     HorizontalOptions = LayoutOptions.Start,
-                    BackgroundColor = MainPage.BackColor
+                    BackgroundColor = Colors.BackColor
                 };
                 button.Clicked += (object sender, EventArgs e) => 
                 {
@@ -93,8 +93,8 @@ namespace XBot
                 };
                 Frame newf = new Frame
                 {
-                    BorderColor = MainPage.UserColor,
-                    BackgroundColor = MainPage.BackColor,
+                    BorderColor = Colors.UserColor,
+                    BackgroundColor = Colors.BackColor,
                     Content = new StackLayout
                     {
                         Children =
@@ -103,7 +103,7 @@ namespace XBot
                             new Label
                             {
                                 Text = subs[i],
-                                TextColor = MainPage.UserColor,
+                                TextColor = Colors.UserColor,
                                 HorizontalTextAlignment = TextAlignment.Start,
                                 VerticalTextAlignment = TextAlignment.Center
                             }
@@ -119,8 +119,8 @@ namespace XBot
                 FontSize = 20,
                 TextColor = Xamarin.Forms.Color.Green,
                 FontAttributes = FontAttributes.Bold,
-                BackgroundColor = MainPage.BackColor,
-                BorderColor = MainPage.UserColor,
+                BackgroundColor = Colors.BackColor,
+                BorderColor = Colors.UserColor,
                 HorizontalOptions = LayoutOptions.Start,
             };
             button1.Clicked += Add;
@@ -131,13 +131,13 @@ namespace XBot
                 PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = MainPage.UserColor,
-                BackgroundColor = MainPage.BackColor
+                TextColor = Colors.UserColor,
+                BackgroundColor = Colors.BackColor
             };
             entry.Completed += Add;
             Frame newframe = new Frame
             {
-                BorderColor = MainPage.UserColor,
+                BorderColor = Colors.UserColor,
                 Content = new StackLayout
                 {
                     Children =
@@ -147,7 +147,7 @@ namespace XBot
                     },
                     Orientation = StackOrientation.Horizontal
                 },
-                BackgroundColor = MainPage.BackColor
+                BackgroundColor = Colors.BackColor
             };
             sl.Children.Add(newframe);
             f.Content = sl;
@@ -156,21 +156,21 @@ namespace XBot
 
         void MakeContent()
         {
-            BackgroundColor = MainPage.BackColor;
+            BackgroundColor = Colors.BackColor;
             frame = MakeSubscribtions();
             Dark = new Button
             {
                 Text = "Сменить",
-                BackgroundColor = MainPage.BackColor,
-                TextColor = MainPage.UserColor,
-                BorderColor = MainPage.UserColor
+                BackgroundColor = Colors.BackColor,
+                TextColor = Colors.UserColor,
+                BorderColor = Colors.UserColor
             };
             Button b = new Button
             {
                 Text = "Очистить диалоговое окно",
-                BackgroundColor = MainPage.BackColor,
-                TextColor = MainPage.UserColor,
-                BorderColor = MainPage.UserColor,
+                BackgroundColor = Colors.BackColor,
+                TextColor = Colors.UserColor,
+                BorderColor = Colors.UserColor,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             b.Clicked += (object sender, EventArgs e) =>
@@ -181,7 +181,7 @@ namespace XBot
             if ((bool)App.Current.Properties["onstart"])
                 OnStart.IsToggled = true;
             Dark.Clicked += MakeDark;
-            amount.TextColor = MainPage.UserColor;
+            amount.TextColor = Colors.UserColor;
             Content = new ScrollView
             {
                 Content = new StackLayout
@@ -190,25 +190,25 @@ namespace XBot
                     {
                         new Frame
                         {
-                            BackgroundColor = MainPage.BackColor,
+                            BackgroundColor = Colors.BackColor,
                             Content = new StackLayout
                             {
                                 Children =
                                 {
                                     new Label
                                     {
-                                        TextColor = MainPage.UserColor,
+                                        TextColor = Colors.UserColor,
                                         Text = "Количество новостей за раз",
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         VerticalOptions = LayoutOptions.Center,
                                         HorizontalTextAlignment = TextAlignment.Start,
-                                        BackgroundColor = MainPage.BackColor
+                                        BackgroundColor = Colors.BackColor
                                     },
                                     amount
                                 },
                                 Orientation = StackOrientation.Horizontal
                             },
-                            BorderColor = MainPage.UserColor,
+                            BorderColor = Colors.UserColor,
                             VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                         },
@@ -220,7 +220,7 @@ namespace XBot
                                 {
                                     new Label
                                     {
-                                        TextColor = MainPage.UserColor,
+                                        TextColor = Colors.UserColor,
                                         Text = "Цветовая тема",
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         VerticalOptions = LayoutOptions.Center,
@@ -230,10 +230,10 @@ namespace XBot
                                 },
                                 Orientation = StackOrientation.Horizontal
                             },
-                            BorderColor = MainPage.UserColor,
+                            BorderColor = Colors.UserColor,
                             VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
-                            BackgroundColor = MainPage.BackColor
+                            BackgroundColor = Colors.BackColor
                         },
                         frame,
                         new Frame
@@ -244,7 +244,7 @@ namespace XBot
                                 {
                                     new Label
                                     {
-                                        TextColor = MainPage.UserColor,
+                                        TextColor = Colors.UserColor,
                                         Text = "Показывать подписки при старте",
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         VerticalOptions = LayoutOptions.Center,
@@ -254,16 +254,16 @@ namespace XBot
                                 },
                                 Orientation = StackOrientation.Horizontal
                             },
-                            BorderColor = MainPage.UserColor,
+                            BorderColor = Colors.UserColor,
                             VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
-                            BackgroundColor = MainPage.BackColor
+                            BackgroundColor = Colors.BackColor
                         },
                         new Frame
                         {
                             Content = b,
-                            BorderColor = MainPage.UserColor,
-                            BackgroundColor = MainPage.BackColor
+                            BorderColor = Colors.UserColor,
+                            BackgroundColor = Colors.BackColor
                         }
                     }
                 }

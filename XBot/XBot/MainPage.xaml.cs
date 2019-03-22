@@ -43,10 +43,10 @@ namespace XBot
                 Placeholder = "Сообщение",
                 PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
                 FontSize = 20,
-                BackgroundColor = BackColor,
+                BackgroundColor = Colors.BackColor,
                 VerticalOptions = LayoutOptions.End,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = UserColor
+                TextColor = Colors.UserColor
             };
             message.Completed += ButtonClick;
             settings = new Button
@@ -55,7 +55,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = BackColor,
+                BackgroundColor = Colors.BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             subscribes = new Button
@@ -64,7 +64,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = BackColor,
+                BackgroundColor = Colors.BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             news = new Button
@@ -73,7 +73,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = BackColor,
+                BackgroundColor = Colors.BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             weather = new Button
@@ -82,7 +82,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = BackColor,
+                BackgroundColor = Colors.BackColor,
                 FontAttributes = FontAttributes.Bold
             };
             weather.Clicked += WeatherClick;
@@ -210,13 +210,13 @@ namespace XBot
         public void MakeContent()
         {
             Content = new StackLayout { Children = { frame, message, new StackLayout { Children = { settings, subscribes, news, weather }, Orientation = StackOrientation.Horizontal } } };
-            BackgroundColor = BackColor;
-            message.TextColor = UserColor;
-            message.BackgroundColor = BackColor;
-            settings.BackgroundColor = BackColor;
-            subscribes.BackgroundColor = BackColor;
-            news.BackgroundColor = BackColor;
-            weather.BackgroundColor = BackColor;
+            BackgroundColor = Colors.BackColor;
+            message.TextColor = Colors.UserColor;
+            message.BackgroundColor = Colors.BackColor;
+            settings.BackgroundColor = Colors.BackColor;
+            subscribes.BackgroundColor = Colors.BackColor;
+            news.BackgroundColor = Colors.BackColor;
+            weather.BackgroundColor = Colors.BackColor;
             if (scroll != null)
                 scroll.ScrollToAsync(stack, ScrollToPosition.End, false);
         }
@@ -224,23 +224,23 @@ namespace XBot
         public void MakeFrame()
         {
             List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = BackColor };
+            frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Colors.BackColor };
             stack = new StackLayout { VerticalOptions = LayoutOptions.End };
             for (int i = 0; i < mes.Count; i++)
             {
-                Frame f = new Frame { BackgroundColor = BackColor };
+                Frame f = new Frame { BackgroundColor = Colors.BackColor };
                 if (mes[i][0] == 'U')
                     f = new Frame
                     {
-                        Content = new Label { TextColor = UserColor, Text = mes[i].Substring(1), BackgroundColor = BackColor },
-                        BorderColor = UserColor,
+                        Content = new Label { TextColor = Colors.UserColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor },
+                        BorderColor = Colors.UserColor,
                         HorizontalOptions = LayoutOptions.End,
-                        BackgroundColor = BackColor
+                        BackgroundColor = Colors.BackColor
                     };
                 else
                 {
                     if (mes[i].Split('֍').Length == 1)
-                        f.Content = new Label { TextColor = BotColor, Text = mes[i].Substring(1), BackgroundColor = BackColor };
+                        f.Content = new Label { TextColor = Colors.BotColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor };
                     else
                     {
                         string[] info = mes[i].Substring(1).Split('֍');
@@ -249,7 +249,7 @@ namespace XBot
                         for (int j = 0; j < info.Length / 2; j++)
                         {
                             dict[info[2 * j]] = info[2 * j + 1];
-                            Label l = new Label { TextColor = BotColor, Text = info[2 * j] };
+                            Label l = new Label { TextColor = Colors.BotColor, Text = info[2 * j] };
                             if (j > 0)
                             {
                                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -265,7 +265,7 @@ namespace XBot
                         }
                         f.Content = sl;
                     }
-                    f.BorderColor = BotColor;
+                    f.BorderColor = Colors.BotColor;
                     f.HorizontalOptions = LayoutOptions.Start;
                 }
                 f.VerticalOptions = LayoutOptions.End;
@@ -275,32 +275,7 @@ namespace XBot
             frame.Content = scroll;
         }
 
-        public static Xamarin.Forms.Color BackColor
-        {
-            get
-            {
-                string[] c = ((string)App.Current.Properties["back"]).Split(' ');
-                return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
-            }
-        }
-
-        public static Xamarin.Forms.Color UserColor
-        {
-            get 
-            {
-                string[] c = ((string)App.Current.Properties["user"]).Split(' ');
-                return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
-            }
-        }
-
-        public static Xamarin.Forms.Color BotColor
-        {
-            get 
-            {
-                string[] c = ((string)App.Current.Properties["bot"]).Split(' ');
-                return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
-            }
-        }
+        
 
     }
 }

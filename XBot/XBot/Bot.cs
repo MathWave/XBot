@@ -73,13 +73,7 @@ namespace XBot
             }
             catch { }
             Chat.Remove();
-            string con = "";
-            try
-            {
-                con = await client.GetStringAsync("http://google.com/");
-            }
-            catch { }
-            if (line == null || line.Length == 0 || con == null || con.Length == 0)
+            if (line == null || line.Length == 0)
                 Chat.Add("Отсутствует подключение к интернету", true);
             else if (mess.Length == 0)
                 Chat.Add("Поиск не дал результатов", true);

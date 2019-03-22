@@ -275,7 +275,5 @@ namespace XBot
             frame.Content = scroll;
         }
 
-        
-
     }
 }

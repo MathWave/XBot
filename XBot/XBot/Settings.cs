@@ -9,7 +9,6 @@ namespace XBot
 {
     public class Settings : ContentPage
     {
-        Frame frame = new Frame();
         Entry entry = new Entry();
         Switch OnStart = new Switch();
         Button Dark = new Button();
@@ -51,113 +50,11 @@ namespace XBot
             MakeContent();
         }
 
-        Frame MakeSubscribtions()
-        {
-            Frame f = new Frame { BorderColor = Colors.UserColor, BackgroundColor = Colors.BackColor };
-            StackLayout sl = new StackLayout
-            {
-                Children =
-                {
-                    new Label
-                    {
-                        Text = "Мои подписки\n",
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        //FontSize = 20,
-                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                        VerticalOptions = LayoutOptions.End,
-                        TextColor = Colors.UserColor,
-                        FontAttributes = FontAttributes.Bold,
-                        BackgroundColor = Colors.BackColor
-                    }
-                }
-            };
-            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
-            for (int i = 0; i < subs.Count; i++)
-            {
-                Button button = new Button
-                {
-                    Text = "⊖",
-                    FontSize = 20,
-                    ClassId = i.ToString(),
-                    TextColor = Xamarin.Forms.Color.Red,
-                    FontAttributes = FontAttributes.Bold,
-                    BorderColor = Colors.UserColor,
-                    HorizontalOptions = LayoutOptions.Start,
-                    BackgroundColor = Colors.BackColor
-                };
-                button.Clicked += (object sender, EventArgs e) => 
-                {
-                    subs.RemoveAt(int.Parse(((Button)sender).ClassId)) ;
-                    App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
-                    MakeContent();
-                };
-                Frame newf = new Frame
-                {
-                    BorderColor = Colors.UserColor,
-                    BackgroundColor = Colors.BackColor,
-                    Content = new StackLayout
-                    {
-                        Children =
-                        {
-                            button,
-                            new Label
-                            {
-                                Text = subs[i],
-                                TextColor = Colors.UserColor,
-                                HorizontalTextAlignment = TextAlignment.Start,
-                                VerticalTextAlignment = TextAlignment.Center
-                            }
-                        },
-                        Orientation = StackOrientation.Horizontal
-                    }
-                };
-                sl.Children.Add(newf);
-            }
-            Button button1 = new Button
-            {
-                Text = "⊕",
-                FontSize = 20,
-                TextColor = Xamarin.Forms.Color.Green,
-                FontAttributes = FontAttributes.Bold,
-                BackgroundColor = Colors.BackColor,
-                BorderColor = Colors.UserColor,
-                HorizontalOptions = LayoutOptions.Start,
-            };
-            button1.Clicked += Add;
-            entry = new Entry
-            {
-                Placeholder = "Дополнительная подписка",
-                FontSize = 14,
-                PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Colors.UserColor,
-                BackgroundColor = Colors.BackColor
-            };
-            entry.Completed += Add;
-            Frame newframe = new Frame
-            {
-                BorderColor = Colors.UserColor,
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        button1,
-                        entry
-                    },
-                    Orientation = StackOrientation.Horizontal
-                },
-                BackgroundColor = Colors.BackColor
-            };
-            sl.Children.Add(newframe);
-            f.Content = sl;
-            return f;
-        }
+        
 
         void MakeContent()
         {
             BackgroundColor = Colors.BackColor;
-            frame = MakeSubscribtions();
             Dark = new Button
             {
                 Text = "Сменить",
@@ -178,6 +75,15 @@ namespace XBot
                 App.Current.Properties["messages"] = "";
                 main.Display();
             };
+            Button b1 = new Button
+            {
+                Text = "Мои подписки",
+                BackgroundColor = Colors.BackColor,
+                TextColor = Colors.UserColor,
+                BorderColor = Colors.UserColor,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            b1.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Subscribes());
             if ((bool)App.Current.Properties["onstart"])
                 OnStart.IsToggled = true;
             Dark.Clicked += MakeDark;
@@ -235,7 +141,6 @@ namespace XBot
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                             BackgroundColor = Colors.BackColor
                         },
-                        frame,
                         new Frame
                         {
                             Content = new StackLayout
@@ -261,6 +166,12 @@ namespace XBot
                         },
                         new Frame
                         {
+                            Content = b1,
+                            BorderColor = Colors.UserColor,
+                            BackgroundColor = Colors.BackColor
+                        },
+                        new Frame
+                        {
                             Content = b,
                             BorderColor = Colors.UserColor,
                             BackgroundColor = Colors.BackColor
@@ -269,17 +180,6 @@ namespace XBot
                 }
             };
             
-        }
-
-        void Add(object sender, EventArgs e)
-        {
-            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
-            if (entry.Text != null && entry.Text.Length != 0)
-            {
-                subs.Add(entry.Text);
-                App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
-                MakeContent();
-            }
         }
 
     }

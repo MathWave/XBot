@@ -20,7 +20,7 @@ namespace XBot
 
         protected override void OnStart()
         {
-
+            
         }
 
         protected override void OnSleep() //89081836999 - номер мамки игната

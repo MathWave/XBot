@@ -28,6 +28,7 @@ namespace XBot
         {
             object obj;
             NavigationPage.SetHasNavigationBar(this, false);
+            App.Current.Properties["welcome"] = true;
             if (!App.Current.Properties.TryGetValue("messages", out obj))
             {
                 App.Current.Properties["messages"] = "";
@@ -37,6 +38,7 @@ namespace XBot
                 App.Current.Properties["back"] = "255 255 255";
                 App.Current.Properties["user"] = "0 0 255";
                 App.Current.Properties["bot"] = "128 0 128";
+                App.Current.Properties["welcome"] = true;
             }
             message = new Entry
             {
@@ -95,28 +97,6 @@ namespace XBot
             else
                 MakeFrame();
             MakeContent();
-            if ((bool)App.Current.Properties["onstart"])
-            {
-                try
-                {
-                    SubscribesClick(this, new EventArgs());
-                }
-                catch { }
-            }
-            else
-            {
-                try
-                {
-                    NewsClick(this, new EventArgs());
-                }
-                catch
-                {
-                    subscribes.IsEnabled = false; news.IsEnabled = false;
-                    Thread.Sleep(3);
-                    subscribes.IsEnabled = true; news.IsEnabled = true;
-                }
-            }
-            //try { Bot.Activate(this); } catch { }
         }
 
         private void SubscribesClick(object sender, EventArgs e)

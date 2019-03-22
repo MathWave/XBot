@@ -34,7 +34,9 @@ namespace XBot
                 App.Current.Properties["subscribes"] = "";
                 App.Current.Properties["count"] = 5;
                 App.Current.Properties["onstart"] = false;
-                App.Current.Properties["back"] = "White";
+                App.Current.Properties["back"] = "255 255 255";
+                App.Current.Properties["user"] = "0 0 255";
+                App.Current.Properties["bot"] = "128 0 128";
             }
             message = new Entry
             {

@@ -165,6 +165,19 @@ namespace XBot
                 TextColor = MainPage.UserColor,
                 BorderColor = MainPage.UserColor
             };
+            Button b = new Button
+            {
+                Text = "Очистить диалоговое окно",
+                BackgroundColor = MainPage.BackColor,
+                TextColor = MainPage.UserColor,
+                BorderColor = MainPage.UserColor,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            b.Clicked += (object sender, EventArgs e) =>
+            {
+                App.Current.Properties["messages"] = "";
+                main.Display();
+            };
             if ((bool)App.Current.Properties["onstart"])
                 OnStart.IsToggled = true;
             Dark.Clicked += MakeDark;
@@ -246,6 +259,12 @@ namespace XBot
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                             BackgroundColor = MainPage.BackColor
                         },
+                        new Frame
+                        {
+                            Content = b,
+                            BorderColor = MainPage.UserColor,
+                            BackgroundColor = MainPage.BackColor
+                        }
                     }
                 }
             };

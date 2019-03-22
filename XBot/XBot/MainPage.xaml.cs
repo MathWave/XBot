@@ -189,8 +189,6 @@ namespace XBot
             List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
             if (message.Text == null || message.Text.Length == 0)
                 return;
-            else if (message.Text[0] == '/')
-                DoCommand();
             else
             {
                 Chat.Add(message.Text, false);
@@ -199,46 +197,6 @@ namespace XBot
                 Bot.Search(this, message.Text.Split(' '));
             }
             message.Text = "";
-        }
-
-        void Block()
-        {
-            message.IsEnabled = false;
-            settings.IsEnabled = false;
-            news.IsEnabled = false;
-            weather.IsEnabled = false;
-        }
-
-        void UnBlock()
-        {
-            message.IsEnabled = true;
-            settings.IsEnabled = true;
-            news.IsEnabled = true;
-            weather.IsEnabled = true;
-        }
-
-        void DoCommand()
-        {
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            switch (message.Text.Split(' ')[0])
-            {
-                case "/clear":
-                    App.Current.Properties["messages"] = "";
-                    break;
-                case "/help":
-                    mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-                    mes.Add("U" + message.Text);
-                    mes.Add("B/clear - очистить поле сообщений");
-                    App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
-                    break;
-                default:
-                    mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-                    mes.Add("U" + message.Text);
-                    mes.Add("BНеизвестная команда!");
-                    App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
-                    break;
-            }
-            Display();
         }
 
         public void Display()

@@ -92,34 +92,36 @@ namespace XBot
             subscribes.Clicked += SubscribesClick;
             string line = (string)App.Current.Properties["messages"];
             if (line.Length == 0)
-                frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand };
+                frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Colors.BackColor };
             else
                 MakeFrame();
             MakeContent();
         }
 
+        public void Active(bool act)
+        {
+            message.IsEnabled = act;
+            settings.IsEnabled = act;
+            subscribes.IsEnabled = act;
+            news.IsEnabled = act;
+            weather.IsEnabled = act;
+        }
+
         private void SubscribesClick(object sender, EventArgs e)
         {
-            try
+
+            if ((string)App.Current.Properties["subscribes"] == "")
             {
-                if ((string)App.Current.Properties["subscribes"] == "")
-                {
-                    Chat.Add("Список подписок пуст! Заполните его в настройках!", true);
-                    Display();
-                }
-                else
-                {
-                    Chat.Add("Ищу подписки...", true);
-                    Display();
-                    Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
-                }
+                Chat.Add("Список подписок пуст! Заполните его в настройках!", true);
+                Display();
             }
-            catch
+            else
             {
-                subscribes.IsEnabled = false; news.IsEnabled = false;
-                Thread.Sleep(3);
-                subscribes.IsEnabled = true; news.IsEnabled = true;
+                Chat.Add("Ищу подписки...", true);
+                Display();
+                Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
             }
+
         }
 
         private void SettingsClick(object sender, EventArgs e)

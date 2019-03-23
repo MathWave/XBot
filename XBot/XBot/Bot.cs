@@ -13,7 +13,8 @@ namespace XBot
         private static readonly HttpClient client = new HttpClient();
 
         async public static void GetNews(MainPage m)
-        {            
+        {
+            m.Active(false);
             string line = "";
             string mess = "";
             mess += $"Топ-{(int)App.Current.Properties["count"]} новостей на {DateTime.Now.ToString()}\n\n֍֍";
@@ -37,10 +38,12 @@ namespace XBot
             else
                 Chat.Add(mess.Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
+            m.Active(true);
         }
 
         async public static void Search(MainPage m, IEnumerable<string> requests)
         {
+            m.Active(false);
             int count = 1;
             int amount = 0;
             string mess = "";
@@ -80,6 +83,7 @@ namespace XBot
             else
                 Chat.Add(($"Топ-{amount} подписок на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
+            m.Active(true);
         }
 
     }

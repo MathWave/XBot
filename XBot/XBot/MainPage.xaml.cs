@@ -28,7 +28,6 @@ namespace XBot
         {
             object obj;
             NavigationPage.SetHasNavigationBar(this, false);
-            App.Current.Properties["welcome"] = true;
             if (!App.Current.Properties.TryGetValue("messages", out obj))
             {
                 App.Current.Properties["messages"] = "";

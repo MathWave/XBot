@@ -77,6 +77,7 @@ namespace XBot
                         VerticalOptions = LayoutOptions.CenterAndExpand
                     });
                 enter.Clicked += Register;
+                pass.Completed += Register;
             }
             else
             {
@@ -89,6 +90,7 @@ namespace XBot
                         VerticalOptions = LayoutOptions.CenterAndExpand
                     });
                 enter.Clicked += Login;
+                pass.Completed += Login;
             }
             sl.Children.Add(enter);
             Content = sl;

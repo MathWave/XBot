@@ -33,8 +33,10 @@ namespace XBot
             catch { line = ""; }
             mess += '\b';
             Chat.Remove();
-            if (line == null || line.Length == 0 || mess == "")
+            if (line == null || line.Length == 0)
                 Chat.Add("Отсутствует подключение к интернету", true);
+            else if (mess.Length == 0)
+                Chat.Add("Поиск не дал результатов", true);
             else
                 Chat.Add(mess.Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
@@ -61,7 +63,7 @@ namespace XBot
                         string[] elems1 = info.Split('\t');
                         foreach (string str in requests)
                         {
-                            if (elems1[1].ToLower().Contains(str.ToLower()))
+                            if (elems1[1].ToLower().Contains(str.ToLower()) && !Contains(elems1[1]))
                             {
                                 mess += elems1[1] + "\n֍" + elems1[0] + "֍";
                                 amount++;
@@ -84,6 +86,15 @@ namespace XBot
                 Chat.Add(($"Топ-{amount} подписок на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
             m.Active(true);
+        }
+
+        static bool Contains(string news)
+        {
+            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["control"]);
+            foreach (string str in subs)
+                if (news.ToLower().Contains(str.ToLower()))
+                    return true;
+            return false;
         }
 
     }

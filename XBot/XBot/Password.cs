@@ -57,7 +57,7 @@ namespace XBot
                     FontAttributes = FontAttributes.Bold,
                     BackgroundColor = Colors.BackColor
                 });
-            if (!(bool)App.Current.Properties["control"])
+            if (!(bool)App.Current.Properties["blocked"])
             {
                 pass.Placeholder = "Придумайте пароль";
                 sl.Children.Add
@@ -81,6 +81,7 @@ namespace XBot
             }
             else
             {
+                pass.IsPassword = true;
                 sl.Children.Add
                     (new Frame
                     {
@@ -105,7 +106,7 @@ namespace XBot
             else
             {
                 App.Current.Properties["password"] = pass.Text;
-                App.Current.Properties["control"] = true;
+                App.Current.Properties["blocked"] = true;
                 Navigation.PushAsync(new Control());
                 Navigation.RemovePage(Navigation.NavigationStack[2]);
             }

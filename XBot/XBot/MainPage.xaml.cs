@@ -37,7 +37,8 @@ namespace XBot
                 App.Current.Properties["back"] = "255 255 255";
                 App.Current.Properties["user"] = "0 0 255";
                 App.Current.Properties["bot"] = "128 0 128";
-                App.Current.Properties["control"] = false;
+                App.Current.Properties["control"] = "";
+                App.Current.Properties["blocked"] = false;
             }
             message = new Entry
             {

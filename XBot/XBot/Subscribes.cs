@@ -21,23 +21,7 @@ namespace XBot
 
         void MakeContent()
         {
-            StackLayout sl = new StackLayout
-            {
-                Children =
-                {
-                    new Label
-                    {
-                        Text = "\nМои подписки\n",
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        FontSize = 20,
-                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                        VerticalOptions = LayoutOptions.End,
-                        TextColor = Colors.UserColor,
-                        FontAttributes = FontAttributes.Bold,
-                        BackgroundColor = Colors.BackColor
-                    }
-                }
-            };
+            StackLayout sl = new StackLayout();
             Button button1 = new Button
             {
                 Text = "⊕",
@@ -74,7 +58,6 @@ namespace XBot
                 },
                 BackgroundColor = Colors.BackColor
             };
-            sl.Children.Add(newframe);
             List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
             for (int i = subs.Count - 1; i >= 0; i--)
             {
@@ -117,7 +100,25 @@ namespace XBot
                 };
                 sl.Children.Add(newf);
             }
-            Content = new ScrollView { Content = sl };
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    new Label
+                    {
+                        Text = "\nМои подписки\n",
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        FontSize = 20,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        VerticalOptions = LayoutOptions.End,
+                        TextColor = Colors.UserColor,
+                        FontAttributes = FontAttributes.Bold,
+                        BackgroundColor = Colors.BackColor
+                    },
+                    newframe,
+                    new ScrollView { Content = sl }
+                }
+            };
         }
 
         void Add(object sender, EventArgs e)

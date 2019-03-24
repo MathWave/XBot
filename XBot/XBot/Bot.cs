@@ -17,25 +17,31 @@ namespace XBot
             m.Active(false);
             string line = "";
             string mess = "";
-            mess += $"Топ-{(int)App.Current.Properties["count"]} новостей на {DateTime.Now.ToString()}\n\n֍֍";
+            int count = 0;
             try
             {
                 line = await client.GetStringAsync("http://mediametrics.ru/rating/ru/online.tsv?page=1&update=1401216280");
                 string[] elems = line.Split('\n');
-                for (int i = 1; i <= (int)App.Current.Properties["count"]; i++)
+                for (int i = 1; count < (int)App.Current.Properties["count"] && i < elems.Length; i++)
                 {
                     string[] first = elems[i].Split('\t');
                     string info = await client.GetStringAsync("http://mediametrics.ru/rating/index.tsv?titles=" + first[5]);
                     string[] elems1 = info.Split('\t');
-                    mess += elems1[1] + "\n֍" + elems1[0] + "֍";
+                    if (!Contains(elems1[1]))
+                    {
+                        mess += elems1[1] + "\n֍" + elems1[0] + "֍";
+                        count++;
+                    }
                 }
             }
+            catch (IndexOutOfRangeException) { }
             catch { line = ""; }
             mess += '\b';
             Chat.Remove();
+            mess = $"Топ-{count} новостей на {DateTime.Now.ToString()}\n\n֍֍" + mess;
             if (line == null || line.Length == 0)
                 Chat.Add("Отсутствует подключение к интернету", true);
-            else if (mess.Length == 0)
+            else if (mess.Length == 0 || count == 0)
                 Chat.Add("Поиск не дал результатов", true);
             else
                 Chat.Add(mess.Replace("&quot;", "\"").Replace("&amp;", "\""), true);
@@ -67,16 +73,16 @@ namespace XBot
                             {
                                 mess += elems1[1] + "\n֍" + elems1[0] + "֍";
                                 amount++;
-                                break;
                             }
                             if (amount == (int)App.Current.Properties["count"])
-                                break;
+                                goto go;
                         }
                         count++;
                     }
                 }
             }
             catch { }
+            go:
             Chat.Remove();
             if (line == null || line.Length == 0)
                 Chat.Add("Отсутствует подключение к интернету", true);

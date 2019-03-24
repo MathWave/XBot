@@ -96,6 +96,8 @@ namespace XBot
 
         static bool Contains(string news)
         {
+            if (!(bool)App.Current.Properties["blocked"])
+                return false;
             List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["control"]);
             foreach (string str in subs)
                 if (news.ToLower().Contains(str.ToLower()))

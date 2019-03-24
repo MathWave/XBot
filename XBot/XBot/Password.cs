@@ -36,8 +36,7 @@ namespace XBot
             BackgroundColor = Colors.BackColor,
             TextColor = Colors.UserColor,
             BorderColor = Colors.UserColor,
-            VerticalOptions = LayoutOptions.End,
-            FontSize = 20
+            VerticalOptions = LayoutOptions.End
         };
 
         public Password()

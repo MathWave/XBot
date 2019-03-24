@@ -100,6 +100,15 @@ namespace XBot
                 };
                 sl.Children.Add(newf);
             }
+            Button exit = new Button
+            {
+                Text = "Отключить",
+                BackgroundColor = Colors.BackColor,
+                TextColor = Colors.UserColor,
+                BorderColor = Colors.UserColor,
+                VerticalOptions = LayoutOptions.End
+            };
+            exit.Clicked += Exit;
             Content = new StackLayout
             {
                 Children =
@@ -116,9 +125,17 @@ namespace XBot
                         BackgroundColor = Colors.BackColor
                     },
                     newframe,
-                    new ScrollView { Content = sl }
+                    new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
+                    exit
                 }
             };
+        }
+
+        async void Exit(object sender, EventArgs e)
+        {
+            App.Current.Properties["blocked"] = false;
+            App.Current.Properties["control"] = "";
+            await Navigation.PopAsync();
         }
 
         void Add(object sender, EventArgs e)

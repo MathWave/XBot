@@ -97,6 +97,18 @@ namespace XBot
             else
                 MakeFrame();
             MakeContent();
+            if ((bool)App.Current.Properties["onstart"])
+            {
+                Chat.Add("Ищу новости...", true);
+                Display();
+                Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
+            }
+            else
+            {
+                Chat.Add("Ищу подписки...", true);
+                Display();
+                Bot.GetNews(this);
+            }
         }
 
         public void Active(bool act)

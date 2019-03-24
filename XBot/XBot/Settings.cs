@@ -84,6 +84,15 @@ namespace XBot
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             b1.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Subscribes());
+            Button b2 = new Button
+            {
+                Text = "Родительский контроль",
+                BackgroundColor = Colors.BackColor,
+                TextColor = Colors.UserColor,
+                BorderColor = Colors.UserColor,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            b2.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Password());
             if ((bool)App.Current.Properties["onstart"])
                 OnStart.IsToggled = true;
             Dark.Clicked += MakeDark;
@@ -167,6 +176,12 @@ namespace XBot
                         new Frame
                         {
                             Content = b1,
+                            BorderColor = Colors.UserColor,
+                            BackgroundColor = Colors.BackColor
+                        },
+                        new Frame
+                        {
+                            Content = b2,
                             BorderColor = Colors.UserColor,
                             BackgroundColor = Colors.BackColor
                         },

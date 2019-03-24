@@ -18,11 +18,9 @@ namespace XBot
         Entry message;
         ScrollView scroll;
         StackLayout stack;
-        Button weather;
         Button settings;
         Button news;
         Button subscribes;
-        bool recording = false;
 
         public MainPage()
         {
@@ -78,16 +76,6 @@ namespace XBot
                 BackgroundColor = Colors.BackColor,
                 FontAttributes = FontAttributes.Bold
             };
-            weather = new Button
-            {
-                Text = "🎤",
-                FontSize = 20,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Colors.BackColor,
-                FontAttributes = FontAttributes.Bold
-            };
-            weather.Clicked += WeatherClick;
             news.Clicked += NewsClick;
             settings.Clicked += SettingsClick;
             subscribes.Clicked += SubscribesClick;
@@ -98,17 +86,9 @@ namespace XBot
                 MakeFrame();
             MakeContent();
             if ((bool)App.Current.Properties["onstart"])
-            {
-                Chat.Add("Ищу новости...", true);
-                Display();
-                Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
-            }
+                SubscribesClick(new object(), new EventArgs());
             else
-            {
-                Chat.Add("Ищу подписки...", true);
-                Display();
-                Bot.GetNews(this);
-            }
+                NewsClick(new object(), new EventArgs());
         }
 
         public void Active(bool act)
@@ -117,7 +97,6 @@ namespace XBot
             settings.IsEnabled = act;
             subscribes.IsEnabled = act;
             news.IsEnabled = act;
-            weather.IsEnabled = act;
         }
 
         private void SubscribesClick(object sender, EventArgs e)
@@ -153,33 +132,6 @@ namespace XBot
             catch { }
         }
 
-        private void WeatherClick(object sender, EventArgs e)
-        {
-            if (!recording)
-            {
-                recording = true;
-                message.Placeholder = "Запись звукового сообщения...";
-                message.IsEnabled = false;
-                news.IsEnabled = false;
-                settings.IsEnabled = false;
-                subscribes.IsEnabled = false;
-            }
-            else
-            {
-                recording = false;
-                message.Placeholder = "Сообщение";
-                message.IsEnabled = true;
-                news.IsEnabled = true;
-                settings.IsEnabled = true;
-                subscribes.IsEnabled = true;
-                List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-                mes.Add("U[Голосовое сообщение]");
-                mes.Add("BЯ еще не умею распознавать речь! Пинай Егора, чтобы я поскорее научился!");
-                App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
-                Display();
-            }
-        }
-
         private void ButtonClick(object sender, EventArgs e)
         {
             List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
@@ -203,14 +155,13 @@ namespace XBot
 
         public void MakeContent()
         {
-            Content = new StackLayout { Children = { frame, message, new StackLayout { Children = { settings, subscribes, news, weather }, Orientation = StackOrientation.Horizontal } } };
+            Content = new StackLayout { Children = { frame, message, new StackLayout { Children = { settings, news, subscribes }, Orientation = StackOrientation.Horizontal } } };
             BackgroundColor = Colors.BackColor;
             message.TextColor = Colors.UserColor;
             message.BackgroundColor = Colors.BackColor;
             settings.BackgroundColor = Colors.BackColor;
             subscribes.BackgroundColor = Colors.BackColor;
             news.BackgroundColor = Colors.BackColor;
-            weather.BackgroundColor = Colors.BackColor;
             if (scroll != null)
                 scroll.ScrollToAsync(stack, ScrollToPosition.End, false);
         }

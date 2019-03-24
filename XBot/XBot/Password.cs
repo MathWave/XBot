@@ -17,7 +17,8 @@ namespace XBot
             BackgroundColor = Colors.BackColor,
             VerticalOptions = LayoutOptions.CenterAndExpand,
             TextColor = Colors.UserColor,
-            HorizontalTextAlignment = TextAlignment.Center
+            HorizontalTextAlignment = TextAlignment.Center,
+            IsPassword = true
         };
 
         Entry repeat = new Entry
@@ -27,7 +28,8 @@ namespace XBot
             BackgroundColor = Colors.BackColor,
             VerticalOptions = LayoutOptions.CenterAndExpand,
             TextColor = Colors.UserColor,
-            HorizontalTextAlignment = TextAlignment.Center
+            HorizontalTextAlignment = TextAlignment.Center,
+            IsPassword = true
         };
 
         Button enter = new Button
@@ -76,11 +78,9 @@ namespace XBot
                         VerticalOptions = LayoutOptions.CenterAndExpand
                     });
                 enter.Clicked += Register;
-                pass.Completed += Register;
             }
             else
             {
-                pass.IsPassword = true;
                 sl.Children.Add
                     (new Frame
                     {
@@ -106,7 +106,7 @@ namespace XBot
             {
                 App.Current.Properties["password"] = pass.Text;
                 App.Current.Properties["blocked"] = true;
-                Navigation.PushAsync(new Control());
+                await Navigation.PushAsync(new Control());
                 Navigation.RemovePage(Navigation.NavigationStack[2]);
             }
         }
@@ -115,7 +115,7 @@ namespace XBot
         {
             if (pass.Text == (string)App.Current.Properties["password"])
             {
-                Navigation.PushAsync(new Control());
+                await Navigation.PushAsync(new Control());
                 Navigation.RemovePage(Navigation.NavigationStack[2]);
             }
             else

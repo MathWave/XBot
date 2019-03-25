@@ -98,11 +98,17 @@ namespace XBot
         {
             m.Active(false);
             string line = "";
-            Byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
-            line = Encoding.UTF8.GetString(s, 0, s.Length);
-            string[] vl = line.Split('\n');
-            string dollar = vl[102].Split('"')[2].Substring(2, 5);
-            string euro = vl[111].Split('"')[2].Substring(2, 5);
+            string dollar = "";
+            string euro = "";
+            try
+            {
+                Byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
+                line = Encoding.UTF8.GetString(s, 0, s.Length);
+                string[] vl = line.Split('\n');
+                dollar = vl[102].Split('"')[2].Substring(2, 5);
+                euro = vl[111].Split('"')[2].Substring(2, 5);
+            }
+            catch { }
             Chat.Remove();
             if (line == "")
                 Chat.Add("Отсутствует подключение к интернету", true);

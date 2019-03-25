@@ -21,6 +21,7 @@ namespace XBot
         Button settings;
         Button news;
         Button subscribes;
+        Button currency;
 
         public MainPage()
         {
@@ -76,9 +77,19 @@ namespace XBot
                 BackgroundColor = Colors.BackColor,
                 FontAttributes = FontAttributes.Bold
             };
+            currency = new Button
+            {
+                Text = "📈",
+                FontSize = 20,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.End,
+                BackgroundColor = Colors.BackColor,
+                FontAttributes = FontAttributes.Bold
+            };
             news.Clicked += NewsClick;
             settings.Clicked += SettingsClick;
             subscribes.Clicked += SubscribesClick;
+            currency.Clicked += CurrencyClick;
             string line = (string)App.Current.Properties["messages"];
             if (line.Length == 0)
                 frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Colors.BackColor };
@@ -101,7 +112,6 @@ namespace XBot
 
         private void SubscribesClick(object sender, EventArgs e)
         {
-
             if ((string)App.Current.Properties["subscribes"] == "")
             {
                 Chat.Add("Список подписок пуст! Заполните его в настройках!", true);
@@ -119,6 +129,17 @@ namespace XBot
         private void SettingsClick(object sender, EventArgs e)
         {
             Navigation.PushAsync(new Settings(this));
+        }
+
+        void CurrencyClick(object sender, EventArgs e)
+        {
+            try
+            {
+                Chat.Add("Вычисляю курс валют...", true);
+                Display();
+                Bot.Currency(this);
+            }
+            catch { }
         }
 
         private void NewsClick(object sender, EventArgs e)
@@ -155,13 +176,14 @@ namespace XBot
 
         public void MakeContent()
         {
-            Content = new StackLayout { Children = { frame, message, new StackLayout { Children = { settings, news, subscribes }, Orientation = StackOrientation.Horizontal } } };
+            Content = new StackLayout { Children = { frame, message, new StackLayout { Children = { settings, subscribes, news, currency }, Orientation = StackOrientation.Horizontal } } };
             BackgroundColor = Colors.BackColor;
             message.TextColor = Colors.UserColor;
             message.BackgroundColor = Colors.BackColor;
             settings.BackgroundColor = Colors.BackColor;
             subscribes.BackgroundColor = Colors.BackColor;
             news.BackgroundColor = Colors.BackColor;
+            currency.BackgroundColor = Colors.BackColor;
             if (scroll != null)
                 scroll.ScrollToAsync(stack, ScrollToPosition.End, false);
         }
@@ -185,7 +207,12 @@ namespace XBot
                 else
                 {
                     if (mes[i].Split('֍').Length == 1)
-                        f.Content = new Label { TextColor = Colors.BotColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor };
+                    {
+                        Label l = new Label { TextColor = Colors.BotColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor };
+                        if (mes[i].Contains('$') && mes[i].Contains('€'))
+                            l.FontSize = 24;
+                        f.Content = l;
+                    }
                     else
                     {
                         string[] info = mes[i].Substring(1).Split('֍');

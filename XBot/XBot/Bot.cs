@@ -94,6 +94,24 @@ namespace XBot
             m.Active(true);
         }
 
+        async public static void Currency(MainPage m)
+        {
+            m.Active(false);
+            string line = "";
+            Byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
+            line = Encoding.UTF8.GetString(s, 0, s.Length);
+            string[] vl = line.Split('\n');
+            string dollar = vl[102].Split('"')[2].Substring(2, 5);
+            string euro = vl[111].Split('"')[2].Substring(2, 5);
+            Chat.Remove();
+            if (line == "")
+                Chat.Add("Отсутствует подключение к интернету", true);
+            else
+                Chat.Add($"$ {dollar}\n€ {euro}", true);
+            m.Display();
+            m.Active(true);
+        }
+
         static bool Contains(string news)
         {
             if (!(bool)App.Current.Properties["blocked"])
@@ -103,6 +121,14 @@ namespace XBot
                 if (news.ToLower().Contains(str.ToLower()))
                     return true;
             return false;
+        }
+
+        static string CurrentDay
+        {
+            get {
+                string[] n = DateTime.Now.ToString().Split(' ');
+                return n[0].Replace('.', '/');
+            }
         }
 
     }

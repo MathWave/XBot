@@ -113,7 +113,7 @@ namespace XBot
             if (line == "")
                 Chat.Add("Отсутствует подключение к интернету", true);
             else
-                Chat.Add($"$ {dollar}\n€ {euro}", true);
+                Chat.Add($"Курс валют на {DateTime.Now}\n\n$ {dollar}\n€ {euro}", true);
             m.Display();
             m.Active(true);
         }
@@ -127,14 +127,6 @@ namespace XBot
                 if (news.ToLower().Contains(str.ToLower()))
                     return true;
             return false;
-        }
-
-        static string CurrentDay
-        {
-            get {
-                string[] n = DateTime.Now.ToString().Split(' ');
-                return n[0].Replace('.', '/');
-            }
         }
 
     }

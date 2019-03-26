@@ -106,8 +106,9 @@ namespace XBot
         {
             message.IsEnabled = act;
             settings.IsEnabled = act;
-            subscribes.IsEnabled = act;
+            subscribes.IsEnabled = act;  
             news.IsEnabled = act;
+            currency.IsEnabled = act;
         }
 
         private void SubscribesClick(object sender, EventArgs e)
@@ -209,8 +210,10 @@ namespace XBot
                     if (mes[i].Split('֍').Length == 1)
                     {
                         Label l = new Label { TextColor = Colors.BotColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor };
+                        /*
                         if (mes[i].Contains('$') && mes[i].Contains('€'))
                             l.FontSize = 24;
+                            */
                         f.Content = l;
                     }
                     else

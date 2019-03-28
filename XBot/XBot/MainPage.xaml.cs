@@ -25,23 +25,7 @@ namespace XBot
 
         public MainPage()
         {
-            object obj;
             NavigationPage.SetHasNavigationBar(this, false);
-            if (!App.Current.Properties.TryGetValue("messages", out obj))
-            {
-                App.Current.Properties["messages"] = "";
-                App.Current.Properties["subscribes"] = "";
-                App.Current.Properties["count"] = 5;
-                App.Current.Properties["onstart"] = "news";
-                App.Current.Properties["back"] = "255 255 255";
-                App.Current.Properties["user"] = "0 0 255";
-                App.Current.Properties["bot"] = "128 0 128";
-                App.Current.Properties["control"] = "";
-                App.Current.Properties["blocked"] = false;
-                App.Current.Properties["welcome"] = true;
-                App.Current.Properties["subscribes_intro"] = true;
-                App.Current.Properties["control_intro"] = true;
-            }
             message = new Entry
             {
                 Placeholder = "Сообщение",

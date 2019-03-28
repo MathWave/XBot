@@ -7,9 +7,8 @@ using Xamarin.Forms;
 
 namespace XBot
 {
-    public class SubscribesIntro : ContentPage
+    public class Welcome : ContentPage
     {
-
         Button ok = new Button
         {
             Text = "OK",
@@ -28,7 +27,7 @@ namespace XBot
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
-        public SubscribesIntro()
+        public Welcome()
         {
             ok.Clicked += OkClick;
             ignore.Clicked += IgnoreClick;
@@ -43,11 +42,13 @@ namespace XBot
                         Content = new Label
                         {
                             Text =
-                            "Добро пожаловать в раздел \"Мои подписки\"!\n\n" +
-                            "В этом разделе можно добавить ключевые слова, по которым будет автоматически проводиться поиск.\n\n" +
-                            "Обратите внимание, что если ключевое слово внесено в родительский контроль, система поиска будет его игнорировать.",
+                            "Привет, я XBot! Я буду присылать тебе новости, но на этом мои функции не ограничиваются!\n\n" +
+                            "Еще я умею обрабатывать запросы, сохранять их, вычислять курс валют, а также ограничивать доступ к ненужному контенту.\n\n" +
+                            "Я использую открытое API Mediametrics и центрального банка России, за что им огромное спасибо!\n\n" +
+                            "Я являюсь некоммерческим проектом и создан в образовательных целях. Если у тебя возникли замечания или предложения, напиши моему создателю: emmtvv@icloud.com.\n\n" +
+                            "Приятного пользования!",
                             TextColor = Colors.UserColor,
-                            FontSize = 24
+                            FontSize = 18
                         },
                         VerticalOptions = LayoutOptions.CenterAndExpand,
                         BackgroundColor = Colors.BackColor,
@@ -64,16 +65,15 @@ namespace XBot
 
         async void OkClick(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Subscribes());
-            Navigation.RemovePage(Navigation.NavigationStack[2]);
+            await Navigation.PushAsync(new MainPage());
+            Navigation.RemovePage(Navigation.NavigationStack[0]);
         }
 
         async void IgnoreClick(object sender, EventArgs e)
         {
-            App.Current.Properties["subscribes_intro"] = false;
-            await Navigation.PushAsync(new Subscribes());
-            Navigation.RemovePage(Navigation.NavigationStack[2]);
+            App.Current.Properties["welcome"] = false;
+            await Navigation.PushAsync(new MainPage());
+            Navigation.RemovePage(Navigation.NavigationStack[0]);
         }
-
     }
 }

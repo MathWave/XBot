@@ -105,7 +105,7 @@ namespace XBot
                 if ((bool)App.Current.Properties["control_intro"])
                     Navigation.PushAsync(new ControlIntro());
                 else
-                    Navigation.PushAsync(new Control());
+                    Navigation.PushAsync(new Password());
             };
             Dark.Clicked += MakeDark;
             amount.TextColor = Colors.UserColor;

@@ -14,8 +14,23 @@ namespace XBot
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new MainPage());
+            object obj;
+            if (!App.Current.Properties.TryGetValue("messages", out obj))
+            {
+                App.Current.Properties["messages"] = "";
+                App.Current.Properties["subscribes"] = "";
+                App.Current.Properties["count"] = 5;
+                App.Current.Properties["onstart"] = "news";
+                App.Current.Properties["back"] = "255 255 255";
+                App.Current.Properties["user"] = "0 0 255";
+                App.Current.Properties["bot"] = "128 0 128";
+                App.Current.Properties["control"] = "";
+                App.Current.Properties["blocked"] = false;
+                App.Current.Properties["welcome"] = true;
+                App.Current.Properties["subscribes_intro"] = true;
+                App.Current.Properties["control_intro"] = true;
+            }
+            MainPage = (bool)App.Current.Properties["welcome"] ? new NavigationPage(new Welcome()) : new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

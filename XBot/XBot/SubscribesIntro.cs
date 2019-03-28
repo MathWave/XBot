@@ -38,14 +38,20 @@ namespace XBot
             {
                 Children =
                 {
-                    new Label
+                    new Frame
                     {
-                        Text = 
-                        "Добро пожаловать в раздел \"Мои подписки\"!\n" +
-                        "В этом разделе можно добавить ключевые слова, по которым будет автоматически проводиться поиск.\n" +
-                        "Обратите внимание, что если ключевое слово внесено в родительский контроль, система поиска будет его игнорировать.",
-                        TextColor = Colors.UserColor,
-                        VerticalOptions = LayoutOptions.CenterAndExpand
+                        Content = new Label
+                        {
+                            Text =
+                            "Добро пожаловать в раздел \"Мои подписки\"!\n\n" +
+                            "В этом разделе можно добавить ключевые слова, по которым будет автоматически проводиться поиск.\n\n" +
+                            "Обратите внимание, что если ключевое слово внесено в родительский контроль, система поиска будет его игнорировать.",
+                            TextColor = Colors.UserColor,
+                            FontSize = 24
+                        },
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                        BackgroundColor = Colors.BackColor,
+                        HasShadow = false
                     },
                     new StackLayout
                     {

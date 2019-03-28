@@ -128,7 +128,7 @@ namespace XBot
             {
                 Chat.Add("Ищу подписки...", true);
                 Display();
-                Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]));
+                Bot.Search(this, Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]), true);
             }
 
         }
@@ -170,7 +170,7 @@ namespace XBot
                 Chat.Add(message.Text, false);
                 Chat.Add($"Выполняю поиск по запросу \"{message.Text}\"...", true);
                 Display();
-                Bot.Search(this, message.Text.Split(' '));
+                Bot.Search(this, message.Text.Split(' '), false);
             }
             message.Text = "";
         }

@@ -49,7 +49,7 @@ namespace XBot
             m.Active(true);
         }
 
-        async public static void Search(MainPage m, IEnumerable<string> requests)
+        async public static void Search(MainPage m, IEnumerable<string> requests, bool type)
         {
             m.Active(false);
             int count = 1;
@@ -84,12 +84,17 @@ namespace XBot
             catch { }
             go:
             Chat.Remove();
+            string name = "";
+            if (type)
+                name = "подписок";
+            else
+                name = $"новостей по запросу \"{FromIEnumerable(requests)}\"";
             if (line == null || line.Length == 0)
                 Chat.Add("Отсутствует подключение к интернету", true);
             else if (mess.Length == 0)
                 Chat.Add("Поиск не дал результатов", true);
             else
-                Chat.Add(($"Топ-{amount} подписок на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
+                Chat.Add(($"Топ-{amount} {name} на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
             m.Active(true);
         }
@@ -116,6 +121,14 @@ namespace XBot
                 Chat.Add($"Курс валют на {DateTime.Now}\n\n$ {dollar}\n€ {euro}", true);
             m.Display();
             m.Active(true);
+        }
+
+        static string FromIEnumerable(IEnumerable<string> arr)
+        {
+            string line = "";
+            foreach (string s in arr)
+                line += s + " ";
+            return line.Substring(0, line.Length - 1);
         }
 
         static bool Contains(string news)

@@ -100,7 +100,13 @@ namespace XBot
                 BorderColor = Colors.UserColor,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
-            b2.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Password());
+            b2.Clicked += (object sender, EventArgs e) =>
+            {
+                if ((bool)App.Current.Properties["control_intro"])
+                    Navigation.PushAsync(new ControlIntro());
+                else
+                    Navigation.PushAsync(new Control());
+            };
             Dark.Clicked += MakeDark;
             amount.TextColor = Colors.UserColor;
             Content = new ScrollView

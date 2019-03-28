@@ -102,13 +102,22 @@ namespace XBot
             }
             Button exit = new Button
             {
-                Text = "Отключить",
+                Text = "Отключить контоль",
                 BackgroundColor = Colors.BackColor,
                 TextColor = Colors.UserColor,
                 BorderColor = Colors.UserColor,
                 VerticalOptions = LayoutOptions.End
             };
-            exit.Clicked += Exit;
+            exit.Clicked += Deny;
+            Button apply = new Button
+            {
+                Text = "Применить",
+                BackgroundColor = Colors.BackColor,
+                TextColor = Colors.UserColor,
+                BorderColor = Colors.UserColor,
+                VerticalOptions = LayoutOptions.End
+            };
+            apply.Clicked += Apply;
             Content = new StackLayout
             {
                 Children =
@@ -126,12 +135,18 @@ namespace XBot
                     },
                     newframe,
                     new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
-                    exit
+                    exit,
+                    apply
                 }
             };
         }
 
-        async void Exit(object sender, EventArgs e)
+        async void Apply(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+
+        async void Deny(object sender, EventArgs e)
         {
             App.Current.Properties["blocked"] = false;
             App.Current.Properties["control"] = "";

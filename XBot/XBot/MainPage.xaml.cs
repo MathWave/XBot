@@ -32,12 +32,15 @@ namespace XBot
                 App.Current.Properties["messages"] = "";
                 App.Current.Properties["subscribes"] = "";
                 App.Current.Properties["count"] = 5;
-                App.Current.Properties["onstart"] = false;
+                App.Current.Properties["onstart"] = "news";
                 App.Current.Properties["back"] = "255 255 255";
                 App.Current.Properties["user"] = "0 0 255";
                 App.Current.Properties["bot"] = "128 0 128";
                 App.Current.Properties["control"] = "";
                 App.Current.Properties["blocked"] = false;
+                App.Current.Properties["welcome"] = true;
+                App.Current.Properties["subscribes_intro"] = true;
+                App.Current.Properties["control_intro"] = true;
             }
             message = new Entry
             {
@@ -96,10 +99,13 @@ namespace XBot
             else
                 MakeFrame();
             MakeContent();
-            if ((bool)App.Current.Properties["onstart"])
+            if ((string)App.Current.Properties["onstart"] == "news")
+                NewsClick(new object(), new EventArgs());
+            else if ((string)App.Current.Properties["onstart"] == "subscribes")
                 SubscribesClick(new object(), new EventArgs());
             else
-                NewsClick(new object(), new EventArgs());
+                CurrencyClick(new object(), new EventArgs());
+
         }
 
         public void Active(bool act)

@@ -9,8 +9,7 @@ namespace XBot
 {
     public class Settings : ContentPage
     {
-        Entry entry = new Entry();
-        Switch OnStart = new Switch();
+        Picker OnStart = new Picker { Items = { "🔝Последние новости", "🤵Мои подписки", "📈Курс валют" }, WidthRequest = 30 };
         Button Dark = new Button();
 
         Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Colors.UserColor };
@@ -20,20 +19,23 @@ namespace XBot
         {
             NavigationPage.SetHasNavigationBar(this, false);
             main = m;
-            OnStart.Toggled += (object sender, ToggledEventArgs e) => 
-            {
-                if ((bool)App.Current.Properties["onstart"])
-                    App.Current.Properties["onstart"] = false;
-                else
-                    App.Current.Properties["onstart"] = true;
-            };
             amount.SelectedIndex = (int)App.Current.Properties["count"] - 1;
             amount.SelectedIndexChanged += (object sender, EventArgs e) => { App.Current.Properties["count"] = amount.SelectedIndex + 1; };
+            OnStart.SelectedIndex = (string)App.Current.Properties["onstart"] == "news" ? 0 : (string)App.Current.Properties["onstart"] == "subscribes" ? 1 : 2;
+            OnStart.SelectedIndexChanged += (object sender, EventArgs e) =>
+            {
+                if (OnStart.SelectedIndex == 0)
+                    App.Current.Properties["onstart"] = "news";
+                else if (OnStart.SelectedIndex == 1)
+                    App.Current.Properties["onstart"] = "subscribes";
+                else
+                    App.Current.Properties["onstart"] = "currency";
+            };
             MakeContent();
         }
 
          void MakeDark(object sender, EventArgs e)
-        {
+         {
             if ((string)App.Current.Properties["back"] == "30 30 30")
             {
                 App.Current.Properties["back"] = "255 255 255";
@@ -48,7 +50,7 @@ namespace XBot
             }
             main.Display();
             MakeContent();
-        }
+         }
 
         
 
@@ -83,7 +85,13 @@ namespace XBot
                 BorderColor = Colors.UserColor,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
-            b1.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Subscribes());
+            b1.Clicked += (object sender, EventArgs e) =>
+            {
+                if ((bool)App.Current.Properties["subscribes_intro"])
+                    Navigation.PushAsync(new SubscribesIntro());
+                else
+                    Navigation.PushAsync(new Subscribes());
+            };
             Button b2 = new Button
             {
                 Text = "Родительский контроль",
@@ -93,8 +101,6 @@ namespace XBot
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             b2.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Password());
-            if ((bool)App.Current.Properties["onstart"])
-                OnStart.IsToggled = true;
             Dark.Clicked += MakeDark;
             amount.TextColor = Colors.UserColor;
             Content = new ScrollView
@@ -159,7 +165,7 @@ namespace XBot
                                     new Label
                                     {
                                         TextColor = Colors.UserColor,
-                                        Text = "Показывать подписки при старте",
+                                        Text = "При старте показывать",
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         VerticalOptions = LayoutOptions.Center,
                                         HorizontalTextAlignment = TextAlignment.Start

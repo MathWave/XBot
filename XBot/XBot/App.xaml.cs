@@ -13,7 +13,6 @@ namespace XBot
     {
         public App()
         {
-            InitializeComponent();
             object obj;
             if (!App.Current.Properties.TryGetValue("messages", out obj))
             {
@@ -29,23 +28,10 @@ namespace XBot
                 App.Current.Properties["welcome"] = true;
                 App.Current.Properties["subscribes_intro"] = true;
                 App.Current.Properties["control_intro"] = true;
+                App.Current.Properties["hint"] = true;
             }
-            MainPage = (bool)App.Current.Properties["welcome"] ? new NavigationPage(new Welcome()) : new NavigationPage(new MainPage());
+            MainPage = (bool)App.Current.Properties["welcome"] ? new NavigationPage(new Welcome()) : (bool)App.Current.Properties["hint"] ? new NavigationPage(new Hint()) : new NavigationPage(new MainPage());
         }
 
-        protected override void OnStart()
-        {
-            
-        }
-
-        protected override void OnSleep() //89081836999 - номер мамки игната
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
-        }
     }
 }

@@ -11,7 +11,7 @@ namespace XBot
     {
         Picker OnStart = new Picker { Items = { "🔝Последние новости", "🤵Мои подписки", "📈Курс валют" }, WidthRequest = 30 };
         Button Dark = new Button();
-
+        Switch Hints = new Switch();
         Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Colors.UserColor };
         MainPage main;
 
@@ -22,6 +22,8 @@ namespace XBot
             amount.SelectedIndex = (int)App.Current.Properties["count"] - 1;
             amount.SelectedIndexChanged += (object sender, EventArgs e) => { App.Current.Properties["count"] = amount.SelectedIndex + 1; };
             OnStart.SelectedIndex = (string)App.Current.Properties["onstart"] == "news" ? 0 : (string)App.Current.Properties["onstart"] == "subscribes" ? 1 : 2;
+            Hints.IsToggled = (bool)App.Current.Properties["hint"];
+            Hints.Toggled += (object sender, ToggledEventArgs e) => App.Current.Properties["hint"] = !(bool)App.Current.Properties["hint"];
             OnStart.SelectedIndexChanged += (object sender, EventArgs e) =>
             {
                 if (OnStart.SelectedIndex == 0)
@@ -183,6 +185,27 @@ namespace XBot
                             BorderColor = Colors.UserColor,
                             VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
+                            BackgroundColor = Colors.BackColor
+                        },
+                        new Frame
+                        {
+                            Content = new StackLayout
+                            {
+                                Children =
+                                {
+                                    new Label
+                                    {
+                                        TextColor = Colors.UserColor,
+                                        Text = "Показывать подсказки",
+                                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                                        VerticalOptions = LayoutOptions.Center,
+                                        HorizontalTextAlignment = TextAlignment.Start
+                                    },
+                                    Hints
+                                },
+                                Orientation = StackOrientation.Horizontal
+                            },
+                            BorderColor = Colors.UserColor,
                             BackgroundColor = Colors.BackColor
                         },
                         new Frame

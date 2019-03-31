@@ -37,22 +37,26 @@ namespace XBot
             {
                 Children =
                 {
-                    new Frame
+                    new ScrollView
                     {
-                        Content = new Label
+                        Content = new Frame
                         {
-                            Text =
-                            "Привет, я XBot! Я буду присылать тебе новости, но на этом мои функции не ограничиваются!\n\n" +
-                            "Еще я умею обрабатывать запросы, сохранять их, вычислять курс валют, а также ограничивать доступ к ненужному контенту.\n\n" +
-                            "Я использую открытое API Mediametrics и центрального банка России, за что им огромное спасибо!\n\n" +
-                            "Я являюсь некоммерческим проектом и создан в образовательных целях. Если у тебя возникли замечания или предложения, напиши моему создателю: emmtvv@icloud.com.\n\n" +
-                            "Приятного пользования!",
-                            TextColor = Colors.UserColor,
-                            FontSize = 18
+                            Content = new Label
+                            {
+                                Text =
+                                "Привет, я XBot! Я буду присылать тебе новости, но на этом мои функции не ограничиваются!\n\n" +
+                                "Еще я умею обрабатывать запросы, сохранять их, вычислять курс валют, а также ограничивать доступ к ненужному контенту.\n\n" +
+                                "Я использую открытое API Mediametrics и центрального банка России, за что им огромное спасибо!\n\n" +
+                                "Я являюсь некоммерческим проектом и создан в образовательных целях. Если у тебя возникли замечания или предложения, напиши моему создателю: emmtvv@icloud.com.\n\n" +
+                                "Приятного пользования!",
+                                TextColor = Colors.UserColor,
+                                FontSize = 18
+                            },
+                            VerticalOptions = LayoutOptions.CenterAndExpand,
+                            BackgroundColor = Colors.BackColor,
+                            HasShadow = false
                         },
-                        VerticalOptions = LayoutOptions.CenterAndExpand,
-                        BackgroundColor = Colors.BackColor,
-                        HasShadow = false
+                        VerticalOptions = LayoutOptions.FillAndExpand
                     },
                     new StackLayout
                     {

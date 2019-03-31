@@ -37,20 +37,24 @@ namespace XBot
             {
                 Children =
                 {
-                    new Frame
+                    new ScrollView
                     {
-                        Content = new Label
+                        Content = new Frame
                         {
-                            Text =
-                            "Добро пожаловать в раздел \"Родительский контроль\"!\n\n" +
-                            "В этом разделе можно добавить ключевые слова, по которым будет игнорироваться поиск.\n\n" +
-                            "Обратите внимание, что если ключевое слово внесено в родительский контроль, система поиска будет его игнорировать.",
-                            TextColor = Colors.UserColor,
-                            FontSize = 24
+                            Content = new Label
+                            {
+                                Text =
+                                "Добро пожаловать в раздел \"Родительский контроль\"!\n\n" +
+                                "В этом разделе можно добавить ключевые слова, по которым будет игнорироваться поиск.\n\n" +
+                                "Обратите внимание, что если ключевое слово внесено в родительский контроль, система поиска будет его игнорировать.",
+                                TextColor = Colors.UserColor,
+                                FontSize = 24
+                            },
+                            VerticalOptions = LayoutOptions.CenterAndExpand,
+                            BackgroundColor = Colors.BackColor,
+                            HasShadow = false
                         },
-                        VerticalOptions = LayoutOptions.CenterAndExpand,
-                        BackgroundColor = Colors.BackColor,
-                        HasShadow = false
+                        VerticalOptions = LayoutOptions.FillAndExpand
                     },
                     new StackLayout
                     {

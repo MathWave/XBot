@@ -44,7 +44,7 @@ namespace XBot
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
                 BackgroundColor = Colors.BackColor,
-                FontAttributes = FontAttributes.Bold
+                WidthRequest = 50
             };
             subscribes = new Button
             {
@@ -53,7 +53,7 @@ namespace XBot
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
                 BackgroundColor = Colors.BackColor,
-                FontAttributes = FontAttributes.Bold
+                WidthRequest = 50
             };
             news = new Button
             {
@@ -62,7 +62,7 @@ namespace XBot
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
                 BackgroundColor = Colors.BackColor,
-                FontAttributes = FontAttributes.Bold
+                WidthRequest = 50
             };
             currency = new Button
             {
@@ -71,7 +71,7 @@ namespace XBot
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
                 BackgroundColor = Colors.BackColor,
-                FontAttributes = FontAttributes.Bold
+                WidthRequest = 50
             };
             news.Clicked += NewsClick;
             settings.Clicked += SettingsClick;
@@ -167,7 +167,25 @@ namespace XBot
 
         public void MakeContent()
         {
-            Content = new StackLayout { Children = { frame, message, new StackLayout { Children = { settings, subscribes, news, currency }, Orientation = StackOrientation.Horizontal } } };
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    frame,
+                    message,
+                    new StackLayout
+                    {
+                        Children =
+                        {
+                            settings,
+                            subscribes,
+                            news,
+                            currency
+                        },
+                        Orientation = StackOrientation.Horizontal
+                    },
+                }
+            };
             BackgroundColor = Colors.BackColor;
             message.TextColor = Colors.UserColor;
             message.BackgroundColor = Colors.BackColor;

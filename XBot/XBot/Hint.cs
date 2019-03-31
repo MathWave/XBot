@@ -41,17 +41,21 @@ namespace XBot
             {
                 Children =
                 {
-                    new Frame
+                    new ScrollView
                     {
-                        Content = new Label
+                        Content = new Frame
                         {
-                            Text = hints[(new Random()).Next(hints.Length)],
-                            TextColor = Colors.UserColor,
-                            FontSize = 24
+                            Content = new Label
+                            {
+                                Text = hints[(new Random()).Next(hints.Length)],
+                                TextColor = Colors.UserColor,
+                                FontSize = 24
+                            },
+                            VerticalOptions = LayoutOptions.CenterAndExpand,
+                            BackgroundColor = Colors.BackColor,
+                            HasShadow = false
                         },
-                        VerticalOptions = LayoutOptions.CenterAndExpand,
-                        BackgroundColor = Colors.BackColor,
-                        HasShadow = false
+                        VerticalOptions = LayoutOptions.FillAndExpand
                     },
                     ok
                 }

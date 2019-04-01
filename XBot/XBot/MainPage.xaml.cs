@@ -215,13 +215,22 @@ namespace XBot
                     };
                 else
                 {
-                    if (mes[i].Split('֍').Length == 1)
+                    if (mes[i][1] == 'C')
+                    {
+                        string[] cur = mes[i].Substring(2).Split('\n');
+                        f.Content = new StackLayout
+                        {
+                            Children =
+                            {
+                                new Label { TextColor = Colors.BotColor, Text = cur[0], BackgroundColor = Colors.BackColor },
+                                new Label { TextColor = Colors.BotColor, Text = cur[1], BackgroundColor = Colors.BackColor, FontSize = 25 },
+                                new Label { TextColor = Colors.BotColor, Text = cur[2], BackgroundColor = Colors.BackColor, FontSize = 25 }
+                            }
+                        };
+                    }
+                    else if (mes[i].Split('֍').Length == 1)
                     {
                         Label l = new Label { TextColor = Colors.BotColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor };
-                        /*
-                        if (mes[i].Contains('$') && mes[i].Contains('€'))
-                            l.FontSize = 24;
-                            */
                         f.Content = l;
                     }
                     else
@@ -244,6 +253,8 @@ namespace XBot
                                 };
                                 l.GestureRecognizers.Add(tapGestureRecognizer);
                             }
+                            else
+                                l.FontAttributes = FontAttributes.Bold;
                             sl.Children.Add(l);
                         }
                         f.Content = sl;

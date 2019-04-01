@@ -38,7 +38,7 @@ namespace XBot
             catch { line = ""; }
             mess += '\b';
             Chat.Remove();
-            mess = $"Топ-{count} новостей на {DateTime.Now.ToString()} за {Period}\n\n֍֍" + mess;
+            mess = $"Топ-{count} новостей на {Now} за {Period}\n\n֍֍" + mess;
             if (line == null || line.Length == 0)
                 Chat.Add("Отсутствует подключение к интернету", true);
             else if (mess.Length == 0 || count == 0)
@@ -94,7 +94,7 @@ namespace XBot
             else if (mess.Length == 0)
                 Chat.Add("Поиск не дал результатов", true);
             else
-                Chat.Add(($"Топ-{amount} {name} на {DateTime.Now.ToString()} за {Period}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
+                Chat.Add(($"Топ-{amount} {name} на {Now} за {Period}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
             m.Active(true);
         }
@@ -118,7 +118,7 @@ namespace XBot
             if (line == "")
                 Chat.Add("Отсутствует подключение к интернету", true);
             else
-                Chat.Add($"Курс валют на {DateTime.Now}\n\n$ {dollar}\n€ {euro}", true);
+                Chat.Add($"CКурс валют на {Now}\n$ {dollar}\n€ {euro}", true);
             m.Display();
             m.Active(true);
         }
@@ -144,7 +144,8 @@ namespace XBot
 
         static string Period
         {
-            get {
+            get 
+            {
                 switch ((string)App.Current.Properties["frequency"])
                 {
                     case "online":
@@ -158,6 +159,54 @@ namespace XBot
                     default:
                         return "последний месяц";
                 }
+            }
+        }
+
+        static string Now
+        {
+            get {
+                string datetime = DateTime.Now.ToString();
+                string line = "";
+                if (datetime[0] == '0')
+                    datetime = datetime.Substring(1);
+                string[] d1 = datetime.Split(' ');
+                string[] date = d1[0].Split('.');
+                line += $"{date[0]} {Month(date[1])} ";
+                line += d1[1].Substring(0, 5);
+                return line;
+            }
+        }
+
+        static string Month(string num)
+        {
+            if (num[0] == '0')
+                num = num.Substring(1);
+            switch (int.Parse(num))
+            {
+                case 1:
+                    return "января";
+                case 2:
+                    return "февраля";
+                case 3:
+                    return "марта";
+                case 4:
+                    return "апреля";
+                case 5:
+                    return "мая";
+                case 6:
+                    return "июня";
+                case 7:
+                    return "июля";
+                case 8:
+                    return "августа";
+                case 9:
+                    return "сентбря";
+                case 10:
+                    return "октября";
+                case 11:
+                    return "ноября";
+                default:
+                    return "декабря";
             }
         }
 

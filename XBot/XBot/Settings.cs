@@ -11,6 +11,7 @@ namespace XBot
     {
         Picker OnStart = new Picker { Items = { "🔝Последние новости", "🤵Мои подписки", "📈Курс валют" }, WidthRequest = 30 };
         Button Dark = new Button();
+        Button time = new Button();
         Switch Hints = new Switch();
         Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Colors.UserColor };
         MainPage main;
@@ -65,6 +66,20 @@ namespace XBot
                 BackgroundColor = Colors.BackColor,
                 TextColor = Colors.UserColor,
                 BorderColor = Colors.UserColor
+            };
+            time = new Button
+            {
+                Text = "Выбрать",
+                BackgroundColor = Colors.BackColor,
+                TextColor = Colors.UserColor,
+                BorderColor = Colors.UserColor
+            };
+            time.Clicked += (object sender, EventArgs e) =>
+            {
+                if ((bool)App.Current.Properties["frequency_intro"])
+                    Navigation.PushAsync(new TimingIntro());
+                else
+                    Navigation.PushAsync(new Timing());
             };
             Button b = new Button
             {
@@ -156,6 +171,29 @@ namespace XBot
                                         HorizontalTextAlignment = TextAlignment.Start
                                     },
                                     Dark
+                                },
+                                Orientation = StackOrientation.Horizontal
+                            },
+                            BorderColor = Colors.UserColor,
+                            VerticalOptions = LayoutOptions.End,
+                            HorizontalOptions = LayoutOptions.FillAndExpand,
+                            BackgroundColor = Colors.BackColor
+                        },
+                        new Frame
+                        {
+                            Content = new StackLayout
+                            {
+                                Children =
+                                {
+                                    new Label
+                                    {
+                                        TextColor = Colors.UserColor,
+                                        Text = "Область поиска",
+                                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                                        VerticalOptions = LayoutOptions.Center,
+                                        HorizontalTextAlignment = TextAlignment.Start
+                                    },
+                                    time
                                 },
                                 Orientation = StackOrientation.Horizontal
                             },

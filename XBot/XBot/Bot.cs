@@ -20,7 +20,7 @@ namespace XBot
             int count = 0;
             try
             {
-                line = await client.GetStringAsync("http://mediametrics.ru/rating/ru/online.tsv?page=1&update=1401216280");
+                line = await client.GetStringAsync($"http://mediametrics.ru/rating/ru/{(string)App.Current.Properties["frequency"]}.tsv?page=1&update=1401216280");
                 string[] elems = line.Split('\n');
                 for (int i = 1; count < (int)App.Current.Properties["count"] && i < elems.Length; i++)
                 {
@@ -38,7 +38,7 @@ namespace XBot
             catch { line = ""; }
             mess += '\b';
             Chat.Remove();
-            mess = $"Топ-{count} новостей на {DateTime.Now.ToString()}\n\n֍֍" + mess;
+            mess = $"Топ-{count} новостей на {DateTime.Now.ToString()} за {Period}\n\n֍֍" + mess;
             if (line == null || line.Length == 0)
                 Chat.Add("Отсутствует подключение к интернету", true);
             else if (mess.Length == 0 || count == 0)
@@ -60,7 +60,7 @@ namespace XBot
             {
                 while (count != 4 && amount < (int)App.Current.Properties["count"])
                 {
-                    line = await client.GetStringAsync("http://mediametrics.ru/rating/ru/online.tsv?page=" + count.ToString() + "&update=1401216280");
+                    line = await client.GetStringAsync($"http://mediametrics.ru/rating/ru/{(string)App.Current.Properties["frequency"]}.tsv?page=" + count.ToString() + "&update=1401216280");
                     string[] elems = line.Split('\n');
                     for (int i = 1; i < elems.Length; i++)
                     {
@@ -94,7 +94,7 @@ namespace XBot
             else if (mess.Length == 0)
                 Chat.Add("Поиск не дал результатов", true);
             else
-                Chat.Add(($"Топ-{amount} {name} на {DateTime.Now.ToString()}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
+                Chat.Add(($"Топ-{amount} {name} на {DateTime.Now.ToString()} за {Period}\n\n֍֍" + mess + "\b\b\b").Replace("&quot;", "\"").Replace("&amp;", "\""), true);
             m.Display();
             m.Active(true);
         }
@@ -140,6 +140,25 @@ namespace XBot
                 if (news.ToLower().Contains(str.ToLower()))
                     return true;
             return false;
+        }
+
+        static string Period
+        {
+            get {
+                switch ((string)App.Current.Properties["frequency"])
+                {
+                    case "online":
+                        return "последние 10 минут";
+                    case "hour":
+                        return "последний час";
+                    case "day":
+                        return "последние сутки";
+                    case "week":
+                        return "последнюю неделю";
+                    default:
+                        return "последний месяц";
+                }
+            }
         }
 
     }

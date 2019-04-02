@@ -14,9 +14,9 @@ namespace XBot
         {
             Placeholder = "Пароль",
             PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
-            BackgroundColor = Colors.BackColor,
+            BackgroundColor = Styles.BackColor,
             VerticalOptions = LayoutOptions.CenterAndExpand,
-            TextColor = Colors.UserColor,
+            TextColor = Styles.UserColor,
             HorizontalTextAlignment = TextAlignment.Center,
             IsPassword = true
         };
@@ -25,9 +25,9 @@ namespace XBot
         {
             Placeholder = "Повторите пароль",
             PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
-            BackgroundColor = Colors.BackColor,
+            BackgroundColor = Styles.BackColor,
             VerticalOptions = LayoutOptions.CenterAndExpand,
-            TextColor = Colors.UserColor,
+            TextColor = Styles.UserColor,
             HorizontalTextAlignment = TextAlignment.Center,
             IsPassword = true
         };
@@ -35,16 +35,16 @@ namespace XBot
         Button enter = new Button
         {
             Text = "Войти",
-            BackgroundColor = Colors.BackColor,
-            TextColor = Colors.UserColor,
-            BorderColor = Colors.UserColor,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
             VerticalOptions = LayoutOptions.End
         };
 
         public Password()
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            BackgroundColor = Colors.BackColor;
+            BackgroundColor = Styles.BackColor;
             StackLayout sl = new StackLayout();
             sl.Children.Add
                 (new Label
@@ -54,9 +54,9 @@ namespace XBot
                     FontSize = 20,
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                     VerticalOptions = LayoutOptions.Start,
-                    TextColor = Colors.UserColor,
+                    TextColor = Styles.UserColor,
                     FontAttributes = FontAttributes.Bold,
-                    BackgroundColor = Colors.BackColor
+                    BackgroundColor = Styles.BackColor
                 });
             if (!(bool)App.Current.Properties["blocked"])
             {
@@ -65,16 +65,16 @@ namespace XBot
                     (new Frame
                     {
                         Content = pass,
-                        BorderColor = Colors.UserColor,
-                        BackgroundColor = Colors.BackColor,
+                        BorderColor = Styles.UserColor,
+                        BackgroundColor = Styles.BackColor,
                         VerticalOptions = LayoutOptions.CenterAndExpand
                     });
                 sl.Children.Add
                     (new Frame
                     {
                         Content = repeat,
-                        BorderColor = Colors.UserColor,
-                        BackgroundColor = Colors.BackColor,
+                        BorderColor = Styles.UserColor,
+                        BackgroundColor = Styles.BackColor,
                         VerticalOptions = LayoutOptions.CenterAndExpand
                     });
                 enter.Clicked += Register;
@@ -85,8 +85,8 @@ namespace XBot
                     (new Frame
                     {
                         Content = pass,
-                        BorderColor = Colors.UserColor,
-                        BackgroundColor = Colors.BackColor,
+                        BorderColor = Styles.UserColor,
+                        BackgroundColor = Styles.BackColor,
                         VerticalOptions = LayoutOptions.CenterAndExpand
                     });
                 enter.Clicked += Login;

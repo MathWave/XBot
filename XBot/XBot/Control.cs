@@ -15,7 +15,7 @@ namespace XBot
         public Control()
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            BackgroundColor = Colors.BackColor;
+            BackgroundColor = Styles.BackColor;
             MakeContent();
         }
 
@@ -28,8 +28,8 @@ namespace XBot
                 FontSize = 20,
                 TextColor = Xamarin.Forms.Color.Green,
                 FontAttributes = FontAttributes.Bold,
-                BackgroundColor = Colors.BackColor,
-                BorderColor = Colors.UserColor,
+                BackgroundColor = Styles.BackColor,
+                BorderColor = Styles.UserColor,
                 HorizontalOptions = LayoutOptions.Start,
             };
             button1.Clicked += Add;
@@ -40,13 +40,13 @@ namespace XBot
                 PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Colors.UserColor,
-                BackgroundColor = Colors.BackColor
+                TextColor = Styles.UserColor,
+                BackgroundColor = Styles.BackColor
             };
             entry.Completed += Add;
             Frame newframe = new Frame
             {
-                BorderColor = Colors.UserColor,
+                BorderColor = Styles.UserColor,
                 Content = new StackLayout
                 {
                     Children =
@@ -56,7 +56,7 @@ namespace XBot
                     },
                     Orientation = StackOrientation.Horizontal
                 },
-                BackgroundColor = Colors.BackColor
+                BackgroundColor = Styles.BackColor
             };
             List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["control"]);
             for (int i = subs.Count - 1; i >= 0; i--)
@@ -68,9 +68,9 @@ namespace XBot
                     ClassId = i.ToString(),
                     TextColor = Xamarin.Forms.Color.Red,
                     FontAttributes = FontAttributes.Bold,
-                    BorderColor = Colors.UserColor,
+                    BorderColor = Styles.UserColor,
                     HorizontalOptions = LayoutOptions.Start,
-                    BackgroundColor = Colors.BackColor
+                    BackgroundColor = Styles.BackColor
                 };
                 button.Clicked += (object sender, EventArgs e) =>
                 {
@@ -80,8 +80,8 @@ namespace XBot
                 };
                 Frame newf = new Frame
                 {
-                    BorderColor = Colors.UserColor,
-                    BackgroundColor = Colors.BackColor,
+                    BorderColor = Styles.UserColor,
+                    BackgroundColor = Styles.BackColor,
                     Content = new StackLayout
                     {
                         Children =
@@ -90,7 +90,7 @@ namespace XBot
                             new Label
                             {
                                 Text = subs[i],
-                                TextColor = Colors.UserColor,
+                                TextColor = Styles.UserColor,
                                 HorizontalTextAlignment = TextAlignment.Start,
                                 VerticalTextAlignment = TextAlignment.Center
                             }
@@ -103,18 +103,18 @@ namespace XBot
             Button exit = new Button
             {
                 Text = "Отключить контоль",
-                BackgroundColor = Colors.BackColor,
-                TextColor = Colors.UserColor,
-                BorderColor = Colors.UserColor,
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.End
             };
             exit.Clicked += Deny;
             Button apply = new Button
             {
                 Text = "Применить",
-                BackgroundColor = Colors.BackColor,
-                TextColor = Colors.UserColor,
-                BorderColor = Colors.UserColor,
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.End
             };
             apply.Clicked += Apply;
@@ -129,9 +129,9 @@ namespace XBot
                         FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         VerticalOptions = LayoutOptions.End,
-                        TextColor = Colors.UserColor,
+                        TextColor = Styles.UserColor,
                         FontAttributes = FontAttributes.Bold,
-                        BackgroundColor = Colors.BackColor
+                        BackgroundColor = Styles.BackColor
                     },
                     newframe,
                     new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },

@@ -7,8 +7,9 @@ using Xamarin.Forms;
 
 namespace XBot
 {
-    public class Welcome : ContentPage
+    public class SizeIntro : ContentPage
     {
+        MainPage main;
         Button ok = new Button
         {
             Text = "OK",
@@ -27,8 +28,9 @@ namespace XBot
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
-        public Welcome()
+        public SizeIntro(MainPage m)
         {
+            main = m;
             ok.Clicked += OkClick;
             ignore.Clicked += IgnoreClick;
             NavigationPage.SetHasNavigationBar(this, false);
@@ -44,13 +46,11 @@ namespace XBot
                             Content = new Label
                             {
                                 Text =
-                                "Привет, я XBot! Я буду присылать тебе новости, но на этом мои функции не ограничиваются!\n\n" +
-                                "Еще я умею обрабатывать запросы, сохранять их, вычислять курс валют, а также ограничивать доступ к ненужному контенту.\n\n" +
-                                "Я использую открытое API Mediametrics и центрального банка России, за что им огромное спасибо!\n\n" +
-                                "Я являюсь некоммерческим проектом и создан в образовательных целях. Если у тебя возникли замечания или предложения, напиши моему создателю: emmtvv@icloud.com.\n\n" +
-                                "Приятного пользования!",
+                                "Добро пожаловать в раздел \"Размер шрифта\"!\n\n" +
+                                "В этом разделе можно выбрать размер шрифта сообщений в чате.\n\n" +
+                                "Обратите внимание, что размер шрифта в первую очередь зависит от разрешения экрана.",
                                 TextColor = Styles.UserColor,
-                                FontSize = 18
+                                FontSize = 24
                             },
                             VerticalOptions = LayoutOptions.CenterAndExpand,
                             BackgroundColor = Styles.BackColor,
@@ -69,15 +69,16 @@ namespace XBot
 
         async void OkClick(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MainPage());
-            Navigation.RemovePage(Navigation.NavigationStack[0]);
+            await Navigation.PushAsync(new Size(main));
+            Navigation.RemovePage(Navigation.NavigationStack[2]);
         }
 
         async void IgnoreClick(object sender, EventArgs e)
         {
-            App.Current.Properties["welcome"] = false;
-            await Navigation.PushAsync(new MainPage());
-            Navigation.RemovePage(Navigation.NavigationStack[0]);
+            App.Current.Properties["size_intro"] = false;
+            await Navigation.PushAsync(new Size(main));
+            Navigation.RemovePage(Navigation.NavigationStack[2]);
         }
+
     }
 }

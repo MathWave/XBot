@@ -13,7 +13,7 @@ namespace XBot
         Button Dark = new Button();
         Button time = new Button();
         Switch Hints = new Switch();
-        Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Colors.UserColor };
+        Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Styles.UserColor };
         MainPage main;
 
         public Settings(MainPage m)
@@ -55,24 +55,22 @@ namespace XBot
             MakeContent();
          }
 
-        
-
         void MakeContent()
         {
-            BackgroundColor = Colors.BackColor;
+            BackgroundColor = Styles.BackColor;
             Dark = new Button
             {
                 Text = "Сменить",
-                BackgroundColor = Colors.BackColor,
-                TextColor = Colors.UserColor,
-                BorderColor = Colors.UserColor
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor
             };
             time = new Button
             {
                 Text = "Выбрать",
-                BackgroundColor = Colors.BackColor,
-                TextColor = Colors.UserColor,
-                BorderColor = Colors.UserColor
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor
             };
             time.Clicked += (object sender, EventArgs e) =>
             {
@@ -84,9 +82,9 @@ namespace XBot
             Button b = new Button
             {
                 Text = "Очистить диалоговое окно",
-                BackgroundColor = Colors.BackColor,
-                TextColor = Colors.UserColor,
-                BorderColor = Colors.UserColor,
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             b.Clicked += (object sender, EventArgs e) =>
@@ -97,9 +95,9 @@ namespace XBot
             Button b1 = new Button
             {
                 Text = "Мои подписки",
-                BackgroundColor = Colors.BackColor,
-                TextColor = Colors.UserColor,
-                BorderColor = Colors.UserColor,
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             b1.Clicked += (object sender, EventArgs e) =>
@@ -112,9 +110,9 @@ namespace XBot
             Button b2 = new Button
             {
                 Text = "Родительский контроль",
-                BackgroundColor = Colors.BackColor,
-                TextColor = Colors.UserColor,
-                BorderColor = Colors.UserColor,
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             b2.Clicked += (object sender, EventArgs e) =>
@@ -124,146 +122,37 @@ namespace XBot
                 else
                     Navigation.PushAsync(new Password());
             };
+            Button size = new Button
+            {
+                Text = "Сменить",
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor
+            };
+            size.Clicked += (object sender, EventArgs e) =>
+            {
+                if ((bool)App.Current.Properties["size_intro"])
+                    Navigation.PushAsync(new SizeIntro(main));
+                else
+                    Navigation.PushAsync(new Size(main));
+            };
             Dark.Clicked += MakeDark;
-            amount.TextColor = Colors.UserColor;
+            amount.TextColor = Styles.UserColor;
             Content = new ScrollView
             {
                 Content = new StackLayout
                 {
                     Children =
                     {
-                        new Frame
-                        {
-                            BackgroundColor = Colors.BackColor,
-                            Content = new StackLayout
-                            {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        TextColor = Colors.UserColor,
-                                        Text = "Количество новостей за раз",
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        VerticalOptions = LayoutOptions.Center,
-                                        HorizontalTextAlignment = TextAlignment.Start,
-                                        BackgroundColor = Colors.BackColor
-                                    },
-                                    amount
-                                },
-                                Orientation = StackOrientation.Horizontal
-                            },
-                            BorderColor = Colors.UserColor,
-                            VerticalOptions = LayoutOptions.End,
-                            HorizontalOptions = LayoutOptions.FillAndExpand,
-                        },
-                        new Frame
-                        {
-                            Content = new StackLayout
-                            {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        TextColor = Colors.UserColor,
-                                        Text = "Цветовая тема",
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        VerticalOptions = LayoutOptions.Center,
-                                        HorizontalTextAlignment = TextAlignment.Start
-                                    },
-                                    Dark
-                                },
-                                Orientation = StackOrientation.Horizontal
-                            },
-                            BorderColor = Colors.UserColor,
-                            VerticalOptions = LayoutOptions.End,
-                            HorizontalOptions = LayoutOptions.FillAndExpand,
-                            BackgroundColor = Colors.BackColor
-                        },
-                        new Frame
-                        {
-                            Content = new StackLayout
-                            {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        TextColor = Colors.UserColor,
-                                        Text = "Область поиска",
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        VerticalOptions = LayoutOptions.Center,
-                                        HorizontalTextAlignment = TextAlignment.Start
-                                    },
-                                    time
-                                },
-                                Orientation = StackOrientation.Horizontal
-                            },
-                            BorderColor = Colors.UserColor,
-                            VerticalOptions = LayoutOptions.End,
-                            HorizontalOptions = LayoutOptions.FillAndExpand,
-                            BackgroundColor = Colors.BackColor
-                        },
-                        new Frame
-                        {
-                            Content = new StackLayout
-                            {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        TextColor = Colors.UserColor,
-                                        Text = "При старте показывать",
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        VerticalOptions = LayoutOptions.Center,
-                                        HorizontalTextAlignment = TextAlignment.Start
-                                    },
-                                    OnStart
-                                },
-                                Orientation = StackOrientation.Horizontal
-                            },
-                            BorderColor = Colors.UserColor,
-                            VerticalOptions = LayoutOptions.End,
-                            HorizontalOptions = LayoutOptions.FillAndExpand,
-                            BackgroundColor = Colors.BackColor
-                        },
-                        new Frame
-                        {
-                            Content = new StackLayout
-                            {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        TextColor = Colors.UserColor,
-                                        Text = "Показывать подсказки",
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        VerticalOptions = LayoutOptions.Center,
-                                        HorizontalTextAlignment = TextAlignment.Start
-                                    },
-                                    Hints
-                                },
-                                Orientation = StackOrientation.Horizontal
-                            },
-                            BorderColor = Colors.UserColor,
-                            BackgroundColor = Colors.BackColor
-                        },
-                        new Frame
-                        {
-                            Content = b1,
-                            BorderColor = Colors.UserColor,
-                            BackgroundColor = Colors.BackColor
-                        },
-                        new Frame
-                        {
-                            Content = b2,
-                            BorderColor = Colors.UserColor,
-                            BackgroundColor = Colors.BackColor
-                        },
-                        new Frame
-                        {
-                            Content = b,
-                            BorderColor = Colors.UserColor,
-                            BackgroundColor = Colors.BackColor
-                        }
+                        Elements.LabelAndElement("Количество новостей за раз", amount),
+                        Elements.LabelAndElement("Цветовая тема", Dark),
+                        Elements.LabelAndElement("Область поиска", time),
+                        Elements.LabelAndElement("Размер шрифта", size),
+                        Elements.LabelAndElement("При старте показывать", OnStart),
+                        Elements.LabelAndElement("Показывать подсказки", Hints),
+                        Elements.Button(b1),
+                        Elements.Button(b2),
+                        Elements.Button(b)
                     }
                 }
             };

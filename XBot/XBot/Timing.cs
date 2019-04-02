@@ -10,12 +10,10 @@ namespace XBot
     public class Timing : ContentPage
     {
 
-        Entry entry = new Entry();
-
         public Timing()
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            BackgroundColor = Colors.BackColor;
+            BackgroundColor = Styles.BackColor;
             MakeContent();
         }
 
@@ -32,20 +30,20 @@ namespace XBot
                     FontSize = 20,
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
-                    BorderColor = Colors.UserColor,
+                    BorderColor = Styles.UserColor,
                     HorizontalOptions = LayoutOptions.Start,
-                    BackgroundColor = Colors.BackColor
+                    BackgroundColor = Styles.BackColor
                 };
                 button.Clicked += (object sender, EventArgs e) =>
                 {
                     App.Current.Properties["frequency"] = code[int.Parse(((Button)sender).ClassId)];
                     MakeContent();
                 };
-                button.TextColor = (string)App.Current.Properties["frequency"] == code[i] ? Color.Green : Colors.UserColor;
+                button.TextColor = (string)App.Current.Properties["frequency"] == code[i] ? Color.Green : Styles.UserColor;
                 Frame newf = new Frame
                 {
-                    BorderColor = Colors.UserColor,
-                    BackgroundColor = Colors.BackColor,
+                    BorderColor = Styles.UserColor,
+                    BackgroundColor = Styles.BackColor,
                     Content = new StackLayout
                     {
                         Children =
@@ -54,7 +52,7 @@ namespace XBot
                             new Label
                             {
                                 Text = subs[i],
-                                TextColor = Colors.UserColor,
+                                TextColor = Styles.UserColor,
                                 HorizontalTextAlignment = TextAlignment.Start,
                                 VerticalTextAlignment = TextAlignment.Center
                             }
@@ -75,9 +73,9 @@ namespace XBot
                         FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         VerticalOptions = LayoutOptions.End,
-                        TextColor = Colors.UserColor,
+                        TextColor = Styles.UserColor,
                         FontAttributes = FontAttributes.Bold,
-                        BackgroundColor = Colors.BackColor
+                        BackgroundColor = Styles.BackColor
                     },
                     new ScrollView { Content = sl }
                 }

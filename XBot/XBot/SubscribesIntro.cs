@@ -13,18 +13,18 @@ namespace XBot
         Button ok = new Button
         {
             Text = "OK",
-            BackgroundColor = Colors.BackColor,
-            TextColor = Colors.UserColor,
-            BorderColor = Colors.UserColor,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
         Button ignore = new Button
         {
             Text = "Больше не показывать",
-            BackgroundColor = Colors.BackColor,
-            TextColor = Colors.UserColor,
-            BorderColor = Colors.UserColor,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
@@ -33,7 +33,7 @@ namespace XBot
             ok.Clicked += OkClick;
             ignore.Clicked += IgnoreClick;
             NavigationPage.SetHasNavigationBar(this, false);
-            BackgroundColor = Colors.BackColor;
+            BackgroundColor = Styles.BackColor;
             Content = new StackLayout
             {
                 Children =
@@ -48,11 +48,11 @@ namespace XBot
                                 "Добро пожаловать в раздел \"Мои подписки\"!\n\n" +
                                 "В этом разделе можно добавить ключевые слова, по которым будет автоматически проводиться поиск.\n\n" +
                                 "Обратите внимание, что если ключевое слово внесено в родительский контроль, система поиска будет его игнорировать.",
-                                TextColor = Colors.UserColor,
+                                TextColor = Styles.UserColor,
                                 FontSize = 24
                             },
                             VerticalOptions = LayoutOptions.CenterAndExpand,
-                            BackgroundColor = Colors.BackColor,
+                            BackgroundColor = Styles.BackColor,
                             HasShadow = false
                         },
                         VerticalOptions = LayoutOptions.FillAndExpand

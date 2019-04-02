@@ -12,9 +12,9 @@ namespace XBot
         Button ok = new Button
         {
             Text = "Спасибо",
-            BackgroundColor = Colors.BackColor,
-            TextColor = Colors.UserColor,
-            BorderColor = Colors.UserColor,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.FillAndExpand
         };
@@ -30,14 +30,15 @@ namespace XBot
             "В настройках можно сохранить ключевые слова для поиска в разделе \"Мои подписки\"",
             "В настройках можно запретить показывать нежелательный контент в разделе \"Родительский контроль\"",
             "В настройках можно очистить диалоговое окно",
-            "В настройках можно указать период времени, по которому будет проводиться поиск"
+            "В настройках можно указать период времени, по которому будет проводиться поиск",
+            "В настройках можно выбрать размер шрифта в чате"
         };
 
         public Hint()
         {
             ok.Clicked += OkClick;
             NavigationPage.SetHasNavigationBar(this, false);
-            BackgroundColor = Colors.BackColor;
+            BackgroundColor = Styles.BackColor;
             Content = new StackLayout
             {
                 Children =
@@ -49,11 +50,11 @@ namespace XBot
                             Content = new Label
                             {
                                 Text = hints[(new Random()).Next(hints.Length)],
-                                TextColor = Colors.UserColor,
+                                TextColor = Styles.UserColor,
                                 FontSize = 24
                             },
                             VerticalOptions = LayoutOptions.CenterAndExpand,
-                            BackgroundColor = Colors.BackColor,
+                            BackgroundColor = Styles.BackColor,
                             HasShadow = false
                         },
                         VerticalOptions = LayoutOptions.FillAndExpand

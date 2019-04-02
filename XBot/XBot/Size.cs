@@ -7,13 +7,14 @@ using Xamarin.Forms;
 
 namespace XBot
 {
-    public class Subscribes : ContentPage
+    public class Size : ContentPage
     {
 
-        Entry entry = new Entry();
+        MainPage main;
 
-        public Subscribes()
+        public Size(MainPage m)
         {
+            main = m;
             NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             MakeContent();
@@ -22,51 +23,15 @@ namespace XBot
         void MakeContent()
         {
             StackLayout sl = new StackLayout();
-            Button button1 = new Button
-            {
-                Text = "⊕",
-                FontSize = 20,
-                TextColor = Xamarin.Forms.Color.Green,
-                FontAttributes = FontAttributes.Bold,
-                BackgroundColor = Styles.BackColor,
-                BorderColor = Styles.UserColor,
-                HorizontalOptions = LayoutOptions.Start,
-            };
-            button1.Clicked += Add;
-            entry = new Entry
-            {
-                Placeholder = "Дополнительная подписка",
-                FontSize = 14,
-                PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Styles.UserColor,
-                BackgroundColor = Styles.BackColor
-            };
-            entry.Completed += Add;
-            Frame newframe = new Frame
-            {
-                BorderColor = Styles.UserColor,
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        button1,
-                        entry
-                    },
-                    Orientation = StackOrientation.Horizontal
-                },
-                BackgroundColor = Styles.BackColor
-            };
-            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
-            for (int i = subs.Count - 1; i >= 0; i--)
+            string[] subs = new string[] { "очень мелкий", "мелкий", "средний", "большой", "очень большой" };
+            int[] code = new int[] { 8, 10, 14, 18, 24 };
+            for (int i = 0; i < subs.Length; i++)
             {
                 Button button = new Button
                 {
-                    Text = "⊖",
+                    Text = "✔",
                     FontSize = 20,
                     ClassId = i.ToString(),
-                    TextColor = Xamarin.Forms.Color.Red,
                     FontAttributes = FontAttributes.Bold,
                     BorderColor = Styles.UserColor,
                     HorizontalOptions = LayoutOptions.Start,
@@ -74,10 +39,11 @@ namespace XBot
                 };
                 button.Clicked += (object sender, EventArgs e) =>
                 {
-                    subs.RemoveAt(int.Parse(((Button)sender).ClassId));
-                    App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
+                    App.Current.Properties["size"] = code[int.Parse(((Button)sender).ClassId)];
                     MakeContent();
+                    main.Display();
                 };
+                button.TextColor = (int)App.Current.Properties["size"] == code[i] ? Color.Green : Styles.UserColor;
                 Frame newf = new Frame
                 {
                     BorderColor = Styles.UserColor,
@@ -106,7 +72,7 @@ namespace XBot
                 {
                     new Label
                     {
-                        Text = "\nМои подписки\n",
+                        Text = "\nРазмер шрифта\n",
                         HorizontalTextAlignment = TextAlignment.Center,
                         FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -115,21 +81,9 @@ namespace XBot
                         FontAttributes = FontAttributes.Bold,
                         BackgroundColor = Styles.BackColor
                     },
-                    newframe,
                     new ScrollView { Content = sl }
                 }
             };
-        }
-
-        void Add(object sender, EventArgs e)
-        {
-            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
-            if (entry.Text != null && entry.Text.Length != 0)
-            {
-                subs.Add(entry.Text);
-                App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
-                MakeContent();
-            }
         }
 
     }

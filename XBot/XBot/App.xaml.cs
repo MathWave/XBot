@@ -44,6 +44,10 @@ namespace XBot
                 App.Current.Properties["frequency"] = "online";
             if (!App.Current.Properties.TryGetValue("frequency_intro", out obj))
                 App.Current.Properties["frequency_intro"] = true;
+            if (!App.Current.Properties.TryGetValue("size", out obj))
+                App.Current.Properties["size"] = 14;
+            if (!App.Current.Properties.TryGetValue("size_intro", out obj))
+                App.Current.Properties["size_intro"] = true;
             MainPage = (bool)App.Current.Properties["welcome"] ? new NavigationPage(new Welcome()) : (bool)App.Current.Properties["hint"] ? new NavigationPage(new Hint()) : new NavigationPage(new MainPage());
         }
 

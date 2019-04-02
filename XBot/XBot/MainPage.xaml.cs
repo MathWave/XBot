@@ -31,10 +31,10 @@ namespace XBot
                 Placeholder = "Сообщение",
                 PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
                 FontSize = 20,
-                BackgroundColor = Colors.BackColor,
+                BackgroundColor = Styles.BackColor,
                 VerticalOptions = LayoutOptions.End,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Colors.UserColor
+                TextColor = Styles.UserColor
             };
             message.Completed += ButtonClick;
             settings = new Button
@@ -43,7 +43,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Colors.BackColor,
+                BackgroundColor = Styles.BackColor,
                 WidthRequest = 50
             };
             subscribes = new Button
@@ -52,7 +52,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Colors.BackColor,
+                BackgroundColor = Styles.BackColor,
                 WidthRequest = 50
             };
             news = new Button
@@ -61,7 +61,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Colors.BackColor,
+                BackgroundColor = Styles.BackColor,
                 WidthRequest = 50
             };
             currency = new Button
@@ -70,7 +70,7 @@ namespace XBot
                 FontSize = 20,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Colors.BackColor,
+                BackgroundColor = Styles.BackColor,
                 WidthRequest = 50
             };
             news.Clicked += NewsClick;
@@ -79,7 +79,7 @@ namespace XBot
             currency.Clicked += CurrencyClick;
             string line = (string)App.Current.Properties["messages"];
             if (line.Length == 0)
-                frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Colors.BackColor };
+                frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Styles.BackColor };
             else
                 MakeFrame();
             MakeContent();
@@ -89,7 +89,6 @@ namespace XBot
                 SubscribesClick(new object(), new EventArgs());
             else
                 CurrencyClick(new object(), new EventArgs());
-
         }
 
         public void Active(bool act)
@@ -186,13 +185,13 @@ namespace XBot
                     },
                 }
             };
-            BackgroundColor = Colors.BackColor;
-            message.TextColor = Colors.UserColor;
-            message.BackgroundColor = Colors.BackColor;
-            settings.BackgroundColor = Colors.BackColor;
-            subscribes.BackgroundColor = Colors.BackColor;
-            news.BackgroundColor = Colors.BackColor;
-            currency.BackgroundColor = Colors.BackColor;
+            BackgroundColor = Styles.BackColor;
+            message.TextColor = Styles.UserColor;
+            message.BackgroundColor = Styles.BackColor;
+            settings.BackgroundColor = Styles.BackColor;
+            subscribes.BackgroundColor = Styles.BackColor;
+            news.BackgroundColor = Styles.BackColor;
+            currency.BackgroundColor = Styles.BackColor;
             if (scroll != null)
                 scroll.ScrollToAsync(stack, ScrollToPosition.End, false);
         }
@@ -200,18 +199,18 @@ namespace XBot
         public void MakeFrame()
         {
             List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Colors.BackColor };
+            frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Styles.BackColor };
             stack = new StackLayout { VerticalOptions = LayoutOptions.End };
             for (int i = 0; i < mes.Count; i++)
             {
-                Frame f = new Frame { BackgroundColor = Colors.BackColor };
+                Frame f = new Frame { BackgroundColor = Styles.BackColor };
                 if (mes[i][0] == 'U')
                     f = new Frame
                     {
-                        Content = new Label { TextColor = Colors.UserColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor },
-                        BorderColor = Colors.UserColor,
+                        Content = new Label { TextColor = Styles.UserColor, Text = mes[i].Substring(1), BackgroundColor = Styles.BackColor, FontSize = Styles.Size },
+                        BorderColor = Styles.UserColor,
                         HorizontalOptions = LayoutOptions.End,
-                        BackgroundColor = Colors.BackColor
+                        BackgroundColor = Styles.BackColor
                     };
                 else
                 {
@@ -222,15 +221,15 @@ namespace XBot
                         {
                             Children =
                             {
-                                new Label { TextColor = Colors.BotColor, Text = cur[0], BackgroundColor = Colors.BackColor },
-                                new Label { TextColor = Colors.BotColor, Text = cur[1], BackgroundColor = Colors.BackColor, FontSize = 25 },
-                                new Label { TextColor = Colors.BotColor, Text = cur[2], BackgroundColor = Colors.BackColor, FontSize = 25 }
+                                new Label { TextColor = Styles.BotColor, Text = cur[0], BackgroundColor = Styles.BackColor, FontSize = Styles.Size },
+                                new Label { TextColor = Styles.BotColor, Text = cur[1], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 },
+                                new Label { TextColor = Styles.BotColor, Text = cur[2], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 }
                             }
                         };
                     }
                     else if (mes[i].Split('֍').Length == 1)
                     {
-                        Label l = new Label { TextColor = Colors.BotColor, Text = mes[i].Substring(1), BackgroundColor = Colors.BackColor };
+                        Label l = new Label { TextColor = Styles.BotColor, Text = mes[i].Substring(1), BackgroundColor = Styles.BackColor, FontSize = Styles.Size };
                         f.Content = l;
                     }
                     else
@@ -241,7 +240,7 @@ namespace XBot
                         for (int j = 0; j < info.Length / 2; j++)
                         {
                             dict[info[2 * j]] = info[2 * j + 1];
-                            Label l = new Label { TextColor = Colors.BotColor, Text = info[2 * j] };
+                            Label l = new Label { TextColor = Styles.BotColor, Text = info[2 * j], FontSize = Styles.Size };
                             if (j > 0)
                             {
                                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -259,7 +258,7 @@ namespace XBot
                         }
                         f.Content = sl;
                     }
-                    f.BorderColor = Colors.BotColor;
+                    f.BorderColor = Styles.BotColor;
                     f.HorizontalOptions = LayoutOptions.Start;
                 }
                 f.VerticalOptions = LayoutOptions.End;

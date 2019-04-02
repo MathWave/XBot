@@ -4,7 +4,7 @@ using System.Text;
 
 namespace XBot
 {
-    static class Colors
+    static class Styles
     {
 
         public static Xamarin.Forms.Color BackColor
@@ -28,6 +28,13 @@ namespace XBot
             get {
                 string[] c = ((string)App.Current.Properties["bot"]).Split(' ');
                 return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
+            }
+        }
+
+        public static int Size
+        {
+            get {
+                return (int)App.Current.Properties["size"];
             }
         }
 

@@ -107,7 +107,7 @@ namespace XBot
             string euro = "";
             try
             {
-                Byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
+                byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
                 line = Encoding.UTF8.GetString(s, 0, s.Length);
                 string[] vl = line.Split('\n');
                 dollar = vl[102].Split('"')[2].Substring(2, 5);

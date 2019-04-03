@@ -11,6 +11,9 @@ namespace XBot
 {
     public partial class App : Application
     {
+
+        public static bool device;
+
         public App()
         {
             object obj;
@@ -48,6 +51,7 @@ namespace XBot
                 App.Current.Properties["size"] = 14;
             if (!App.Current.Properties.TryGetValue("size_intro", out obj))
                 App.Current.Properties["size_intro"] = true;
+            device = DateTime.Now.ToString().Contains("/");
             MainPage = (bool)App.Current.Properties["welcome"] ? new NavigationPage(new Welcome()) : (bool)App.Current.Properties["hint"] ? new NavigationPage(new Hint()) : new NavigationPage(new MainPage());
         }
 

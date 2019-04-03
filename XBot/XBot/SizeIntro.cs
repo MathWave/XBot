@@ -30,6 +30,11 @@ namespace XBot
         };
         public SizeIntro(MainPage m)
         {
+            if (App.device)
+            {
+                ok.Text += "\n\n";
+                ignore.Text += "\n\n";
+            }
             main = m;
             ok.Clicked += OkClick;
             ignore.Clicked += IgnoreClick;

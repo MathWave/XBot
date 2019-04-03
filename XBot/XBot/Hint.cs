@@ -36,6 +36,8 @@ namespace XBot
 
         public Hint()
         {
+            if (App.device)
+                ok.Text += "\n\n";
             ok.Clicked += OkClick;
             NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;

@@ -20,13 +20,16 @@ namespace XBot
         void MakeContent()
         {
             StackLayout sl = new StackLayout();
-            string[] subs = new string[] { "10 минут", "час", "день", "неделя", "месяц" };
+            string[] subs;
+            if (App.device)
+                subs = new string[] { "     10 минут", "     час", "     день", "     неделя", "     месяц" };
+            else
+                subs = new string[] { "10 минут", "час", "день", "неделя", "месяц" };
             string[] code = new string[] { "online", "hour", "day", "week", "month" };
             for (int i = 0; i < subs.Length; i++)
             {
                 Button button = new Button
                 {
-                    Text = "✔",
                     FontSize = 20,
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
@@ -39,7 +42,16 @@ namespace XBot
                     App.Current.Properties["frequency"] = code[int.Parse(((Button)sender).ClassId)];
                     MakeContent();
                 };
-                button.TextColor = (string)App.Current.Properties["frequency"] == code[i] ? Color.Green : Styles.UserColor;
+                if (App.device)
+                {
+                    button.Text = " ";
+                    button.BackgroundColor = (string)App.Current.Properties["frequency"] == code[i] ? Color.Green : Styles.UserColor;
+                }
+                else
+                {
+                    button.Text = "✔";
+                    button.TextColor = (string)App.Current.Properties["frequency"] == code[i] ? Color.Green : Styles.UserColor;
+                }
                 Frame newf = new Frame
                 {
                     BorderColor = Styles.UserColor,

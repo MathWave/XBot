@@ -23,13 +23,20 @@ namespace XBot
         void MakeContent()
         {
             StackLayout sl = new StackLayout();
-            string[] subs = new string[] { "очень мелкий", "мелкий", "средний", "большой", "очень большой" };
+            string[] subs;
+            if (App.device)
+            {
+                subs = new string[] { "     очень мелкий", "     мелкий", "     средний", "     большой", "     очень большой" };
+            }
+            else
+            {
+                subs = new string[] { "очень мелкий", "мелкий", "средний", "большой", "очень большой" };
+            }
             int[] code = new int[] { 8, 10, 14, 18, 24 };
             for (int i = 0; i < subs.Length; i++)
             {
                 Button button = new Button
                 {
-                    Text = "✔",
                     FontSize = 20,
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
@@ -43,7 +50,16 @@ namespace XBot
                     MakeContent();
                     main.Display();
                 };
-                button.TextColor = (int)App.Current.Properties["size"] == code[i] ? Color.Green : Styles.UserColor;
+                if (App.device)
+                {
+                    button.Text = " ";
+                    button.BackgroundColor = (int)App.Current.Properties["size"] == code[i] ? Color.Green : Styles.UserColor;
+                }
+                else
+                {
+                    button.Text = "✔";
+                    button.TextColor = (int)App.Current.Properties["size"] == code[i] ? Color.Green : Styles.UserColor;
+                }
                 Frame newf = new Frame
                 {
                     BorderColor = Styles.UserColor,

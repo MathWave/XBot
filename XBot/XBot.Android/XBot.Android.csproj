@@ -39,7 +39,6 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis />
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>

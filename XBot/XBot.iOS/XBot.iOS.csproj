@@ -153,8 +153,11 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\XBot\XBot.csproj">
-      <Project>{2A3548FF-E303-4462-8545-3DA8B08CEC3E}</Project>
+      <Project>{5BC7DF25-2135-4553-B009-D297BDF55364}</Project>
       <Name>XBot</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
 </Project>

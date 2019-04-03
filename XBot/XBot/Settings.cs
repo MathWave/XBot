@@ -140,21 +140,38 @@ namespace XBot
             amount.TextColor = Styles.UserColor;
             OnStart.BackgroundColor = Styles.BackColor;
             amount.BackgroundColor = Styles.BackColor;
-            Content = new ScrollView
+            Content = new StackLayout
             {
-                Content = new StackLayout
+                Children =
                 {
-                    Children =
+                    new Label
                     {
-                        Elements.LabelAndElement("Количество новостей за раз", amount),
-                        Elements.LabelAndElement("Цветовая тема", Dark),
-                        Elements.LabelAndElement("Область поиска", time),
-                        Elements.LabelAndElement("Размер шрифта", size),
-                        Elements.LabelAndElement("При старте показывать", OnStart),
-                        Elements.LabelAndElement("Показывать подсказки", Hints),
-                        Elements.Button(b1),
-                        Elements.Button(b2),
-                        Elements.Button(b)
+                        Text = "\nНастройки\n",
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        FontSize = 20,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        VerticalOptions = LayoutOptions.End,
+                        TextColor = Styles.UserColor,
+                        FontAttributes = FontAttributes.Bold,
+                        BackgroundColor = Styles.BackColor
+                    },
+                    new ScrollView
+                    {
+                        Content = new StackLayout
+                        {
+                            Children =
+                            {
+                                Elements.LabelAndElement("Количество новостей за раз", amount),
+                                Elements.LabelAndElement("Цветовая тема", Dark),
+                                Elements.LabelAndElement("Область поиска", time),
+                                Elements.LabelAndElement("Размер шрифта", size),
+                                Elements.LabelAndElement("При старте показывать", OnStart),
+                                Elements.LabelAndElement("Показывать подсказки", Hints),
+                                Elements.Button(b1),
+                                Elements.Button(b2),
+                                Elements.Button(b)
+                            }
+                        }
                     }
                 }
             };

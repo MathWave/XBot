@@ -30,6 +30,11 @@ namespace XBot
         };
         public SubscribesIntro()
         {
+            if (App.device)
+            {
+                ok.Text += "\n\n";
+                ignore.Text += "\n\n";
+            }
             ok.Clicked += OkClick;
             ignore.Clicked += IgnoreClick;
             NavigationPage.SetHasNavigationBar(this, false);

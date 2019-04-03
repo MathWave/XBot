@@ -138,6 +138,8 @@ namespace XBot
             };
             Dark.Clicked += MakeDark;
             amount.TextColor = Styles.UserColor;
+            OnStart.BackgroundColor = Styles.BackColor;
+            amount.BackgroundColor = Styles.BackColor;
             Content = new ScrollView
             {
                 Content = new StackLayout

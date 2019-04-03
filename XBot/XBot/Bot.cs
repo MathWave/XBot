@@ -35,7 +35,11 @@ namespace XBot
                 }
             }
             catch (IndexOutOfRangeException) { }
-            catch { line = ""; }
+            catch (Exception ex) 
+            { 
+                string a = ex.ToString();
+                line = "";
+            }
             mess += '\b';
             Chat.Remove();
             mess = $"Топ-{count} новостей на {Now} за {Period}\n\n֍֍" + mess;
@@ -170,9 +174,19 @@ namespace XBot
                 if (datetime[0] == '0')
                     datetime = datetime.Substring(1);
                 string[] d1 = datetime.Split(' ');
-                string[] date = d1[0].Split('.');
-                line += $"{date[0]} {Month(date[1])} ";
-                line += d1[1].Substring(0, 5);
+                string[] date;
+                if (!datetime.Contains("/"))
+                {
+                    date = d1[0].Split('.');
+                    line += $"{date[0]} {Month(date[1])} ";
+                }
+                else
+                {
+                    date = d1[0].Split('/');
+                    line += $"{date[1]} {Month(date[0])} ";
+                }
+                string[] time = d1[1].Split(':');
+                line += time[0] + ":" + time[1];
                 return line;
             }
         }

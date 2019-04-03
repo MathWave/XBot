@@ -221,7 +221,7 @@ namespace XBot
                         {
                             Children =
                             {
-                                new Label { TextColor = Styles.BotColor, Text = cur[0], BackgroundColor = Styles.BackColor, FontSize = Styles.Size },
+                                new Label { TextColor = Styles.BotColor, Text = cur[0], BackgroundColor = Styles.BackColor, FontSize = Styles.Size, FontAttributes = FontAttributes.Bold },
                                 new Label { TextColor = Styles.BotColor, Text = cur[1], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 },
                                 new Label { TextColor = Styles.BotColor, Text = cur[2], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 }
                             }

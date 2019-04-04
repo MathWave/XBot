@@ -136,6 +136,14 @@ namespace XBot
                 else
                     Navigation.PushAsync(new Size(main));
             };
+            Button support = new Button
+            {
+                Text = "Поддержать",
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor
+            };
+            support.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Support());
             Dark.Clicked += MakeDark;
             amount.TextColor = Styles.UserColor;
             OnStart.BackgroundColor = Styles.BackColor;
@@ -169,7 +177,8 @@ namespace XBot
                                 Elements.LabelAndElement("Показывать подсказки", Hints),
                                 Elements.Button(b1),
                                 Elements.Button(b2),
-                                Elements.Button(b)
+                                Elements.Button(b),
+                                Elements.Button(support)
                             }
                         }
                     }

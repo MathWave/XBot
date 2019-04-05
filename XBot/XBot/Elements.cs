@@ -35,7 +35,7 @@ namespace XBot
             };
         }
 
-        public static Frame Button(Button b)
+        public static Frame ButtonInFrame(Button b)
         {
             return new Frame
             {
@@ -43,6 +43,20 @@ namespace XBot
                 BorderColor = Styles.UserColor,
                 BackgroundColor = Styles.BackColor
             };
+        }
+
+        public static Button Button(string text, bool fill)
+        {
+            Button b = new Button
+            {
+                Text = text,
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor
+            };
+            if (fill)
+                b.HorizontalOptions = LayoutOptions.FillAndExpand;
+            return b;
         }
     }
 }

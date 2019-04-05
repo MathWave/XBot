@@ -7,11 +7,9 @@ using Xamarin.Forms;
 
 namespace XBot
 {
-    public class Settings : ContentPage
+    public partial class Settings : ContentPage
     {
         Picker OnStart = new Picker { Items = { "🔝Последние новости", "🤵Мои подписки", "📈Курс валют" }, WidthRequest = 30 };
-        Button Dark = new Button();
-        Button time = new Button();
         Switch Hints = new Switch();
         Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Styles.UserColor };
         MainPage main;
@@ -37,113 +35,35 @@ namespace XBot
             MakeContent();
         }
 
-         void MakeDark(object sender, EventArgs e)
-         {
-            if ((string)App.Current.Properties["back"] == "30 30 30")
-            {
-                App.Current.Properties["back"] = "255 255 255";
-                App.Current.Properties["user"] = "0 0 255";
-                App.Current.Properties["bot"] = "128 0 128";
-            }
-            else
-            {
-                App.Current.Properties["back"] = "30 30 30";
-                App.Current.Properties["user"] = "86 156 214";
-                App.Current.Properties["bot"] = "255 255 255";
-            }
-            main.Display();
-            MakeContent();
-         }
-
         void MakeContent()
         {
             BackgroundColor = Styles.BackColor;
-            Dark = new Button
-            {
-                Text = "Сменить",
-                BackgroundColor = Styles.BackColor,
-                TextColor = Styles.UserColor,
-                BorderColor = Styles.UserColor
-            };
-            time = new Button
-            {
-                Text = "Выбрать",
-                BackgroundColor = Styles.BackColor,
-                TextColor = Styles.UserColor,
-                BorderColor = Styles.UserColor
-            };
-            time.Clicked += (object sender, EventArgs e) =>
-            {
-                if ((bool)App.Current.Properties["frequency_intro"])
-                    Navigation.PushAsync(new TimingIntro());
-                else
-                    Navigation.PushAsync(new Timing());
-            };
-            Button b = new Button
-            {
-                Text = "Очистить диалоговое окно",
-                BackgroundColor = Styles.BackColor,
-                TextColor = Styles.UserColor,
-                BorderColor = Styles.UserColor,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
-            b.Clicked += (object sender, EventArgs e) =>
-            {
-                App.Current.Properties["messages"] = "";
-                main.Display();
-            };
-            Button b1 = new Button
-            {
-                Text = "Мои подписки",
-                BackgroundColor = Styles.BackColor,
-                TextColor = Styles.UserColor,
-                BorderColor = Styles.UserColor,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
-            b1.Clicked += (object sender, EventArgs e) =>
-            {
-                if ((bool)App.Current.Properties["subscribes_intro"])
-                    Navigation.PushAsync(new SubscribesIntro());
-                else
-                    Navigation.PushAsync(new Subscribes());
-            };
-            Button b2 = new Button
-            {
-                Text = "Родительский контроль",
-                BackgroundColor = Styles.BackColor,
-                TextColor = Styles.UserColor,
-                BorderColor = Styles.UserColor,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
-            b2.Clicked += (object sender, EventArgs e) =>
+            Button Dark = Elements.Button("Сменить", false);
+            Button Time = Elements.Button("Выбрать", false);
+            Button Size = Elements.Button("Выбрать", false);
+            Button Type = Elements.Button("Выбрать", false);
+            Button Clear = Elements.Button("Очистить диалоговое окно", true);
+            Button Subs = Elements.Button("Мои подписки", true);
+            Button Control = Elements.Button("Родительский контроль", true);
+            Button Support = Elements.Button("Поддержать", true);
+            Time.Clicked += TimeClick;
+            Clear.Clicked += ClearClick;
+            Subs.Clicked += SubsClick;
+            Control.Clicked += (object sender, EventArgs e) =>
             {
                 if ((bool)App.Current.Properties["control_intro"])
                     Navigation.PushAsync(new ControlIntro());
                 else
                     Navigation.PushAsync(new Password());
             };
-            Button size = new Button
-            {
-                Text = "Сменить",
-                BackgroundColor = Styles.BackColor,
-                TextColor = Styles.UserColor,
-                BorderColor = Styles.UserColor
-            };
-            size.Clicked += (object sender, EventArgs e) =>
+            Size.Clicked += (object sender, EventArgs e) =>
             {
                 if ((bool)App.Current.Properties["size_intro"])
                     Navigation.PushAsync(new SizeIntro(main));
                 else
                     Navigation.PushAsync(new Size(main));
             };
-            Button support = new Button
-            {
-                Text = "Поддержать",
-                BackgroundColor = Styles.BackColor,
-                TextColor = Styles.UserColor,
-                BorderColor = Styles.UserColor
-            };
-            support.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Support());
+            Support.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Support());
             Dark.Clicked += MakeDark;
             amount.TextColor = Styles.UserColor;
             OnStart.BackgroundColor = Styles.BackColor;
@@ -171,14 +91,15 @@ namespace XBot
                             {
                                 Elements.LabelAndElement("Количество новостей за раз", amount),
                                 Elements.LabelAndElement("Цветовая тема", Dark),
-                                Elements.LabelAndElement("Область поиска", time),
-                                Elements.LabelAndElement("Размер шрифта", size),
+                                Elements.LabelAndElement("Тематика новостей", Type),
+                                Elements.LabelAndElement("Область поиска", Time),
                                 Elements.LabelAndElement("При старте показывать", OnStart),
+                                Elements.LabelAndElement("Размер шрифта", Size),
                                 Elements.LabelAndElement("Показывать подсказки", Hints),
-                                Elements.Button(b1),
-                                Elements.Button(b2),
-                                Elements.Button(b),
-                                Elements.Button(support)
+                                Elements.ButtonInFrame(Subs),
+                                Elements.ButtonInFrame(Control),
+                                Elements.ButtonInFrame(Clear),
+                                Elements.ButtonInFrame(Support)
                             }
                         }
                     }

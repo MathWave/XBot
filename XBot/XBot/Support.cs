@@ -44,7 +44,7 @@ namespace XBot
                         },
                         VerticalOptions = LayoutOptions.FillAndExpand
                     },
-                    Elements.Button(ok)
+                    Elements.ButtonInFrame(ok)
                 }
             };
         }

@@ -38,6 +38,7 @@ namespace XBot
                                 FontSize = 24
                             },
                             VerticalOptions = LayoutOptions.CenterAndExpand,
+                            HorizontalOptions = LayoutOptions.FillAndExpand,
                             BackgroundColor = Styles.BackColor,
                             HasShadow = false
                         },

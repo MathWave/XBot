@@ -30,6 +30,14 @@ namespace XBot
                 Navigation.PushAsync(new Timing());
         }
 
+        void TypeClick(object sender, EventArgs e)
+        {
+            if ((bool)App.Current.Properties["type_intro"])
+                Navigation.PushAsync(new TypeIntro());
+            else
+                Navigation.PushAsync(new Type());
+        }
+
         void ClearClick(object sender, EventArgs e)
         {
             App.Current.Properties["messages"] = "";
@@ -42,6 +50,22 @@ namespace XBot
                 Navigation.PushAsync(new SubscribesIntro());
             else
                 Navigation.PushAsync(new Subscribes());
+        }
+
+        void ControlClick(object sender, EventArgs e)
+        {
+            if ((bool)App.Current.Properties["control_intro"])
+                Navigation.PushAsync(new ControlIntro());
+            else
+                Navigation.PushAsync(new Password());
+        }
+
+        void SizeClick(object sender, EventArgs e)
+        {
+            if ((bool)App.Current.Properties["size_intro"])
+                Navigation.PushAsync(new SizeIntro(main));
+            else
+                Navigation.PushAsync(new Size(main));
         }
     }
 }

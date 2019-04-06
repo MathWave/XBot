@@ -20,7 +20,7 @@ namespace XBot
             int count = 0;
             try
             {
-                line = await client.GetStringAsync($"http://mediametrics.ru/rating/ru/{(string)App.Current.Properties["frequency"]}.tsv?page=1&update=1401216280");
+                line = await client.GetStringAsync($"http://mediametrics.ru/rating/{(string)App.Current.Properties["type"]}ru/{(string)App.Current.Properties["frequency"]}.tsv?page=1&update=1401216280");
                 string[] elems = line.Split('\n');
                 for (int i = 1; count < (int)App.Current.Properties["count"] && i < elems.Length; i++)
                 {
@@ -64,7 +64,7 @@ namespace XBot
             {
                 while (count != 4 && amount < (int)App.Current.Properties["count"])
                 {
-                    line = await client.GetStringAsync($"http://mediametrics.ru/rating/ru/{(string)App.Current.Properties["frequency"]}.tsv?page=" + count.ToString() + "&update=1401216280");
+                    line = await client.GetStringAsync($"http://mediametrics.ru/rating/{(string)App.Current.Properties["type"]}ru/{(string)App.Current.Properties["frequency"]}.tsv?page=" + count.ToString() + "&update=1401216280");
                     string[] elems = line.Split('\n');
                     for (int i = 1; i < elems.Length; i++)
                     {

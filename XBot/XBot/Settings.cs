@@ -56,20 +56,9 @@ namespace XBot
             Time.Clicked += TimeClick;
             Clear.Clicked += ClearClick;
             Subs.Clicked += SubsClick;
-            Control.Clicked += (object sender, EventArgs e) =>
-            {
-                if ((bool)App.Current.Properties["control_intro"])
-                    Navigation.PushAsync(new ControlIntro());
-                else
-                    Navigation.PushAsync(new Password());
-            };
-            Size.Clicked += (object sender, EventArgs e) =>
-            {
-                if ((bool)App.Current.Properties["size_intro"])
-                    Navigation.PushAsync(new SizeIntro(main));
-                else
-                    Navigation.PushAsync(new Size(main));
-            };
+            Control.Clicked += ControlClick;
+            Size.Clicked += SizeClick;
+            Type.Clicked += TypeClick;
             Support.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Support());
             Dark.Clicked += MakeDark;
             amount.TextColor = Styles.UserColor;

@@ -25,6 +25,7 @@ namespace XBot
 
         public MainPage()
         {
+            Title = "Диалог";
             NavigationPage.SetHasNavigationBar(this, false);
             message = new Entry
             {

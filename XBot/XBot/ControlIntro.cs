@@ -29,14 +29,12 @@ namespace XBot
         };
         public ControlIntro()
         {
-            if (App.device)
-            {
-                ok.Text += "\n\n";
-                ignore.Text += "\n\n";
-            }
+            if (Device.RuntimePlatform == "iOS")
+                Title = "Родительский контроль";
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             ok.Clicked += OkClick;
             ignore.Clicked += IgnoreClick;
-            NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             Content = new StackLayout
             {

@@ -12,9 +12,17 @@ namespace XBot
 
         Entry entry = new Entry();
 
+        string t = "\nМои подписки\n";
+
         public Subscribes()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
+            if (Device.RuntimePlatform == "iOS")
+            {
+                Title = "Мои подписки";
+                t = "";
+            }
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             MakeContent();
         }
@@ -106,7 +114,7 @@ namespace XBot
                 {
                     new Label
                     {
-                        Text = "\nМои подписки\n",
+                        Text = t,
                         HorizontalTextAlignment = TextAlignment.Center,
                         FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,

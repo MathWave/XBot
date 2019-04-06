@@ -30,15 +30,13 @@ namespace XBot
         };
         public SizeIntro(MainPage m)
         {
-            if (App.device)
-            {
-                ok.Text += "\n\n";
-                ignore.Text += "\n\n";
-            }
+            if (Device.RuntimePlatform == "iOS")
+                Title = "Размер шрифта";
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             main = m;
             ok.Clicked += OkClick;
             ignore.Clicked += IgnoreClick;
-            NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             Content = new StackLayout
             {

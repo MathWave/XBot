@@ -18,7 +18,10 @@ namespace XBot
         public Support()
         {
             ok.Clicked += (object sender, EventArgs e) => Device.OpenUri(new Uri("https://money.yandex.ru/to/410014676758208"));
-            NavigationPage.SetHasNavigationBar(this, false);
+            if (Device.RuntimePlatform == "iOS")
+                Title = "Поддержать";
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             Content = new StackLayout
             {

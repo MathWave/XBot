@@ -13,10 +13,17 @@ namespace XBot
         Switch Hints = new Switch();
         Picker amount = new Picker { Items = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, WidthRequest = 30, TextColor = Styles.UserColor };
         MainPage main;
+        string t = "\nНастройки\n";
 
         public Settings(MainPage m)
         {
-            NavigationPage.SetHasNavigationBar(this, false);
+            if (Device.RuntimePlatform == "iOS")
+            {
+                Title = "Настройки";
+                t = "";
+            }
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             main = m;
             amount.SelectedIndex = (int)App.Current.Properties["count"] - 1;
             amount.SelectedIndexChanged += (object sender, EventArgs e) => { App.Current.Properties["count"] = amount.SelectedIndex + 1; };
@@ -39,9 +46,9 @@ namespace XBot
         {
             BackgroundColor = Styles.BackColor;
             Button Dark = Elements.Button("Сменить", false);
-            Button Time = Elements.Button("Выбрать", false);
-            Button Size = Elements.Button("Выбрать", false);
-            Button Type = Elements.Button("Выбрать", false);
+            Button Time = Elements.Button("Область поиска", true);
+            Button Size = Elements.Button("Размер шрифта", true);
+            Button Type = Elements.Button("Тематика новостей", true);
             Button Clear = Elements.Button("Очистить диалоговое окно", true);
             Button Subs = Elements.Button("Мои подписки", true);
             Button Control = Elements.Button("Родительский контроль", true);
@@ -74,7 +81,7 @@ namespace XBot
                 {
                     new Label
                     {
-                        Text = "\nНастройки\n",
+                        Text = t,
                         HorizontalTextAlignment = TextAlignment.Center,
                         FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -90,12 +97,12 @@ namespace XBot
                             Children =
                             {
                                 Elements.LabelAndElement("Количество новостей за раз", amount),
-                                Elements.LabelAndElement("Цветовая тема", Dark),
-                                Elements.LabelAndElement("Тематика новостей", Type),
-                                Elements.LabelAndElement("Область поиска", Time),
                                 Elements.LabelAndElement("При старте показывать", OnStart),
-                                Elements.LabelAndElement("Размер шрифта", Size),
+                                Elements.LabelAndElement("Цветовая тема", Dark),
                                 Elements.LabelAndElement("Показывать подсказки", Hints),
+                                Elements.ButtonInFrame(Type),
+                                Elements.ButtonInFrame(Time),
+                                Elements.ButtonInFrame(Size),
                                 Elements.ButtonInFrame(Subs),
                                 Elements.ButtonInFrame(Control),
                                 Elements.ButtonInFrame(Clear),

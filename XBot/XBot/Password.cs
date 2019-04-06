@@ -41,15 +41,23 @@ namespace XBot
             VerticalOptions = LayoutOptions.End
         };
 
+        string t = "\nРодительский контроль\n";
+
         public Password()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
+            if (Device.RuntimePlatform == "iOS")
+            {
+                Title = "Родительский контроль";
+                t = "";
+            }
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             StackLayout sl = new StackLayout();
             sl.Children.Add
                 (new Label
                 {
-                    Text = "\nРодительский контроль\n",
+                    Text = t,
                     HorizontalTextAlignment = TextAlignment.Center,
                     FontSize = 20,
                     HorizontalOptions = LayoutOptions.FillAndExpand,

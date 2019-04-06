@@ -175,7 +175,7 @@ namespace XBot
                     datetime = datetime.Substring(1);
                 string[] d1 = datetime.Split(' ');
                 string[] date;
-                if (!App.device)
+                if (!DateTime.Now.ToString().Contains("/"))
                 {
                     date = d1[0].Split('.');
                     line += $"{date[0]} {Month(date[1])} ";

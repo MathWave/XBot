@@ -10,9 +10,16 @@ namespace XBot
     public class Timing : ContentPage
     {
 
+        string t = "\nОбласть поиска\n";
         public Timing()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
+            if (Device.RuntimePlatform == "iOS")
+            {
+                Title = "Область поиска";
+                t = "";
+            }
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             MakeContent();
         }
@@ -21,7 +28,7 @@ namespace XBot
         {
             StackLayout sl = new StackLayout();
             string[] subs;
-            if (App.device)
+            if (Device.RuntimePlatform == "iOS")
                 subs = new string[] { "     10 минут", "     час", "     день", "     неделя", "     месяц" };
             else
                 subs = new string[] { "10 минут", "час", "день", "неделя", "месяц" };
@@ -42,7 +49,7 @@ namespace XBot
                     App.Current.Properties["frequency"] = code[int.Parse(((Button)sender).ClassId)];
                     MakeContent();
                 };
-                if (App.device)
+                if (Device.RuntimePlatform == "iOS")
                 {
                     button.Text = " ";
                     button.BackgroundColor = (string)App.Current.Properties["frequency"] == code[i] ? Color.Green : Styles.UserColor;
@@ -80,7 +87,7 @@ namespace XBot
                 {
                     new Label
                     {
-                        Text = "\nОбласть поиска\n",
+                        Text = t,
                         HorizontalTextAlignment = TextAlignment.Center,
                         FontSize = 20,
                         HorizontalOptions = LayoutOptions.FillAndExpand,

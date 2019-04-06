@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace XBot
 {
@@ -35,6 +36,20 @@ namespace XBot
         {
             get {
                 return (int)App.Current.Properties["size"];
+            }
+        }
+
+        public static string Title(string title, ref NavigationPage p)
+        {
+            if (Device.RuntimePlatform == "iOS")
+            {
+                p.Title = title;
+                return "";
+            }
+            else
+            {
+                NavigationPage.SetHasNavigationBar(p, false);
+                return $"\n{title}\n";
             }
         }
 

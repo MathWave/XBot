@@ -146,7 +146,6 @@ namespace XBot
 
         private void ButtonClick(object sender, EventArgs e)
         {
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
             if (message.Text == null || message.Text.Length == 0)
                 return;
             else

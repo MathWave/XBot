@@ -114,8 +114,9 @@ namespace XBot
                 byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
                 line = Encoding.UTF8.GetString(s, 0, s.Length);
                 string[] vl = line.Split('\n');
-                dollar = vl[102].Split('"')[2].Substring(2, 5);
-                euro = vl[111].Split('"')[2].Substring(2, 5);
+                dollar = GetNumber(vl[102]);
+                euro = GetNumber(vl[111]);
+                //значения валют: 12, 21, 30, ... , 318 
             }
             catch { }
             Chat.Remove();
@@ -127,6 +128,27 @@ namespace XBot
             m.Active(true);
         }
 
+        static string GetNumber(string str)
+        {
+            string newstr = "";
+            bool flag = true;
+            for (int i = 0; i < str.Length; i++)
+            { 
+                if (flag)
+                {
+                    if (str[i] >= '0' && str[i] <= '9')
+                        newstr += str[i];
+                    else if (str[i] == '.')
+                        flag = false;
+                }
+                else
+                {
+                    newstr += "." + str[i] + str[i + 1];
+                    break;
+                }
+            }
+            return newstr;
+        }
         static string FromIEnumerable(IEnumerable<string> arr)
         {
             string line = "";

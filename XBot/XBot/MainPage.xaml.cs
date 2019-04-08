@@ -218,13 +218,15 @@ namespace XBot
                         Content = new Label { TextColor = Styles.UserColor, Text = mes[i].Substring(1), BackgroundColor = Styles.BackColor, FontSize = Styles.Size },
                         BorderColor = Styles.UserColor,
                         HorizontalOptions = LayoutOptions.End,
-                        BackgroundColor = Styles.BackColor
+                        BackgroundColor = Styles.BackColor,
+                        CornerRadius = 30,
+                        HasShadow = false
                     };
                 else
                 {
                     if (mes[i][1] == 'C')
                     {
-                        string[] cur = mes[i].Substring(2).Split('\n');
+                        string[] cur = mes[i].Substring(2, mes[i].Length - 3).Split('\n');
                         StackLayout sl = new StackLayout();
                         sl.Children.Add(new Label { TextColor = Styles.BotColor, Text = cur[0], BackgroundColor = Styles.BackColor, FontSize = Styles.Size, FontAttributes = FontAttributes.Bold });
                         for (int j = 1; j < cur.Length; j++)
@@ -266,6 +268,7 @@ namespace XBot
                     f.HorizontalOptions = LayoutOptions.Start;
                 }
                 f.VerticalOptions = LayoutOptions.End;
+                stack.Children.Add(new Label { FontSize = Styles.Size / 2, Text = "\n" });
                 stack.Children.Add(f);
             }
             scroll = new ScrollView { Content = stack };

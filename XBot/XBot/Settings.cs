@@ -53,12 +53,14 @@ namespace XBot
             Button Subs = Elements.Button("Мои подписки", true);
             Button Control = Elements.Button("Родительский контроль", true);
             Button Support = Elements.Button("Поддержать", true);
+            Button Currency = Elements.Button("Валюта", true);
             Time.Clicked += TimeClick;
             Clear.Clicked += ClearClick;
             Subs.Clicked += SubsClick;
             Control.Clicked += ControlClick;
             Size.Clicked += SizeClick;
             Type.Clicked += TypeClick;
+            Currency.Clicked += CurrencyClick;
             Support.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Support());
             Dark.Clicked += MakeDark;
             amount.TextColor = Styles.UserColor;
@@ -91,6 +93,7 @@ namespace XBot
                                 Elements.LabelAndElement("Показывать подсказки", Hints),
                                 Elements.ButtonInFrame(Type),
                                 Elements.ButtonInFrame(Time),
+                                Elements.ButtonInFrame(Currency),
                                 Elements.ButtonInFrame(Size),
                                 Elements.ButtonInFrame(Subs),
                                 Elements.ButtonInFrame(Control),

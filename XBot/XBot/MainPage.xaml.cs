@@ -124,13 +124,21 @@ namespace XBot
 
         void CurrencyClick(object sender, EventArgs e)
         {
-            try
+            if ((string)App.Current.Properties["currency"] == "")
             {
-                Chat.Add("Вычисляю курс валют...", true);
+                Chat.Add("Список валют пуст! Заполните его в настройках!", true);
                 Display();
-                Bot.Currency(this);
             }
-            catch { }
+            else
+            {
+                try
+                {
+                    Chat.Add("Вычисляю курс валют...", true);
+                    Display();
+                    Bot.Currency(this);
+                }
+                catch { }
+            }
         }
 
         private void NewsClick(object sender, EventArgs e)
@@ -203,7 +211,7 @@ namespace XBot
             stack = new StackLayout { VerticalOptions = LayoutOptions.End };
             for (int i = 0; i < mes.Count; i++)
             {
-                Frame f = new Frame { BackgroundColor = Styles.BackColor };
+                Frame f = new Frame { BackgroundColor = Styles.BackColor, CornerRadius = 30, HasShadow = false };
                 if (mes[i][0] == 'U')
                     f = new Frame
                     {
@@ -217,15 +225,11 @@ namespace XBot
                     if (mes[i][1] == 'C')
                     {
                         string[] cur = mes[i].Substring(2).Split('\n');
-                        f.Content = new StackLayout
-                        {
-                            Children =
-                            {
-                                new Label { TextColor = Styles.BotColor, Text = cur[0], BackgroundColor = Styles.BackColor, FontSize = Styles.Size, FontAttributes = FontAttributes.Bold },
-                                new Label { TextColor = Styles.BotColor, Text = cur[1], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 },
-                                new Label { TextColor = Styles.BotColor, Text = cur[2], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 }
-                            }
-                        };
+                        StackLayout sl = new StackLayout();
+                        sl.Children.Add(new Label { TextColor = Styles.BotColor, Text = cur[0], BackgroundColor = Styles.BackColor, FontSize = Styles.Size, FontAttributes = FontAttributes.Bold });
+                        for (int j = 1; j < cur.Length; j++)
+                            sl.Children.Add(new Label { TextColor = Styles.BotColor, Text = cur[j], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 });
+                        f.Content = sl;
                     }
                     else if (mes[i].Split('֍').Length == 1)
                     {

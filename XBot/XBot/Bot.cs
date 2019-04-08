@@ -107,15 +107,15 @@ namespace XBot
         {
             m.Active(false);
             string line = "";
-            string dollar = "";
-            string euro = "";
+            string mes = $"CКурс валют на {Now}\n";
+            List<string> cur = Formats.FromStringIntoList((string)App.Current.Properties["currency"]);
             try
             {
                 byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
                 line = Encoding.UTF8.GetString(s, 0, s.Length);
                 string[] vl = line.Split('\n');
-                dollar = GetNumber(vl[102]);
-                euro = GetNumber(vl[111]);
+                foreach (string c in cur)
+                    mes += $"{XBot.Currency.CurrencyId[c]}: {GetNumber(vl[XBot.Currency.CurrencyNum[c]])}\n";
                 //значения валют: 12, 21, 30, ... , 318 
             }
             catch { }
@@ -123,7 +123,7 @@ namespace XBot
             if (line == "")
                 Chat.Add("Отсутствует подключение к интернету", true);
             else
-                Chat.Add($"CКурс валют на {Now}\n$ {dollar}\n€ {euro}", true);
+                Chat.Add(mes, true);
             m.Display();
             m.Active(true);
         }

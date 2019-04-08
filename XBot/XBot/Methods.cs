@@ -30,6 +30,14 @@ namespace XBot
                 Navigation.PushAsync(new Timing());
         }
 
+        void CurrencyClick(object sender, EventArgs e)
+        {
+            if ((bool)App.Current.Properties["currency_intro"])
+                Navigation.PushAsync(new CurrencyIntro());
+            else
+                Navigation.PushAsync(new Currency());
+        }
+
         void TypeClick(object sender, EventArgs e)
         {
             if ((bool)App.Current.Properties["type_intro"])

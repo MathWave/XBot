@@ -16,7 +16,7 @@ namespace XBot
             {
                 App.Current.Properties["back"] = "30 30 30";
                 App.Current.Properties["user"] = "86 156 214";
-                App.Current.Properties["bot"] = "255 255 255";
+                App.Current.Properties["bot"] = "80 80 80";
             }
             main.Display();
             MakeContent();

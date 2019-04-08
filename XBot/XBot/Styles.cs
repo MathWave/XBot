@@ -10,7 +10,8 @@ namespace XBot
 
         public static Xamarin.Forms.Color BackColor
         {
-            get {
+            get 
+            {
                 string[] c = ((string)App.Current.Properties["back"]).Split(' ');
                 return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
             }
@@ -18,7 +19,8 @@ namespace XBot
 
         public static Xamarin.Forms.Color UserColor
         {
-            get {
+            get 
+            {
                 string[] c = ((string)App.Current.Properties["user"]).Split(' ');
                 return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
             }
@@ -26,19 +28,31 @@ namespace XBot
 
         public static Xamarin.Forms.Color BotColor
         {
-            get {
+            get 
+            {
                 string[] c = ((string)App.Current.Properties["bot"]).Split(' ');
                 return System.Drawing.Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
             }
         }
 
+        public static Xamarin.Forms.Color UserBackColor
+        {
+            get
+            {
+                Color c = UserColor;
+                return Color.FromRgb(c.R * 1.2, c.G * 1.2, c.B * 1.2);
+            }
+        }
+
         public static int Size
         {
-            get {
+            get 
+            {
                 return (int)App.Current.Properties["size"];
             }
         }
 
+        /*
         public static string Title(string title, ref NavigationPage p)
         {
             if (Device.RuntimePlatform == "iOS")
@@ -52,6 +66,7 @@ namespace XBot
                 return $"\n{title}\n";
             }
         }
+        */
 
     }
 }

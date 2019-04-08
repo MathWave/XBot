@@ -45,7 +45,8 @@ namespace XBot
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 TextColor = Styles.UserColor,
                 BackgroundColor = Styles.BackColor,
-                Title = "Добавить валюту"
+                Title = "Добавить валюту",
+                TitleColor = Xamarin.Forms.Color.LightSkyBlue
             };
             if (Device.RuntimePlatform == "Android")
                 entry.SelectedIndexChanged += Add;

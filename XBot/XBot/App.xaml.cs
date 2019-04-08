@@ -57,6 +57,20 @@ namespace XBot
                 App.Current.Properties["currency"] = "";
             if (!App.Current.Properties.TryGetValue("currency_intro", out obj))
                 App.Current.Properties["currency_intro"] = true;
+
+            if ((string)App.Current.Properties["back"] == "30 30 30")
+            {
+                App.Current.Properties["back"] = "30 30 30";
+                App.Current.Properties["user"] = "86 156 214";
+                App.Current.Properties["bot"] = "80 80 80";
+            }
+            else
+            {
+                App.Current.Properties["back"] = "255 255 255";
+                App.Current.Properties["user"] = "0 0 255";
+                App.Current.Properties["bot"] = "128 0 128";
+            }
+
             MainPage = (bool)App.Current.Properties["welcome"] ? new NavigationPage(new Welcome()) : (bool)App.Current.Properties["hint"] ? new NavigationPage(new Hint()) : new NavigationPage(new MainPage());
         }
 

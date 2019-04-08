@@ -211,14 +211,14 @@ namespace XBot
             stack = new StackLayout { VerticalOptions = LayoutOptions.End };
             for (int i = 0; i < mes.Count; i++)
             {
-                Frame f = new Frame { BackgroundColor = Styles.BackColor, CornerRadius = 30, HasShadow = false };
+                Frame f = new Frame { BackgroundColor = Styles.BotColor, CornerRadius = 30, HasShadow = false };
                 if (mes[i][0] == 'U')
                     f = new Frame
                     {
-                        Content = new Label { TextColor = Styles.UserColor, Text = mes[i].Substring(1), BackgroundColor = Styles.BackColor, FontSize = Styles.Size },
+                        Content = new Label { TextColor = Xamarin.Forms.Color.White, Text = mes[i].Substring(1), BackgroundColor = Styles.UserColor, FontSize = Styles.Size },
                         BorderColor = Styles.UserColor,
                         HorizontalOptions = LayoutOptions.End,
-                        BackgroundColor = Styles.BackColor,
+                        BackgroundColor = Styles.UserColor,
                         CornerRadius = 30,
                         HasShadow = false
                     };
@@ -228,14 +228,14 @@ namespace XBot
                     {
                         string[] cur = mes[i].Substring(2, mes[i].Length - 3).Split('\n');
                         StackLayout sl = new StackLayout();
-                        sl.Children.Add(new Label { TextColor = Styles.BotColor, Text = cur[0], BackgroundColor = Styles.BackColor, FontSize = Styles.Size, FontAttributes = FontAttributes.Bold });
+                        sl.Children.Add(new Label { TextColor = Xamarin.Forms.Color.White, Text = cur[0], BackgroundColor = Styles.BotColor, FontSize = Styles.Size, FontAttributes = FontAttributes.Bold });
                         for (int j = 1; j < cur.Length; j++)
-                            sl.Children.Add(new Label { TextColor = Styles.BotColor, Text = cur[j], BackgroundColor = Styles.BackColor, FontSize = Styles.Size * 3 / 2 });
+                            sl.Children.Add(new Label { TextColor = Xamarin.Forms.Color.White, Text = cur[j], BackgroundColor = Styles.BotColor, FontSize = Styles.Size * 3 / 2 });
                         f.Content = sl;
                     }
                     else if (mes[i].Split('֍').Length == 1)
                     {
-                        Label l = new Label { TextColor = Styles.BotColor, Text = mes[i].Substring(1), BackgroundColor = Styles.BackColor, FontSize = Styles.Size };
+                        Label l = new Label { TextColor = Xamarin.Forms.Color.White, Text = mes[i].Substring(1), BackgroundColor = Styles.BotColor, FontSize = Styles.Size };
                         f.Content = l;
                     }
                     else
@@ -246,7 +246,7 @@ namespace XBot
                         for (int j = 0; j < info.Length / 2; j++)
                         {
                             dict[info[2 * j]] = info[2 * j + 1];
-                            Label l = new Label { TextColor = Styles.BotColor, Text = info[2 * j], FontSize = Styles.Size };
+                            Label l = new Label { TextColor = Xamarin.Forms.Color.White, Text = info[2 * j], FontSize = Styles.Size, BackgroundColor = Styles.BotColor };
                             if (j > 0)
                             {
                                 var tapGestureRecognizer = new TapGestureRecognizer();

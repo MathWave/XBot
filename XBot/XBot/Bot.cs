@@ -29,7 +29,7 @@ namespace XBot
                     string[] elems1 = info.Split('\t');
                     if (!Contains(elems1[1]))
                     {
-                        mess += elems1[1] + "\n֍" + elems1[0] + "֍";
+                        mess += $"{elems1[1]}\n֍{elems1[0]}֍";
                         count++;
                     }
                 }

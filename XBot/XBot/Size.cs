@@ -30,15 +30,7 @@ namespace XBot
         void MakeContent()
         {
             StackLayout sl = new StackLayout();
-            string[] subs;
-            if (Device.RuntimePlatform == "iOS")
-            {
-                subs = new string[] { "     очень мелкий", "     мелкий", "     средний", "     большой", "     очень большой" };
-            }
-            else
-            {
-                subs = new string[] { "очень мелкий", "мелкий", "средний", "большой", "очень большой" };
-            }
+            string[] subs = new string[] { "очень мелкий", "мелкий", "средний", "большой", "очень большой" };
             int[] code = new int[] { 8, 10, 14, 18, 24 };
             for (int i = 0; i < subs.Length; i++)
             {
@@ -48,8 +40,11 @@ namespace XBot
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
                     BorderColor = Styles.UserColor,
-                    HorizontalOptions = LayoutOptions.Start,
-                    BackgroundColor = Styles.BackColor
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    BackgroundColor = Styles.BackColor,
+                    Text = subs[i],
+                    TextColor = Styles.UserColor,
+                    CornerRadius = 30
                 };
                 button.Clicked += (object sender, EventArgs e) =>
                 {
@@ -57,36 +52,19 @@ namespace XBot
                     MakeContent();
                     main.Display();
                 };
-                if (Device.RuntimePlatform == "iOS")
-                {
-                    button.Text = " ";
-                    button.BackgroundColor = (int)App.Current.Properties["size"] == code[i] ? Color.Green : Styles.UserColor;
-                }
-                else
-                {
-                    button.Text = "✔";
-                    button.TextColor = (int)App.Current.Properties["size"] == code[i] ? Color.Green : Styles.UserColor;
-                }
                 Frame newf = new Frame
                 {
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
-                    Content = new StackLayout
-                    {
-                        Children =
-                        {
-                            button,
-                            new Label
-                            {
-                                Text = subs[i],
-                                TextColor = Styles.UserColor,
-                                HorizontalTextAlignment = TextAlignment.Start,
-                                VerticalTextAlignment = TextAlignment.Center
-                            }
-                        },
-                        Orientation = StackOrientation.Horizontal
-                    }
+                    CornerRadius = 30,
+                    Content = button
                 };
+                if ((int)App.Current.Properties["size"] == code[i])
+                {
+                    button.TextColor = Color.White;
+                    button.BackgroundColor = Styles.UserColor;
+                    newf.BackgroundColor = Styles.UserColor;
+                }
                 sl.Children.Add(newf);
             }
             Content = new StackLayout

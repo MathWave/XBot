@@ -12,6 +12,7 @@ namespace XBot
         {
             return new Frame
             {
+                CornerRadius = 30,
                 Content = new StackLayout
                 {
                     Children =
@@ -39,6 +40,7 @@ namespace XBot
         {
             return new Frame
             {
+                CornerRadius = 30,
                 Content = b,
                 BorderColor = Styles.UserColor,
                 BackgroundColor = Styles.BackColor

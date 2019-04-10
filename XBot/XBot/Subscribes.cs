@@ -54,6 +54,7 @@ namespace XBot
             entry.Completed += Add;
             Frame newframe = new Frame
             {
+                CornerRadius = 30,
                 BorderColor = Styles.UserColor,
                 Content = new StackLayout
                 {
@@ -88,6 +89,7 @@ namespace XBot
                 };
                 Frame newf = new Frame
                 {
+                    CornerRadius = 30,
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
                     Content = new StackLayout

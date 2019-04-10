@@ -48,14 +48,17 @@ namespace XBot
                 Title = "Добавить валюту",
                 TitleColor = Xamarin.Forms.Color.LightSkyBlue
             };
+            /*
             if (Device.RuntimePlatform == "Android")
                 entry.SelectedIndexChanged += Add;
+                */               
             List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["currency"]);
             foreach (string c in CurrencyNum.Keys)
                 if (!subs.Contains(c))
                     entry.Items.Add(c);
             Frame newframe = new Frame
             {
+                CornerRadius = 30,
                 BorderColor = Styles.UserColor,
                 Content = new StackLayout
                 {
@@ -89,6 +92,7 @@ namespace XBot
                 };
                 Frame newf = new Frame
                 {
+                    CornerRadius = 30,
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
                     Content = new StackLayout

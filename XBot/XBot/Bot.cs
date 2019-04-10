@@ -114,8 +114,8 @@ namespace XBot
                 byte[] s = await client.GetByteArrayAsync("https://www.cbr-xml-daily.ru/daily_json.js");
                 line = Encoding.UTF8.GetString(s, 0, s.Length);
                 string[] vl = line.Split('\n');
-                foreach (string c in cur)
-                    mes += $"{XBot.Currency.CurrencyId[c]}: {GetNumber(vl[XBot.Currency.CurrencyNum[c]])}\n";
+                for (int i = cur.Count - 1; i >= 0; i--)
+                    mes += $"{XBot.Currency.CurrencyId[cur[i]]}: {GetNumber(vl[XBot.Currency.CurrencyNum[cur[i]]])}\n";
                 //значения валют: 12, 21, 30, ... , 318 
             }
             catch { }

@@ -1,21 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xamarin.Forms;
 
-namespace XBot
+namespace XBot.SettingsOnStart
 {
-    public class Timing : ContentPage
+    public class Intro4 : ContentPage
     {
-
-        string t = "\nОбласть поиска\n";
-        public Timing()
+        string t = "\nРазмер шрифта\n";
+        Button ignore = new Button
         {
+            Text = "Назад",
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        Button ok = new Button
+        {
+            Text = "Далее",
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        async void Pop(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+        public Intro4()
+        {
+            ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro5());
+            ignore.Clicked += Pop;
             if (Device.RuntimePlatform == "iOS")
             {
-                Title = "Область поиска";
+                Title = "Размер шрифта";
                 t = "";
             }
             else
@@ -27,13 +47,13 @@ namespace XBot
         void MakeContent()
         {
             StackLayout sl = new StackLayout();
-            string[] subs = new string[] { "10 минут", "час", "день", "неделя", "месяц" };
-            string[] code = new string[] { "online", "hour", "day", "week", "month" };
+            string[] subs = new string[] { "очень мелкий", "мелкий", "средний", "большой", "очень большой" };
+            int[] code = new int[] { 8, 10, 14, 18, 24 };
             for (int i = 0; i < subs.Length; i++)
             {
                 Button button = new Button
                 {
-                    FontSize = 20,
+                    FontSize = code[i],
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
                     BorderColor = Styles.UserColor,
@@ -45,7 +65,7 @@ namespace XBot
                 };
                 button.Clicked += (object sender, EventArgs e) =>
                 {
-                    App.Current.Properties["frequency"] = code[int.Parse(((Button)sender).ClassId)];
+                    App.Current.Properties["size"] = code[int.Parse(((Button)sender).ClassId)];
                     MakeContent();
                 };
                 Frame newf = new Frame
@@ -53,10 +73,9 @@ namespace XBot
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
                     CornerRadius = 30,
-                    Content = button,
-                    HasShadow = false
+                    Content = button
                 };
-                if ((string)App.Current.Properties["frequency"] == code[i])
+                if ((int)App.Current.Properties["size"] == code[i])
                 {
                     button.TextColor = Color.White;
                     button.BackgroundColor = Styles.UserColor;
@@ -79,10 +98,15 @@ namespace XBot
                         FontAttributes = FontAttributes.Bold,
                         BackgroundColor = Styles.BackColor
                     },
-                    new ScrollView { Content = sl }
+                    new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
+                    new StackLayout
+                    {
+                        Children = {ignore, ok},
+                        Orientation = StackOrientation.Horizontal
+                    }
                 }
             };
         }
-
     }
 }
+

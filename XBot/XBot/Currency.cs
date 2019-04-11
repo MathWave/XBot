@@ -109,7 +109,8 @@ namespace XBot
                             }
                         },
                         Orientation = StackOrientation.Horizontal
-                    }
+                    },
+                    HasShadow = false
                 };
                 sl.Children.Add(newf);
             }

@@ -36,7 +36,7 @@ namespace XBot
             {
                 Button button = new Button
                 {
-                    FontSize = 20,
+                    FontSize = code[i],
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
                     BorderColor = Styles.UserColor,
@@ -57,7 +57,8 @@ namespace XBot
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
                     CornerRadius = 30,
-                    Content = button
+                    Content = button,
+                    HasShadow = false
                 };
                 if ((int)App.Current.Properties["size"] == code[i])
                 {

@@ -252,7 +252,6 @@ namespace XBot
                                 var tapGestureRecognizer = new TapGestureRecognizer();
                                 tapGestureRecognizer.Tapped += (s, e) =>
                                 {
-                                    int k = j;
                                     string tmp = dict[l.Text];
                                     Device.OpenUri(new Uri("http://" + tmp));
                                 };

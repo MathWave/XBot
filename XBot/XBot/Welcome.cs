@@ -11,7 +11,7 @@ namespace XBot
     {
         Button ok = new Button
         {
-            Text = "OK",
+            Text = "Настроить",
             BackgroundColor = Styles.BackColor,
             TextColor = Styles.UserColor,
             BorderColor = Styles.UserColor,
@@ -20,7 +20,7 @@ namespace XBot
         };
         Button ignore = new Button
         {
-            Text = "Больше не показывать",
+            Text = "Пропустить",
             BackgroundColor = Styles.BackColor,
             TextColor = Styles.UserColor,
             BorderColor = Styles.UserColor,
@@ -48,6 +48,7 @@ namespace XBot
                                 "Еще я умею обрабатывать запросы, сохранять их, вычислять курс валют, а также ограничивать доступ к ненужному контенту.\n\n" +
                                 "Я использую открытое API Mediametrics и центрального банка России, за что им огромное спасибо!\n\n" +
                                 "Я являюсь некоммерческим проектом и создан в образовательных целях. Если у тебя возникли замечания или предложения, напиши моему создателю: emmtvv@icloud.com.\n\n" +
+                                "Нажми на кнопку \"Настроить\", чтобы я работал максимально комфортно для тебя!\n\n" +
                                 "Приятного пользования!",
                                 TextColor = Styles.UserColor,
                                 FontSize = 18
@@ -69,8 +70,8 @@ namespace XBot
 
         async void OkClick(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MainPage());
-            Navigation.RemovePage(Navigation.NavigationStack[0]);
+            //App.Current.Properties["welcome"] = false;
+            await Navigation.PushAsync(new XBot.SettingsOnStart.Intro1());
         }
 
         async void IgnoreClick(object sender, EventArgs e)

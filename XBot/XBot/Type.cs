@@ -53,7 +53,8 @@ namespace XBot
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
                     CornerRadius = 30,
-                    Content = button
+                    Content = button,
+                    HasShadow = false
                 };
                 if ((string)App.Current.Properties["type"] == code[i])
                 {

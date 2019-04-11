@@ -31,7 +31,8 @@ namespace XBot
                 BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.End,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Styles.BackColor
+                BackgroundColor = Styles.BackColor,
+                HasShadow = false
             };
         }
 
@@ -41,7 +42,8 @@ namespace XBot
             {
                 Content = b,
                 BorderColor = Styles.UserColor,
-                BackgroundColor = Styles.BackColor
+                BackgroundColor = Styles.BackColor,
+                HasShadow = false
             };
         }
 

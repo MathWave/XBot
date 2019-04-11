@@ -1,21 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xamarin.Forms;
 
-namespace XBot
+namespace XBot.SettingsOnStart
 {
-    public class Subscribes : ContentPage
+    public class Intro6 : ContentPage
     {
-
         Entry entry = new Entry();
 
         string t = "\nМои подписки\n";
-
-        public Subscribes()
+        Button ignore = new Button
         {
+            Text = "Назад",
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        Button ok = new Button
+        {
+            Text = "Далее",
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        async void Pop(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+        public Intro6()
+        {
+            ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro7());
+            ignore.Clicked += Pop;
             if (Device.RuntimePlatform == "iOS")
             {
                 Title = "Мои подписки";
@@ -106,8 +126,7 @@ namespace XBot
                             }
                         },
                         Orientation = StackOrientation.Horizontal
-                    },
-                    HasShadow = false
+                    }
                 };
                 sl.Children.Add(newf);
             }
@@ -127,7 +146,12 @@ namespace XBot
                         BackgroundColor = Styles.BackColor
                     },
                     newframe,
-                    new ScrollView { Content = sl }
+                    new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
+                    new StackLayout
+                    {
+                        Children = {ignore, ok},
+                        Orientation = StackOrientation.Horizontal
+                    }
                 }
             };
         }
@@ -142,6 +166,6 @@ namespace XBot
                 MakeContent();
             }
         }
-
     }
 }
+

@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xamarin.Forms;
 
-namespace XBot
+namespace XBot.SettingsOnStart
 {
-    public class Timing : ContentPage
+    public class Intro2 : ContentPage
     {
-
-        string t = "\nОбласть поиска\n";
-        public Timing()
+        Button ok;
+        Button ignore;
+        async void Pop(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+        string t = "\nТематика новостей\n";
+        public Intro2()
         {
             if (Device.RuntimePlatform == "iOS")
             {
-                Title = "Область поиска";
+                Title = "Тематика новостей";
                 t = "";
             }
             else
@@ -26,14 +28,34 @@ namespace XBot
 
         void MakeContent()
         {
+            ignore = new Button
+            {
+                Text = "Назад",
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+            ok = new Button
+            {
+                Text = "Далее",
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+            ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro3());
+            ignore.Clicked += Pop;
             StackLayout sl = new StackLayout();
-            string[] subs = new string[] { "10 минут", "час", "день", "неделя", "месяц" };
-            string[] code = new string[] { "online", "hour", "day", "week", "month" };
+            string[] subs = new string[] { "Общие", "LifeStyle", "Hi-tech", "Спорт", "Бизнес" };
+            string[] code = new string[] { "", "magazine/", "hitech/", "sport/", "business/" };
             for (int i = 0; i < subs.Length; i++)
             {
                 Button button = new Button
                 {
-                    FontSize = 20,
+                    //FontSize = 20,
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
                     BorderColor = Styles.UserColor,
@@ -45,7 +67,7 @@ namespace XBot
                 };
                 button.Clicked += (object sender, EventArgs e) =>
                 {
-                    App.Current.Properties["frequency"] = code[int.Parse(((Button)sender).ClassId)];
+                    App.Current.Properties["type"] = code[int.Parse(((Button)sender).ClassId)];
                     MakeContent();
                 };
                 Frame newf = new Frame
@@ -53,10 +75,9 @@ namespace XBot
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
                     CornerRadius = 30,
-                    Content = button,
-                    HasShadow = false
+                    Content = button
                 };
-                if ((string)App.Current.Properties["frequency"] == code[i])
+                if ((string)App.Current.Properties["type"] == code[i])
                 {
                     button.TextColor = Color.White;
                     button.BackgroundColor = Styles.UserColor;
@@ -79,10 +100,15 @@ namespace XBot
                         FontAttributes = FontAttributes.Bold,
                         BackgroundColor = Styles.BackColor
                     },
-                    new ScrollView { Content = sl }
+                    new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
+                    new StackLayout
+                    {
+                        Children = {ignore, ok},
+                        Orientation = StackOrientation.Horizontal
+                    }
                 }
             };
         }
-
     }
 }
+

@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xamarin.Forms;
 
-namespace XBot
+namespace XBot.SettingsOnStart
 {
-    public class Timing : ContentPage
+    public class Intro3 : ContentPage
     {
-
+        Button ok;
+        Button ignore;
+        async void Pop(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
         string t = "\nОбласть поиска\n";
-        public Timing()
+        public Intro3()
         {
             if (Device.RuntimePlatform == "iOS")
             {
@@ -26,6 +28,26 @@ namespace XBot
 
         void MakeContent()
         {
+            ignore = new Button
+            {
+                Text = "Назад",
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+            ok = new Button
+            {
+                Text = "Далее",
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+            ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro4());
+            ignore.Clicked += Pop;
             StackLayout sl = new StackLayout();
             string[] subs = new string[] { "10 минут", "час", "день", "неделя", "месяц" };
             string[] code = new string[] { "online", "hour", "day", "week", "month" };
@@ -53,8 +75,7 @@ namespace XBot
                     BorderColor = Styles.UserColor,
                     BackgroundColor = Styles.BackColor,
                     CornerRadius = 30,
-                    Content = button,
-                    HasShadow = false
+                    Content = button
                 };
                 if ((string)App.Current.Properties["frequency"] == code[i])
                 {
@@ -79,10 +100,15 @@ namespace XBot
                         FontAttributes = FontAttributes.Bold,
                         BackgroundColor = Styles.BackColor
                     },
-                    new ScrollView { Content = sl }
+                    new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
+                    new StackLayout
+                    {
+                        Children = {ignore, ok},
+                        Orientation = StackOrientation.Horizontal
+                    }
                 }
             };
         }
-
     }
 }
+

@@ -1,24 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xamarin.Forms;
 
-namespace XBot
+namespace XBot.SettingsOnStart
 {
-    public class Subscribes : ContentPage
+    public class Intro5 : ContentPage
     {
-
-        Entry entry = new Entry();
-
-        string t = "\nМои подписки\n";
-
-        public Subscribes()
+        Picker entry = new Picker();
+        Button ignore = new Button
         {
+            Text = "Назад",
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        Button ok = new Button
+        {
+            Text = "Далее",
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        async void Pop(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+        string t = "\nВалюта\n";
+
+        public Intro5()
+        {
+            ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro6());
+            ignore.Clicked += Pop;
             if (Device.RuntimePlatform == "iOS")
             {
-                Title = "Мои подписки";
+                Title = "Валюта";
                 t = "";
             }
             else
@@ -41,17 +61,24 @@ namespace XBot
                 HorizontalOptions = LayoutOptions.Start,
             };
             button1.Clicked += Add;
-            entry = new Entry
+            entry = new Picker
             {
-                Placeholder = "Дополнительная подписка",
                 FontSize = 14,
-                PlaceholderColor = Xamarin.Forms.Color.LightSkyBlue,
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 TextColor = Styles.UserColor,
-                BackgroundColor = Styles.BackColor
+                BackgroundColor = Styles.BackColor,
+                Title = "Добавить валюту",
+                TitleColor = Xamarin.Forms.Color.LightSkyBlue
             };
-            entry.Completed += Add;
+            /*
+            if (Device.RuntimePlatform == "Android")
+                entry.SelectedIndexChanged += Add;
+                */
+            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["currency"]);
+            foreach (string c in Currency.CurrencyNum.Keys)
+                if (!subs.Contains(c))
+                    entry.Items.Add(c);
             Frame newframe = new Frame
             {
                 CornerRadius = 30,
@@ -67,7 +94,6 @@ namespace XBot
                 },
                 BackgroundColor = Styles.BackColor
             };
-            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
             for (int i = subs.Count - 1; i >= 0; i--)
             {
                 Button button = new Button
@@ -84,7 +110,7 @@ namespace XBot
                 button.Clicked += (object sender, EventArgs e) =>
                 {
                     subs.RemoveAt(int.Parse(((Button)sender).ClassId));
-                    App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
+                    App.Current.Properties["currency"] = Formats.FromListIntoString(subs);
                     MakeContent();
                 };
                 Frame newf = new Frame
@@ -106,8 +132,7 @@ namespace XBot
                             }
                         },
                         Orientation = StackOrientation.Horizontal
-                    },
-                    HasShadow = false
+                    }
                 };
                 sl.Children.Add(newf);
             }
@@ -127,21 +152,27 @@ namespace XBot
                         BackgroundColor = Styles.BackColor
                     },
                     newframe,
-                    new ScrollView { Content = sl }
+                    new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
+                    new StackLayout
+                    {
+                        Children = {ignore, ok},
+                        Orientation = StackOrientation.Horizontal
+                    }
+
                 }
             };
         }
 
         void Add(object sender, EventArgs e)
         {
-            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
-            if (entry.Text != null && entry.Text.Length != 0)
+            List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["currency"]);
+            if (entry.SelectedItem != null && ((string)entry.SelectedItem).Length != 0)
             {
-                subs.Add(entry.Text);
-                App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
+                subs.Add((string)entry.SelectedItem);
+                App.Current.Properties["currency"] = Formats.FromListIntoString(subs);
                 MakeContent();
             }
         }
-
     }
 }
+

@@ -8,6 +8,7 @@ namespace XBot.SettingsOnStart
     {
         Button ok;
         Button ignore;
+        Button help;
         async void Pop(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
@@ -42,6 +43,11 @@ namespace XBot.SettingsOnStart
         Button dark = new Button { Text="     ", BackgroundColor = Color.FromRgb(30, 30, 30), BorderColor = Color.FromRgb(255,255,255), BorderWidth = 1, HorizontalOptions = LayoutOptions.FillAndExpand };
         Button light = new Button { Text = "     ", BackgroundColor = Color.FromRgb(255, 255, 255), BorderColor = Color.FromRgb(30, 30, 30), BorderWidth = 1, HorizontalOptions = LayoutOptions.FillAndExpand };
 
+        async void Help(object sender, EventArgs e)
+        {
+            await DisplayAlert("Помощь", "Выбери цветовую тему приложения", "Хорошо!");
+        }
+
         void MakeContent()
         {
             ignore = new Button
@@ -51,7 +57,7 @@ namespace XBot.SettingsOnStart
                 TextColor = Styles.UserColor,
                 BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.CenterAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
             ok = new Button
             {
@@ -60,10 +66,21 @@ namespace XBot.SettingsOnStart
                 TextColor = Styles.UserColor,
                 BorderColor = Styles.UserColor,
                 VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.CenterAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+            help = new Button
+            {
+                Text = "?",
+                FontAttributes = FontAttributes.Bold,
+                BackgroundColor = Styles.BackColor,
+                TextColor = Styles.UserColor,
+                BorderColor = Styles.UserColor,
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
             ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro2());
             ignore.Clicked += Pop;
+            help.Clicked += Help;
             BackgroundColor = Styles.BackColor;
             Content = new StackLayout
             {
@@ -122,7 +139,7 @@ namespace XBot.SettingsOnStart
                     },
                     new StackLayout
                     {
-                        Children = {ignore, ok},
+                        Children = {ignore, help, ok},
                         Orientation = StackOrientation.Horizontal
                     }
                 }

@@ -65,7 +65,8 @@ namespace XBot
                     },
                     Orientation = StackOrientation.Horizontal
                 },
-                BackgroundColor = Styles.BackColor
+                BackgroundColor = Styles.BackColor,
+                HasShadow = false
             };
             List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["subscribes"]);
             for (int i = subs.Count - 1; i >= 0; i--)

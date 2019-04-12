@@ -69,7 +69,8 @@ namespace XBot
                     },
                     Orientation = StackOrientation.Horizontal
                 },
-                BackgroundColor = Styles.BackColor
+                BackgroundColor = Styles.BackColor,
+                HasShadow = false
             };
             for (int i = subs.Count - 1; i >= 0; i--)
             {

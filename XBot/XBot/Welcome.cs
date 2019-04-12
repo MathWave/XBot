@@ -16,7 +16,7 @@ namespace XBot
             TextColor = Styles.UserColor,
             BorderColor = Styles.UserColor,
             VerticalOptions = LayoutOptions.End,
-            HorizontalOptions = LayoutOptions.CenterAndExpand
+            HorizontalOptions = LayoutOptions.FillAndExpand
         };
         Button ignore = new Button
         {
@@ -25,7 +25,7 @@ namespace XBot
             TextColor = Styles.UserColor,
             BorderColor = Styles.UserColor,
             VerticalOptions = LayoutOptions.End,
-            HorizontalOptions = LayoutOptions.CenterAndExpand
+            HorizontalOptions = LayoutOptions.FillAndExpand
         };
         public Welcome()
         {

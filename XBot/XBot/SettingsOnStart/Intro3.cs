@@ -8,6 +8,20 @@ namespace XBot.SettingsOnStart
     {
         Button ok;
         Button ignore;
+        Button help = new Button
+        {
+            Text = "?",
+            FontAttributes = FontAttributes.Bold,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.FillAndExpand
+        };
+        async void Help(object sender, EventArgs e)
+        {
+            await DisplayAlert("Помощь", "Выбери временной интервал поиска новостей", "Хорошо!");
+        }
         async void Pop(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
@@ -23,6 +37,7 @@ namespace XBot.SettingsOnStart
             else
                 NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
+            help.Clicked += Help;
             MakeContent();
         }
 
@@ -103,12 +118,13 @@ namespace XBot.SettingsOnStart
                     new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
                     new StackLayout
                     {
-                        Children = {ignore, ok},
+                        Children = {ignore, help, ok },
                         Orientation = StackOrientation.Horizontal
                     }
                 }
             };
         }
+
     }
 }
 

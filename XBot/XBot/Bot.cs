@@ -115,7 +115,11 @@ namespace XBot
                 line = Encoding.UTF8.GetString(s, 0, s.Length);
                 string[] vl = line.Split('\n');
                 for (int i = cur.Count - 1; i >= 0; i--)
-                    mes += $"{XBot.Currency.CurrencyId[cur[i]]}: {GetNumber(vl[XBot.Currency.CurrencyNum[cur[i]]])}\n";
+                {
+                    int num = XBot.Currency.CurrencyNum[cur[i]];
+                    double val = double.Parse(vl[num].Split(':')[1].Split(' ')[1].Split(',')[0]) / int.Parse(vl[num - 2].Split(':')[1].Split(' ')[1].Split(',')[0]) + 0.005;
+                    mes += $"{XBot.Currency.CurrencyId[cur[i]]}: {val:f2}\n";
+                }
                 //значения валют: 12, 21, 30, ... , 318 
             }
             catch { }

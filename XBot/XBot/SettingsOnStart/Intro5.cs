@@ -26,6 +26,20 @@ namespace XBot.SettingsOnStart
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
+        Button help = new Button
+        {
+            Text = "?",
+            FontAttributes = FontAttributes.Bold,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.FillAndExpand
+        };
+        async void Help(object sender, EventArgs e)
+        {
+            await DisplayAlert("Помощь", "Выбери валюту, курс которой ты хотел бы получать", "Хорошо!");
+        }
         async void Pop(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
@@ -36,6 +50,7 @@ namespace XBot.SettingsOnStart
         {
             ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro6());
             ignore.Clicked += Pop;
+            help.Clicked += Help;
             if (Device.RuntimePlatform == "iOS")
             {
                 Title = "Валюта";
@@ -155,7 +170,7 @@ namespace XBot.SettingsOnStart
                     new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
                     new StackLayout
                     {
-                        Children = {ignore, ok},
+                        Children = {ignore, help, ok },
                         Orientation = StackOrientation.Horizontal
                     }
 

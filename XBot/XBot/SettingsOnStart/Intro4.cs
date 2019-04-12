@@ -25,6 +25,20 @@ namespace XBot.SettingsOnStart
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
+        Button help = new Button
+        {
+            Text = "?",
+            FontAttributes = FontAttributes.Bold,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.FillAndExpand
+        };
+        async void Help(object sender, EventArgs e)
+        {
+            await DisplayAlert("Помощь", "Выбери размер шрифта в диалоге", "Хорошо!");
+        }
         async void Pop(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
@@ -33,6 +47,7 @@ namespace XBot.SettingsOnStart
         {
             ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro5());
             ignore.Clicked += Pop;
+            help.Clicked += Help;
             if (Device.RuntimePlatform == "iOS")
             {
                 Title = "Размер шрифта";
@@ -101,7 +116,7 @@ namespace XBot.SettingsOnStart
                     new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
                     new StackLayout
                     {
-                        Children = {ignore, ok},
+                        Children = {ignore, help, ok },
                         Orientation = StackOrientation.Horizontal
                     }
                 }

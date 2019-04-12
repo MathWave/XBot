@@ -28,6 +28,20 @@ namespace XBot.SettingsOnStart
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
+        Button help = new Button
+        {
+            Text = "?",
+            FontAttributes = FontAttributes.Bold,
+            BackgroundColor = Styles.BackColor,
+            TextColor = Styles.UserColor,
+            BorderColor = Styles.UserColor,
+            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.FillAndExpand
+        };
+        async void Help(object sender, EventArgs e)
+        {
+            await DisplayAlert("Помощь", "Выбери ключевые слова, по которым ты хотел бы получать нвоости", "Хорошо!");
+        }
         async void Pop(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
@@ -36,6 +50,7 @@ namespace XBot.SettingsOnStart
         {
             ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro7());
             ignore.Clicked += Pop;
+            help.Clicked += Help;
             if (Device.RuntimePlatform == "iOS")
             {
                 Title = "Мои подписки";
@@ -45,6 +60,7 @@ namespace XBot.SettingsOnStart
                 NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
             MakeContent();
+            Display();
         }
 
         void MakeContent()
@@ -149,7 +165,7 @@ namespace XBot.SettingsOnStart
                     new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
                     new StackLayout
                     {
-                        Children = {ignore, ok},
+                        Children = {ignore, help, ok },
                         Orientation = StackOrientation.Horizontal
                     }
                 }
@@ -165,6 +181,11 @@ namespace XBot.SettingsOnStart
                 App.Current.Properties["subscribes"] = Formats.FromListIntoString(subs);
                 MakeContent();
             }
+        }
+
+        async void Display()
+        {
+            await DisplayAlert("Важная информация!", "Выбери ключевые слова, по которым будет производиться поиск", "Понятно!");
         }
     }
 }

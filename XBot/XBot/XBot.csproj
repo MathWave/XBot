@@ -16,4 +16,7 @@
   <ItemGroup>
     <Folder Include="SettingsOnStart\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Commands.cs" />
+  </ItemGroup>
 </Project>

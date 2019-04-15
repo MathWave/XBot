@@ -8,7 +8,7 @@ namespace XBot
     static class Formats
     {
 
-        const char parse = '÷';
+        public const char parse = '÷';
 
         public static string FromListIntoString(List<string> l)
         {
@@ -16,7 +16,7 @@ namespace XBot
                 return "";
             string line = "";
             for (int i = 0; i < l.Count; i++)
-                line += l[i] + parse;
+                line += l[i].Replace(parse.ToString(), parse.ToString() + parse.ToString()) + parse;
             return line.Substring(0, line.Length - 1);
         }
 
@@ -24,7 +24,24 @@ namespace XBot
         {
             if (line == null || line.Length == 0)
                 return new List<string>();
-            return line.Split(parse).ToList<string>();
+            string word = "";
+            List<string> l = new List<string>();
+            int i = 0;
+            while (i < line.Length)
+            {
+                if (line[i] != parse)
+                    word += line[i];
+                else if (line[i + 1] == parse)
+                    word += line[i++];
+                else
+                {
+                    l.Add(word);
+                    word = "";
+                }
+                i++;
+            }
+            l.Add(word);
+            return l;
         }
 
     }

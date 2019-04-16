@@ -22,6 +22,7 @@ namespace XBot
         Button news;
         Button subscribes;
         Button currency;
+        Button favs;
 
         public MainPage()
         {
@@ -74,10 +75,20 @@ namespace XBot
                 BackgroundColor = Styles.BackColor,
                 WidthRequest = 50
             };
+            favs = new Button
+            {
+                Text = "⭐️",
+                FontSize = 20,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.End,
+                BackgroundColor = Styles.BackColor,
+                WidthRequest = 50
+            };
             news.Clicked += NewsClick;
             settings.Clicked += SettingsClick;
             subscribes.Clicked += SubscribesClick;
             currency.Clicked += CurrencyClick;
+            favs.Clicked += FavsClick;
             string line = (string)App.Current.Properties["messages"];
             if (line.Length == 0)
                 frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Styles.BackColor };
@@ -90,6 +101,19 @@ namespace XBot
                 SubscribesClick(new object(), new EventArgs());
             else
                 CurrencyClick(new object(), new EventArgs());
+        }
+
+        private void FavsClick(object sender, EventArgs e)
+        {
+            if ((string)App.Current.Properties["save"] == "")
+                Chat.Add("Список закладок пуст!", true);
+            else
+            {
+                if ((string)App.Current.Properties["messages"] != "")
+                    App.Current.Properties["messages"] += Formats.parse.ToString();
+                App.Current.Properties["messages"] += $"BСтатьи, сохраненные в закладки:\n\n֍֍{((string)App.Current.Properties["save"]).Replace(Formats.parse.ToString(), "֍")}";
+            }
+            Display();
         }
 
         public void Active(bool act)
@@ -187,7 +211,8 @@ namespace XBot
                             settings,
                             subscribes,
                             news,
-                            currency
+                            currency,
+                            favs
                         },
                         Orientation = StackOrientation.Horizontal
                     },
@@ -200,6 +225,7 @@ namespace XBot
             subscribes.BackgroundColor = Styles.BackColor;
             news.BackgroundColor = Styles.BackColor;
             currency.BackgroundColor = Styles.BackColor;
+            favs.BackgroundColor = Styles.BackColor;
             if (scroll != null)
                 scroll.ScrollToAsync(stack, ScrollToPosition.End, false);
         }
@@ -253,7 +279,7 @@ namespace XBot
                                 tapGestureRecognizer.Tapped += (s, e) =>
                                 {
                                     string tmp = dict[l.Text];
-                                    Device.OpenUri(new Uri("http://" + tmp));
+                                    Navigation.PushAsync(new ShowContent(tmp, l.Text));
                                 };
                                 l.GestureRecognizers.Add(tapGestureRecognizer);
                             }

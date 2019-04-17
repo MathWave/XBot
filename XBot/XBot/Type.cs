@@ -23,11 +23,7 @@ namespace XBot
         void MakeContent()
         {
             StackLayout sl = new StackLayout();
-            string[] subs;
-            if (Device.RuntimePlatform == "iOS")
-                subs = new string[] { "     Общие", "     LifeStyle", "     Hi-tech", "     Спорт", "     Бизнес" };
-            else
-                subs = new string[] { "Общие", "LifeStyle", "Hi-tech", "Спорт", "Бизнес" };
+            string[] subs = new string[] { "Общие", "LifeStyle", "Hi-tech", "Спорт", "Бизнес" };
             string[] code = new string[] { "", "magazine/", "hitech/", "sport/", "business/" };
             for (int i = 0; i < subs.Length; i++)
             {

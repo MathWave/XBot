@@ -70,7 +70,6 @@ namespace XBot
 
         async void OkClick(object sender, EventArgs e)
         {
-            //App.Current.Properties["welcome"] = false;
             await Navigation.PushAsync(new XBot.SettingsOnStart.Intro1());
         }
 

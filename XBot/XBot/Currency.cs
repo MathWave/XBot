@@ -47,11 +47,7 @@ namespace XBot
                 BackgroundColor = Styles.BackColor,
                 Title = "Добавить валюту",
                 TitleColor = Xamarin.Forms.Color.LightSkyBlue
-            };
-            /*
-            if (Device.RuntimePlatform == "Android")
-                entry.SelectedIndexChanged += Add;
-                */               
+            };             
             List<string> subs = Formats.FromStringIntoList((string)App.Current.Properties["currency"]);
             foreach (string c in CurrencyNum.Keys)
                 if (!subs.Contains(c))

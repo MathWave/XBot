@@ -49,21 +49,5 @@ namespace XBot
             get => (int)App.Current.Properties["size"];
         }
 
-        /*
-        public static string Title(string title, ref NavigationPage p)
-        {
-            if (Device.RuntimePlatform == "iOS")
-            {
-                p.Title = title;
-                return "";
-            }
-            else
-            {
-                NavigationPage.SetHasNavigationBar(p, false);
-                return $"\n{title}\n";
-            }
-        }
-        */
-
     }
 }

@@ -35,6 +35,19 @@ namespace XBot.SettingsOnStart
             VerticalOptions = LayoutOptions.End,
             HorizontalOptions = LayoutOptions.FillAndExpand
         };
+        Slider slider = new Slider
+        {
+            Minimum = 0,
+            Maximum = 18,
+            ThumbColor = Styles.UserColor,
+            MaximumTrackColor = Styles.UserColor,
+            MinimumTrackColor = Styles.UserColor,
+            Value = (int)App.Current.Properties["size"] - 8
+        };
+        Label my = new Label { TextColor = Xamarin.Forms.Color.White, Text = "Привет, как тебя зовут?", BackgroundColor = Styles.UserColor, FontSize = Styles.Size };
+        Label bot = new Label { TextColor = Xamarin.Forms.Color.White, Text = "Меня зовут XBot!", BackgroundColor = Styles.BotColor, FontSize = Styles.Size };
+        Frame fr;
+        int size = (int)App.Current.Properties["size"];
         async void Help(object sender, EventArgs e)
         {
             await DisplayAlert("Помощь", "Выбери размер шрифта в диалоге", "Хорошо!");
@@ -45,7 +58,13 @@ namespace XBot.SettingsOnStart
         }
         public Intro4()
         {
-            ok.Clicked += (object sender, EventArgs e) => Navigation.PushAsync(new Intro5());
+            slider.ValueChanged += Slider_ValueChanged;
+            ok.Clicked += (object sender, EventArgs e) =>
+            {
+                App.Current.Properties["size"] = size;
+                Navigation.PushAsync(new Intro5());
+            };
+
             ignore.Clicked += Pop;
             help.Clicked += Help;
             if (Device.RuntimePlatform == "iOS")
@@ -56,48 +75,37 @@ namespace XBot.SettingsOnStart
             else
                 NavigationPage.SetHasNavigationBar(this, false);
             BackgroundColor = Styles.BackColor;
-            MakeContent();
-        }
-
-        void MakeContent()
-        {
-            StackLayout sl = new StackLayout();
-            string[] subs = new string[] { "очень мелкий", "мелкий", "средний", "большой", "очень большой" };
-            int[] code = new int[] { 8, 10, 14, 18, 24 };
-            for (int i = 0; i < subs.Length; i++)
+            fr = new Frame
             {
-                Button button = new Button
+                Content = new StackLayout
                 {
-                    FontSize = code[i],
-                    ClassId = i.ToString(),
-                    FontAttributes = FontAttributes.Bold,
-                    BorderColor = Styles.UserColor,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    BackgroundColor = Styles.BackColor,
-                    Text = subs[i],
-                    TextColor = Styles.UserColor,
-                    CornerRadius = 30
-                };
-                button.Clicked += (object sender, EventArgs e) =>
-                {
-                    App.Current.Properties["size"] = code[int.Parse(((Button)sender).ClassId)];
-                    MakeContent();
-                };
-                Frame newf = new Frame
-                {
-                    BorderColor = Styles.UserColor,
-                    BackgroundColor = Styles.BackColor,
-                    CornerRadius = 30,
-                    Content = button
-                };
-                if ((int)App.Current.Properties["size"] == code[i])
-                {
-                    button.TextColor = Color.White;
-                    button.BackgroundColor = Styles.UserColor;
-                    newf.BackgroundColor = Styles.UserColor;
-                }
-                sl.Children.Add(newf);
-            }
+                    Children =
+                    {
+                        new Frame
+                        {
+                            Content = my,
+                            BorderColor = Styles.UserColor,
+                            HorizontalOptions = LayoutOptions.End,
+                            BackgroundColor = Styles.UserColor,
+                            CornerRadius = 30,
+                            HasShadow = false
+                        },
+                        new Frame
+                        {
+                            Content = bot,
+                            BorderColor = Styles.BotColor,
+                            HorizontalOptions = LayoutOptions.Start,
+                            BackgroundColor = Styles.BotColor,
+                            CornerRadius = 30,
+                            HasShadow = false
+                        }
+                    }
+                },
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                HasShadow = false,
+                BackgroundColor = Styles.BackColor
+            };
             Content = new StackLayout
             {
                 Children =
@@ -113,15 +121,24 @@ namespace XBot.SettingsOnStart
                         FontAttributes = FontAttributes.Bold,
                         BackgroundColor = Styles.BackColor
                     },
-                    new ScrollView { Content = sl, VerticalOptions = LayoutOptions.FillAndExpand },
+                    fr,
+                    slider,
                     new StackLayout
                     {
-                        Children = {ignore, help, ok },
+                        Children = { ignore, help, ok },
                         Orientation = StackOrientation.Horizontal
                     }
                 }
             };
         }
+
+        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            size = (int)e.NewValue + 8;
+            my.FontSize = size;
+            bot.FontSize = size;
+        }
+
     }
 }
 

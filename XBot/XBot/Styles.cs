@@ -46,10 +46,7 @@ namespace XBot
 
         public static int Size
         {
-            get 
-            {
-                return (int)App.Current.Properties["size"];
-            }
+            get => (int)App.Current.Properties["size"];
         }
 
         /*

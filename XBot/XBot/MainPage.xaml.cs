@@ -123,6 +123,7 @@ namespace XBot
             subscribes.IsEnabled = act;  
             news.IsEnabled = act;
             currency.IsEnabled = act;
+            favs.IsEnabled = act;
         }
 
         private void SubscribesClick(object sender, EventArgs e)

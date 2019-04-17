@@ -13,12 +13,13 @@ namespace XBot
 
         Button save = new Button
         {
-            Text = "Сохранить",
+            Text = "☆",
             BackgroundColor = Styles.BackColor,
             TextColor = Styles.UserColor,
             BorderColor = Styles.UserColor,
             VerticalOptions = LayoutOptions.End,
-            HorizontalOptions = LayoutOptions.FillAndExpand
+            HorizontalOptions = LayoutOptions.FillAndExpand,
+            FontSize = 20
         };
 
         Button back = new Button
@@ -46,29 +47,39 @@ namespace XBot
             this.title = title;
             this.url = url;
             BackgroundColor = Styles.BackColor;
-            save.Clicked += SaveClick;
             back.Clicked += BackClick;
-            internet.Clicked += (object sender, EventArgs e) => Device.OpenUri(new Uri(url));
+            internet.Clicked += (object sender, EventArgs e) => Device.OpenUri(new Uri("http://" + url));
             NavigationPage.SetHasNavigationBar(this, false);
             List<string> favs = Formats.FromStringIntoList((string)App.Current.Properties["save"]);
             if (PositionInList(favs, $"{title}֍{url}") != -1)
-                save.Text = "Удалить";
+                save = new Button
+                {
+                    Text = "★",
+                    BackgroundColor = Styles.BackColor,
+                    TextColor = Color.Yellow,
+                    BorderColor = Color.Yellow,
+                    VerticalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    FontSize = 20
+                };
+            save.Clicked += SaveClick;
             Content = new StackLayout { Children = { new WebView { Source = "http://" + url, VerticalOptions = LayoutOptions.FillAndExpand }, new StackLayout { Children = { back, internet, save }, Orientation = StackOrientation.Horizontal } } };
         }
 
-        async void SaveClick(object sender, EventArgs e)
+        void SaveClick(object sender, EventArgs e)
         {
             List<string> favs = Formats.FromStringIntoList((string)App.Current.Properties["save"]);
-            if (save.Text == "Сохранить")
+            if (save.Text == "☆")
             {
                 favs.Add($"{title}֍{url}");
-                save.Text = "Удалить";
+                save.Text = "★";
+                save.TextColor = Color.Yellow;
             }
             else
             {
                 favs.Remove($"{title}֍{url}");
-                save.Text = "Сохранить";
-                await Navigation.PopAsync();
+                save.Text = "☆";
+                save.TextColor = Styles.UserColor;
             }
             App.Current.Properties["save"] = Formats.FromListIntoString(favs);
         }

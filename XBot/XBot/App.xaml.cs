@@ -71,7 +71,6 @@ namespace XBot
                 App.Current.Properties["user"] = "0 0 255";
                 App.Current.Properties["bot"] = "128 0 128";
             }
-            //MainPage = new NavigationPage(new ShowContent("http://google.com/"));
             MainPage = (bool)App.Current.Properties["welcome"] ? new NavigationPage(new Welcome()) : (bool)App.Current.Properties["hint"] ? new NavigationPage(new Hint()) : new NavigationPage(new MainPage());
         }
 

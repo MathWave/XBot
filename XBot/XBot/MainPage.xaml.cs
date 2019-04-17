@@ -111,7 +111,7 @@ namespace XBot
             {
                 if ((string)App.Current.Properties["messages"] != "")
                     App.Current.Properties["messages"] += Formats.parse.ToString();
-                App.Current.Properties["messages"] += $"BСтатьи, сохраненные в закладки:\n\n֍֍{((string)App.Current.Properties["save"]).Replace(Formats.parse.ToString(), "֍")}";
+                App.Current.Properties["messages"] += $"BЗакладки:\n\n֍֍{((string)App.Current.Properties["save"]).Replace(Formats.parse.ToString(), "֍")}";
             }
             Display();
         }

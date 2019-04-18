@@ -117,14 +117,13 @@ namespace XBot
                 for (int i = cur.Count - 1; i >= 0; i--)
                 {
                     int num = XBot.Currency.CurrencyNum[cur[i]];
-                    string ss = vl[num].Split(':')[1].Split(' ')[1].Split(',')[0].Replace(".", ",");
+                    string[] ss = vl[num].Split(':')[1].Split(' ')[1].Split(',')[0].Split('.');
                     string p = vl[num - 2].Split(':')[1].Split(' ')[1].Split(',')[0];
-                    double val = double.Parse(ss);
+                    double val = double.Parse(ss[0]) + double.Parse(ss[1]) / 10000; 
                     int a = int.Parse(p);
                     val = val / a + 0.005;
                     mes += $"{XBot.Currency.CurrencyId[cur[i]]}: {val:f2}\n";
                 }
-                //значения валют: 12, 21, 30, ... , 318 
             }
             catch(Exception ex) { string a = ex.ToString(); }
             Chat.Remove();

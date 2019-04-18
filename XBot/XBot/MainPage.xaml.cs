@@ -106,12 +106,12 @@ namespace XBot
         private void FavsClick(object sender, EventArgs e)
         {
             if ((string)App.Current.Properties["save"] == "")
-                Chat.Add("Список закладок пуст!", true);
+                Chat.Add("Список избранного пуст!", true);
             else
             {
                 if ((string)App.Current.Properties["messages"] != "")
                     App.Current.Properties["messages"] += Formats.parse.ToString();
-                App.Current.Properties["messages"] += $"BЗакладки:\n\n֍֍{((string)App.Current.Properties["save"]).Replace(Formats.parse.ToString(), "֍")}";
+                App.Current.Properties["messages"] += $"BИзбранное:\n\n֍֍{((string)App.Current.Properties["save"]).Replace(Formats.parse.ToString(), "֍")}";
             }
             Display();
         }

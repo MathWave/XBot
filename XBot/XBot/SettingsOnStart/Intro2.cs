@@ -70,7 +70,6 @@ namespace XBot.SettingsOnStart
             {
                 Button button = new Button
                 {
-                    //FontSize = 20,
                     ClassId = i.ToString(),
                     FontAttributes = FontAttributes.Bold,
                     BorderColor = Styles.UserColor,

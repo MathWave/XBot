@@ -10,7 +10,7 @@ namespace XBot
     static class Bot
     {
      
-        private static readonly HttpClient client = new HttpClient();
+        public static readonly HttpClient client = new HttpClient();
 
         async public static void GetNews(MainPage m)
         {
@@ -27,7 +27,7 @@ namespace XBot
                     string[] first = elems[i].Split('\t');
                     string info = await client.GetStringAsync("http://mediametrics.ru/rating/index.tsv?titles=" + first[5]);
                     string[] elems1 = info.Split('\t');
-                    if (!Contains(elems1[1]))
+                    if (!Denied(elems1[1]))
                     {
                         mess += $"{elems1[1]}\n֍{elems1[0]}֍";
                         count++;
@@ -73,7 +73,7 @@ namespace XBot
                         string[] elems1 = info.Split('\t');
                         foreach (string str in requests)
                         {
-                            if (elems1[1].ToLower().Contains(str.ToLower()) && !Contains(elems1[1]))
+                            if (IsSubString(elems1[1].ToLower(), str.ToLower()) && !Denied(elems1[1]))
                             {
                                 mess += elems1[1] + "\n֍" + elems1[0] + "֍";
                                 amount++;
@@ -164,7 +164,14 @@ namespace XBot
             return line.Substring(0, line.Length - 1);
         }
 
-        static bool Contains(string news)
+        static bool IsSubString(string name, string str)
+        {
+            if (str.Length > 5)
+                str = str.Substring(0, str.Length - 2);
+            return name.Contains(str);
+        }
+
+        static bool Denied(string news)
         {
             if (!(bool)App.Current.Properties["blocked"])
                 return false;

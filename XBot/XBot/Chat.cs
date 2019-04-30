@@ -13,10 +13,8 @@ namespace XBot
                 mess += "B";
             else
                 mess += "U";
-            List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
             mess += message;
-            mes.Add(mess);
-            App.Current.Properties["messages"] = Formats.FromListIntoString(mes);
+            Formats.Add(mess, "messages");
         }
 
         public static void Remove()

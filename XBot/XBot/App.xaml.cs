@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XBot

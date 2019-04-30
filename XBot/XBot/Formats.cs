@@ -44,5 +44,19 @@ namespace XBot
             return l;
         }
 
+        public static void Add(string what, string where)
+        {
+            List<string> list = FromStringIntoList((string)App.Current.Properties[where]);
+            list.Add(what);
+            App.Current.Properties[where] = FromListIntoString(list);
+        }
+
+        public static void Remove(string what, string where)
+        {
+            List<string> list = FromStringIntoList((string)App.Current.Properties[where]);
+            list.Remove(what);
+            App.Current.Properties[where] = FromListIntoString(list);
+        }
+
     }
 }

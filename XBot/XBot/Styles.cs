@@ -35,15 +35,6 @@ namespace XBot
             }
         }
 
-        public static Xamarin.Forms.Color UserBackColor
-        {
-            get
-            {
-                Color c = UserColor;
-                return Color.FromRgb(c.R * 1.2, c.G * 1.2, c.B * 1.2);
-            }
-        }
-
         public static int Size
         {
             get => (int)App.Current.Properties["size"];

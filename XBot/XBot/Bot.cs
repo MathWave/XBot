@@ -135,27 +135,7 @@ namespace XBot
             m.Active(true);
         }
 
-        static string GetNumber(string str)
-        {
-            string newstr = "";
-            bool flag = true;
-            for (int i = 0; i < str.Length; i++)
-            { 
-                if (flag)
-                {
-                    if (str[i] >= '0' && str[i] <= '9')
-                        newstr += str[i];
-                    else if (str[i] == '.')
-                        flag = false;
-                }
-                else
-                {
-                    newstr += "." + str[i] + str[i + 1];
-                    break;
-                }
-            }
-            return newstr;
-        }
+
         static string FromIEnumerable(IEnumerable<string> arr)
         {
             string line = "";

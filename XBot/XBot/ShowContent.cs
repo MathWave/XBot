@@ -49,7 +49,10 @@ namespace XBot
             BackgroundColor = Styles.BackColor;
             back.Clicked += BackClick;
             internet.Clicked += (object sender, EventArgs e) => Device.OpenUri(new Uri("http://" + url));
-            NavigationPage.SetHasNavigationBar(this, false);
+            if (Device.RuntimePlatform == "iOS")
+                Title = title;
+            else
+                NavigationPage.SetHasNavigationBar(this, false);
             List<string> favs = Formats.FromStringIntoList((string)App.Current.Properties["save"]);
             if (PositionInList(favs, $"{title}֍{url}") != -1)
                 save = new Button

@@ -234,7 +234,7 @@ namespace XBot
         public void MakeFrame()
         {
             List<string> mes = Formats.FromStringIntoList((string)App.Current.Properties["messages"]);
-            frame = new Frame { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Styles.BackColor };
+            frame = new Frame { HasShadow = false, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Styles.BackColor };
             stack = new StackLayout { VerticalOptions = LayoutOptions.End };
             for (int i = 0; i < mes.Count; i++)
             {
